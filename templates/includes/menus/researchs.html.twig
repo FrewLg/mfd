@@ -1,0 +1,37 @@
+{% if is_granted("vw_gntd_rsrch") or is_granted("vw_all_pub") %}
+
+
+	<li>
+		<a href="javascript: void(0);">
+			<i class=" fas fa-globe align-self-center menu-icon"></i>
+			<span>Researches</span>
+			<span class="menu-arrow">
+				<i class="mdi mdi-chevron-right"></i>
+			</span>
+		</a>
+		<ul class="nav-second-level" aria-expanded="false">
+
+
+			{% if is_granted("vw_gntd_rsrch") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('published_research_index') }}">
+						<i class="ti-control-record"></i>
+						Granted Researches
+					</a>
+				</li>
+			{% endif  %}
+
+			{% if is_granted("vw_all_pub") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('all_publications') }}">
+						<i class="ti-control-record"></i>
+						Publications
+					</a>
+				</li>
+			{% endif %}
+
+		</ul>
+	</li>
+{% endif %}

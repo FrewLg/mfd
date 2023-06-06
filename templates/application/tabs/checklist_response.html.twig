@@ -1,0 +1,122 @@
+<div class="tab-pane p-3  active" id="review-checklist" role="tabpanel">
+	<div class="card">
+		<div class="card-header">
+
+			<h5>IRB application review checklist
+			</h5>
+		</div>
+		<div class="card-body">
+		<b>Reviewer:</b><u>{{review_assignment.irbreviewer}}</u><br>
+		<b>Date of Review:</b><u>{{review_assignment.reviewedAt | date('Y-m-d')}}</u>
+		<br>
+		<br>
+			<p>
+				<b>INFORMATION FOR THE REVIEWER:</b>
+				This is a word document, so you may download it to your computer to complete. Each of the components below must be adequately addressed within the application in order to be approved by the IRB. Please indicate whether the PI has given adequate consideration and safeguards to the following areas of concern.
+				<span class="bg-warning">
+					Note any concerns, recommendations or questions in the reviewer’s comment section for each component.
+				</span>
+			</p>
+			<p>
+				For expedited reviews save completed reviews as a WORD document and return to the committee chair. For a full committee review, email a copy to the chair and bring a copy to the committee meeting. The chair will summarize and compile the reviews. Copies of the reviewer checklist will be made available to applications, institutional officials, or federal officials upon request.
+			</p>
+			<p>
+
+				Concerns and questions noted by reviewer(s) must be satisfactorily addressed by the applicant prior to final project approval.
+			</p>
+
+
+			<div>
+				<form method="POST" onSubmit="return confirm('Save changes')">
+                <input hidden name="review-checklist" value="true"/>
+					<table class="table table-bordered table-hover">
+
+						<tbody>
+
+							{% for checklist_group in irb_review_checklist_group %}
+								<tr>
+									<th>{{toRoman(loop.index)}}.
+										{{checklist_group}}</th>
+
+									<th>Response</th>
+								</tr>
+								{% set parents = {} %}
+								{% for checklist in review_assignment.reviewerResponses|filter(checklist =>  (checklist.checklist.answerType==1 and  checklist.checklist.checklistGroup ==  checklist_group)) %}
+									{% if checklist.checklist.parent %}
+									{% set parents = parents|merge({("key" ~ checklist.checklist.parent.id):checklist.checklist.parent}) %}
+
+									{% else %}
+
+
+										<tr>
+											<td>
+												<p style="margin-left:10px">{{toAlpha(loop.index)}}.
+													{{checklist}}</p>
+											</td>
+											<td>{{ checklist.answer }}</td>
+										</tr>
+									{% endif %}
+
+								{% endfor %}
+								{% for checklist_parent in parents %}
+												<tr>
+									<th><b style="margin-left:10px">{{toRoman(loop.index)}}.
+										{{checklist_parent}}<b></th>
+
+									<th>Response</th>
+								</tr>
+								{% for checklist in review_assignment.reviewerResponses|filter(checklist =>  (checklist.checklist.answerType==1 and  checklist.checklist.parent ==  checklist_parent)) %}
+								
+
+										<tr>
+											<td>
+												<p style="margin-left:20px">{{loop.index}}.
+													{{checklist}}</p>
+											</td>
+											<td>{{ checklist.answer }}</td>
+										</tr>
+
+								{% endfor %}
+								{% endfor %}
+
+
+
+							{% endfor %}
+						</tbody>
+					</table>
+
+					<div class="mb-3 row">
+						<label class="col-md-3 my-2 form-label">WAIVERS:</label>
+						<p>Does the application contain a request for the committee to waive any aspects of consent or other standard IRB guidelines?
+
+							<div class="col-md-9">
+							<u>	{{  review_assignment.waiver}}</u>
+							</div>
+						</p>
+					</div>
+					<div class="mb-3 row">
+						<label class="col-md-3 my-2 form-label">RISK LEVEL:</label>
+							<u>	{{  review_assignment.riskLevel}}</u>
+						
+						
+					</div>
+                    	<div class="mb-3 row">
+						<label class="col-md-3 my-2 form-label">RECOMMENDATION: </label>
+						
+							<u>	{{  review_assignment.recommendation}}</u>
+							
+					</div>
+
+                    	<div class="mb-3 row">
+						<label class="col-md-3 my-2 form-label">HOW OFTEN THIS STUDY SHOUD BE REVIEWED: </label>
+							<u>	{{  review_assignment.howOftenStudyReviewed}}</u>
+						
+							
+					</div>
+				
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

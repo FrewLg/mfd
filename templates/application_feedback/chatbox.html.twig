@@ -1,0 +1,235 @@
+<div class="chat-box-right">
+
+	<div class="chat-header">
+		<a href="#" class="media">
+			<div
+				class="media-left">{# <img src="assets/images/users/user-4.jpg" alt="user" class="rounded-circle thumb-md"> #}
+			</div>
+			<!-- media-left -->
+			<div class="media-body">
+				<div>
+					<h6 class="m-0">Discussion and feedbacks</h6>
+					<p
+						class="mb-0">{# {{ application.SubmittedBy.lastLogin|date('Y-m-d h:i a')}} #}
+					</p>
+				</div>
+			</div>
+			<!-- end media-body -->
+		</a>
+		<!--end media-->
+	{# <div class="chat-features">
+						<div class="d-none d-sm-inline-block">
+							<a href="#">
+								<i class="fas fa-phone"></i>
+							</a>
+							<a href="#">
+								<i class="fas fa-video"></i>
+							</a>
+							<a href="#">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+							<a href="#">
+								<i class="fas fa-ellipsis-v"></i>
+							</a>
+						</div>
+					</div> #}
+		<!-- end chat-features -->
+	</div>
+	<!-- end chat-header -->
+	<div class="chat-body" data-simplebar="init">
+		<div class="simplebar-wrapper mb-4 " style="margin: -16px;">
+			<div class="simplebar-height-auto-observer-wrapper">
+				<div class="simplebar-height-auto-observer"></div>
+			</div>
+			<div class="simplebar-mask">
+				<div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+					<div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
+						<div class="simplebar-content" style="padding: 16px;">
+							<div class="chat-detail mb-4">
+								{% for discussions in application.applicationFeedbacks  %}
+
+
+									<div class="media mb-4">
+										{% if   discussions.feedbackFrom != app.user   %}
+											<div class="media-img">
+
+												{% if discussions.feedbackFrom.userInfo and discussions.feedbackFrom.userInfo.image %}
+													<img src="{{ asset('files/profile_pictures/'~discussions.feedbackFrom.userInfo.image ) }}" title='{{discussions.feedbackFrom.userInfo}}' alt="" class="rounded-circle thumb-md">
+												{% else %}
+													<img src="{{ asset('/img/defaultuser.png') }}" title='{{discussions.feedbackFrom.userInfo}}' class="rounded-circle thumb-md ">
+												{% endif %}
+											</div>
+
+											<div class="media-body ">
+
+												<div class="chat-msg">
+													<p>{{ discussions.description}}
+
+
+														{% if discussions.attachment %}
+															<br>
+															<a class='text-primary' href="{{ asset('/files/uploads/'~discussions.attachment)}}">
+																{{discussions.attachment|slice(0,35)}}
+																<i class="fas fa-paperclip"></i>
+															</a>
+														{% endif  %}
+														<br>
+														{% if discussions.sendMail %}
+
+														<span class='text-muted '>
+															<small class='text-success'><i class="fas fa-envelope"></i> Mailed</small>
+														</span>
+														{% endif  %}
+
+														<span class='text-muted text-success'>
+															<small>{{discussions.createdAt | date('M d h:i a')}}</small>
+														</span>
+													</p>
+													{# {{discussions.createdAt | date('M d h:i a')}} #}
+
+
+												</div>
+
+												{# <div class="chat-time">{{discussions.createdAt | date('M d h:i a')}}</div> #}
+											</div>
+
+										{% else %}
+
+											<div class="media-body reverse">
+												<div class="chat-msg">
+													<p>{{ discussions.description}}
+
+														{% if discussions.attachment %}
+															<br>
+															<a class='text-primary' href="{{ asset('/files/uploads/'~discussions.attachment)}}">
+																{{discussions.attachment|slice(0,  20, 35)}}
+																<i class="fas fa-paperclip"></i>
+															</a>
+														{% endif  %}
+														<br>
+														{% if discussions.sendMail %}
+
+														<span class='text-muted text-success'>
+														
+															<small class='text-success'><i class="fas fa-envelope"></i> Mailed</small>
+														</span>
+														{% endif  %}
+
+														<span class='text-muted '>
+															<small>{{discussions.createdAt | date('M d h:i a')}}</small>
+														</span>
+													</p>
+												</div>
+												{# <div class="chat-time">{{discussions.createdAt | date('M d h:i a')}}</div> #}
+
+											</div>
+											<!--end media-body-->
+											<div class="media-img">
+												{% if discussions.feedbackFrom.userInfo and discussions.feedbackFrom.userInfo.image %}
+													<img src="{{ asset('files/profile_pictures/'~discussions.feedbackFrom.userInfo.image ) }}" title='{{discussions.feedbackFrom.userInfo}}' alt="" class="rounded-circle thumb-md">
+												{% else %}
+													<img src="{{ asset('/img/defaultuser.png') }}" title='{{discussions.feedbackFrom.userInfo}}' class="rounded-circle thumb-md ">
+												{% endif %}
+											</div>
+											<!--end media-->
+										{% endif %}
+									</div>
+
+								{% endfor %}
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+							</div>
+							<!-- end chat-detail -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="simplebar-placeholder" style="width: auto; height: 699px;"></div>
+		</div>
+		<div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+			<div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+		</div>
+		<div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+			<div class="simplebar-scrollbar" style="height: 481px; transform: translate3d(0px, 14px, 0px); display: block;"></div>
+		</div>
+	</div>
+	<!-- end chat-body -->
+	<div class="chat-footer ">
+		<div class="row">
+			<div class="col-12 col-md-9">
+				<span
+					class="chat-admin">
+					{# <img src="assets/images/users/user-8.jpg" alt="user" class="rounded-circle thumb-sm"> #}
+
+					{% if app.user.userInfo and app.user.userInfo.image %}
+						<img src="{{ asset('files/profile_pictures/'~app.user.userInfo.image ) }}" alt="" class="rounded-circle thumb-sm">
+					{% else %}
+						<img src="{{ asset('/img/defaultuser.png') }}" class="rounded-circle thumb-sm ">
+					{% endif %}
+				</span>
+
+				<div class='card p-3'>
+					{{ form_start(appfeedbfrom) }}
+
+
+					{{ form_widget(appfeedbfrom.description) }}
+
+
+					Attachment
+					<i class="fas fa-paperclip"></i>
+
+
+					<input type="checkbox" class='form-check-input' onclick="javascript:yesnoCheck();" name="yesno" id="yesCheck">
+
+					<div id="ifYes" style="display:none">
+						{{ form_widget(appfeedbfrom.attachement ,{'attr': {'class': 'form-control'}}) }}
+
+					</div>
+
+
+					<br>
+				</div>
+			</div>
+
+
+			<!-- col-8 -->
+			<div
+				class="col-sm-12 col-md-3 text-right">
+						{{ form_widget(appfeedbfrom.sendMail ,{'attr': {'class': 'form-check-input'}}) }}
+
+<br>
+ 				<button class="btn btn-soft-primary form-group">{{ button_label|default('Send feedback') }}
+					<i class="fas fa-paper-plane"></i>
+				</button>
+ 
+			</div>
+			{# </form>	 #}
+			{{ form_end(appfeedbfrom) }}
+
+		</div>
+		<!-- end row -->
+	</div>
+	<!-- end chat-footer -->
+</div>
+
+
+<script type="text/javascript">
+
+	function yesnoCheck() {
+if ( document.getElementById('yesCheck').checked) {
+document.getElementById('ifYes').style.display = 'block';
+$('#application_feedback_attachement').attr('required', 'required');
+
+} else
+document.getElementById('ifYes').style.display = 'none';
+
+$('#application_feedback_attachement').removeAttr('required');
+$('#ifYes').removeAttr('required');
+
+
+}
+</script>

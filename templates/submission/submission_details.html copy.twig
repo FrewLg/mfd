@@ -1,0 +1,998 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Submission
+{% endblock %}
+{% block styles %}{# <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}"> #}
+	{# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer"/> #}
+{% endblock %}
+
+{% block container_title %}Submission details
+{% endblock %}
+{% block body %}
+
+	<div class="row">
+		<div class="col-lg-9">
+
+			<h4>Project progress
+			</h4>
+
+			{{ include('submission/progress.html.twig') }}
+			<hr>
+
+			<div class="row m-t-sm">
+				<div class="col-lg-12">
+					<div class="panel blank-panel">
+						<div class="panel-heading">
+							<div class="panel-options">
+								<ul class="nav nav-pills nav-justified">
+									<li>
+										<a class="nav-link " href="#tab-1" data-bs-toggle="tab">Research detail</a>
+									</li>
+									<li>
+										<a class="nav-link" href="#Revision" data-bs-toggle="tab">Revision</a>
+									</li>
+									<li>
+										<a class="nav-link active" href="#progress-report" data-bs-toggle="tab">Progress reports</a>
+									</li>
+
+
+									 
+									{% if submission.terminalreport is  not  empty %}
+										<li>
+											<a class="nav-link" href="#terminal-report" data-bs-toggle="tab">Publication</a>
+										</li>
+									{% endif %}
+									{% if submission.published is  not empty %}
+										<li>
+											<a class="nav-link" href="#publication" data-bs-toggle="tab">Publication</a>
+										</li>
+									{% endif %}
+								</ul>
+							</div>
+
+
+							<div class="panel-body">
+
+								<div class="tab-content">
+									<div class="tab-pane " id="tab-1">
+										<div class="row">
+
+
+											<h4 class='text-primary m-3'>
+												Research details</h4>
+
+
+											<div class="accordion" id="accordionExample">
+												<div class="accordion-item active">
+													<h5 class="accordion-header m-0" id="headingOne">
+														<button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+															Executive summary/ Abstract
+														</button>
+													</h5>
+													<div id="collapseOne" class="accordion-collapse collapse active" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+														<div class="accordion-body active">
+															<h3>
+																<a href="#" class="text-navy">
+																	Executive summary
+																</a>
+															</h3>
+															<p class="medium">
+
+																{{ submission.abstract |raw}}
+															</p>
+															<div class="m-t-sm">
+																<a href="#" class="text-muted">Keywords:
+																</a>
+																{{ submission.keywords}}
+															</div>
+
+
+														</div>
+													</div>
+												</div>
+												<div class="accordion-item">
+													<h5 class="accordion-header m-0" id="headingTwo">
+														<button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+															Background And Rationale
+														</button>
+													</h5>
+													<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
+														<div class="accordion-body">
+
+															{{ submission.BackgroundAndRationale |raw}}
+
+														</div>
+													</div>
+												</div>
+
+												<div class="accordion-item">
+													<h5 class="accordion-header m-0" id="Objectives">
+														<button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwoo" aria-expanded="false" aria-controls="collapseTwoo">
+															Objectives
+														</button>
+													</h5>
+													<div id="collapseTwoo" class="accordion-collapse collapse" aria-labelledby="Objectives" data-bs-parent="#accordionExample" style="">
+														<div class="accordion-body">
+
+															<h5 class="font-20 fw-bold d-block mt-2">General objective:</h5>
+															<p>
+																{{ submission.GeneralObjective }}
+															</p>
+															<h5 class="font-20 fw-bold d-block mt-2">Specific Objectives:</h5>
+
+															<ul class="list-unstyled mb-0 row">
+																{% for objective in submission.specificObjectives %}
+																	<li class="col-12 my-1 p-1 list-unstyled">
+
+																		{{ loop.index }}
+																		{{ objective.objective}}
+
+
+																	</li>
+																{% endfor %}
+
+															</ul>
+
+														</div>
+													</div>
+												</div>
+
+
+												<div class="accordion-item">
+													<h5 class="accordion-header m-0" id="headingSpn">
+														<button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">
+															Methodology
+														</button>
+													</h5>
+													<div id="collapseOther" class="accordion-collapse collapse" aria-labelledby="headingSpn" data-bs-parent="#accordionExample" style="">
+														<div class="accordion-body">
+
+															{{ submission.methodology |raw}}
+
+														</div>
+													</div>
+												</div>
+												<div class="accordion-item">
+													<h5 class="accordion-header m-0" id="headingLastTwo">
+														<button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collepaselast" aria-expanded="false" aria-controls="collepaselast">
+															Action plan
+														</button>
+													</h5>
+													<div id="collepaselast" class="accordion-collapse collapse" aria-labelledby="headingLastTwo" data-bs-parent="#accordionExample" style="">
+														<div class="accordion-body">
+
+															<div class="table table-responsive">
+																{{  submission.actionplan |raw }}
+															</div>
+
+
+															<h5 class='text-'>Budget breakdown</h5>
+															<table class="table table-striped">
+																<thead>
+																	<tr>
+																		<th>#</th>
+																		<th>Expense category</th>
+																		<th>Cost
+																		</th>
+																		<th>Quantity
+																		</th>
+																		<th>Description
+																		</th>
+
+																		<th>Total
+																		</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	{% set total = 0 %}
+
+
+																	{% for expense in expenses %}
+																		<tr>
+																			<td>{{ loop.index }}</td>
+																			<td>{{ expense.category }}</td>
+
+																			<td>{{ expense.cost }}</td>
+																			<td>{{ expense.quantity }}</td>
+																			<td>{{ expense.description }}</td>
+																			<td>
+																				{{ expense.cost * expense.quantity }}
+																			</td>
+																			{% set total = total + (expense.cost * expense.quantity)  %}
+																		</tr>
+
+
+																	{% else %}
+																		<tr>
+																			<td colspan="4">no records found</td>
+																		</tr>
+																	{% endfor %}
+																	<tr class="bg-black text-white">
+																		<td colspan="4" class="border-0 font-14">
+																			<b>Grand Total</b>
+																		</td>
+																		<td class="border-0 font-14"></td>
+																		<td class="border-0 font-14">
+																			<b>{{ total }}
+																				ETB</b>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>{#{% endif %}#}<div class="table-responsive">
+																{% if submission.researchTimeTables|length >0 %}
+
+																	<h4>Time table :
+																	</h4>
+
+																	<table class="table table-bordered">
+
+																		<thead>
+																			<tr class="bg-gray-dark">
+																				<th>Task</th>
+
+																				<th>Date Start</th>
+
+																				<th>Date End</th>
+																				<th>Remark</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			{% for schedule in submission.researchTimeTables %}
+																				<tr>
+																					<td>{{ schedule.task }}</td>
+																					<td>
+																						{{ schedule.DateStart|date('d M Y ') }}
+																					</td>
+																					<td>
+																						{{ schedule.DateEnd|date('d M Y') }}
+																					</td>
+																					<td>{{ schedule.remark }}</td>
+
+
+																				</tr>
+																				{% else %}
+
+																			{% endfor %}
+
+
+																		</tbody>
+																	</table>
+																	{% else %}
+																{% endif %}
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="accordion-item">
+													<h5 class="accordion-header m-0" id="headingLastFTwo">
+														<button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collepaselastsyn" aria-expanded="false" aria-controls="collepaselastsyn">References</button>
+													</h5>
+													<div id="collepaselastsyn" class="accordion-collapse collapse" aria-labelledby="headingLastFTwo" data-bs-parent="#accordionExample" style="">
+														<div class="accordion-body">{{ submission.Reference |raw}}</div>
+													</div>
+												</div>
+												<div class="accordion-item">
+													<h5 class="accordion-header m-0" id="headingLastFThree">
+														<button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ResearchOutcome" aria-expanded="false" aria-controls="ResearchOutcome">Research  Outcome</button>
+													</h5>
+													<div id="ResearchOutcome" class="accordion-collapse collapse" aria-labelledby="headingLastFThree" data-bs-parent="#accordionExample" style="">
+														<div class="accordion-body">{{ submission.ResearchOutcome |raw}}</div>
+													</div>
+												</div>
+												<div class="accordion-item">
+													<h5 class="accordion-header m-0" id="headingLastFThree">
+														<button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#members" aria-expanded="false" aria-controls="members">Research members</button>
+													</h5>
+													<div id="members" class="accordion-collapse collapse" aria-labelledby="headingLastFThree" data-bs-parent="#accordionExample" style="">
+														<div class="accordion-body">
+
+
+															<h4 class='text-'>Research team  
+															
+															<a href="#" class="avatar-box thumb-xxs align-self-center">
+										<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+											{{  submission.coAuthors|length +1}}
+										</span>
+									</a>
+
+															 </h4>
+
+
+															<div class="row">
+
+<div class="col-lg-4">
+
+																		<div class="card">
+
+																			<div class="card-body text-center">
+
+
+																				{% if submission.author.userInfo.image    %}
+																					<img src="{{ asset('files/profile_pictures/'~ submission.author.userInfo.image ) }}" class="d-block mx-auto rounded-circle thumb-md" alt="profile">
+																				{% else %}
+																					<img src="{{ asset('/img/defaultuser.png') }}" class="d-block mx-auto rounded-circle thumb-md" alt="profile">
+																				{% endif %}
+
+																				<h5 class="fw-bold mt-3 mb-1">{{ submission.author.userInfo}}
+																					<sapn class="text-muted mb-0">({{submission.author.userInfo.educationLevel}})</span>
+																				</h5>
+																				<p class="text-muted mb-0">  {{ submission.author.userInfo.college}}</p>
+																				<p class="text-muted mb-0">{{ submission.author.userInfo.department }}</p>
+																				<p class="text-muted mb-0">{{ submission.author.userInfo.academicRank }}</p>
+																				<div class="mb-3">
+																					<a href="#" class="me-3 text-success">
+																					Principal Investigtor</a>
+																					 
+																				</div>
+
+																				<a href='{{path('researcher',{'id':submission.author.id})}}' class="btn btn-sm btn-soft-primary">About researcher</a>
+
+																			</div>
+																		</div>
+																	</div>
+
+
+
+																 
+																{% for co_author in  submission.coAuthors %}
+																	<div class="col-lg-4">
+
+																		<div class="card">
+
+																			<div class="card-body text-center">
+
+
+																				{% if co_author.researcher.userInfo.image   %}
+																					<img src="{{ asset('files/profile_pictures/'~ co_author.researcher.userInfo.image ) }}" class="d-block mx-auto rounded-circle thumb-md" alt="profile">
+																				{% else %}
+																					<img src="{{ asset('/img/defaultuser.png') }}" class="d-block mx-auto rounded-circle thumb-md" alt="profile">
+																				{% endif %}
+
+																				<h5 class="fw-bold mt-3 mb-1">{{ co_author.researcher.userInfo}}
+																					<sapn class="text-muted mb-0">({{ co_author.researcher.userInfo.educationLevel }})</span>
+																				</h5>
+																				<p class="text-muted mb-0">{{ co_author.researcher.userInfo.college }}</p>
+																				<p class="text-muted mb-0">{{ co_author.researcher.userInfo.department }}</p>
+																				<p class="text-muted mb-0">{{ co_author.researcher.userInfo.academicRank }}</p>
+																				<div class="mb-3">
+																					<a href="#" class="me-3 text-warning">
+																						{{ co_author.role }}</a>
+																				 
+																				</div>
+
+																				<a href='{{path('researcher',{'id':co_author.researcher.id})}}' class="btn btn-sm btn-soft-primary">About researcher</a>
+
+																			</div>
+																		</div>
+																	</div>
+																{% endfor %}
+
+															</div>
+
+
+														</div>
+
+
+													</div>
+												</div>
+
+											</div>
+
+										</div>
+
+									</div>
+
+									{# start of report tab #}
+
+
+									{% include "submission/tabs/report.html.twig" %}
+
+									{# end of report tab #}
+
+									<div class="tab-pane" id="Revision">
+
+										<h3>
+											<a href="#" class="text-navy">
+												Responses   and revisions
+											</a>
+										</h3>
+
+										{% for review in reviews %}
+
+
+											<div class="card team-card">
+												<div class="card-body">
+
+													{% if review.fromDirector %}
+
+														<div class="ribbon1 rib1-secondary">
+															<span class="text-white text-center rib1-secondary">Director</span>
+														</div>
+													{% elseif review.ReviewedBy.isReviewer %}
+
+
+														<div class="ribbon1 rib1-primary">
+															<span class="text-white text-center rib1-primary">External</span>
+														</div>
+
+
+													{% else %}
+														<div class="ribbon1 rib1-success">
+															<span class="text-white text-center rib1-success">Internal</span>
+														</div>
+													{% endif %}
+
+
+													<div class="float-end">
+														<div class="dropdown d-inline-block"></div>
+													</div>
+													<div class="media align-items-center">
+
+														{% if review.ReviewedBy.userInfo and review.ReviewedBy.userInfo.image %}
+
+
+															<img src="{{ asset('files/profile_pictures/'~review.ReviewedBy.userInfo.image ) }}" alt="" class="rounded-circle user-img">
+														{% else %}
+
+															<img src="{{ asset('/img/defaultuser.png') }}" alt="" class="rounded-circle user-img">
+
+
+														{% endif %}
+
+
+														<div class="online-circle">
+															<i class="fa fa-circle text-success"></i>
+														</div>
+														<div class="media-body ms-3 align-self-center">
+															<h4 class="team-leader m-0">{{review.ReviewedBy.userInfo}}
+																{% if review.fromDirector %}
+
+
+																	<button type="button" class="btn btn-soft-primary btn-icon-circle btn-icon-circle-sm mr-2">
+																		<i class="mdi mdi-bell font-16"></i>
+																		<span class="badge badge-dot online"></span>
+																	</button>
+																{% endif %}
+
+
+															</h4>
+															<p class="text-muted font-12 mb-0">
+
+																{{ review.CreatedAt ?  review.CreatedAt|date('Y-m-d H') : '' }}</p>
+														</div>
+													</div>
+													<h4 class="m-0 mt-4 font-14 font-weight-semibold">
+
+														<h5>
+															{% if   review.remark==1 %}
+																<span class="text-danger">
+																	Declined</span>
+
+															{% elseif   review.remark==2 %}
+																<span class="text-warning">
+																	Accepted with major revision</span>
+															{% elseif   review.remark==3 %}
+																<span class="text-warning">
+																	Accepted with minor revision
+																</span>
+															{% elseif   review.remark==4 %}
+
+																<span class="text-success">
+																	Accepted
+																</span>
+															{% endif   %}
+														</h5>
+
+													</h4>
+													<p class="text-muted mb-0">
+														{{ review.comment |raw}}</p>
+
+
+													{% if review.attachment %}
+														<a href="{{ asset('/files/proposals/review_files/'~ review.attachment ) }}" class="font-14 m-0   btn btn-xs btn-soft-primary">
+															Evaluation Report
+															<i class="fa fa-download material-icons  "></i>
+														</a>
+
+													{% endif %}
+													{% if review.EvaluationAttachment %}
+														<a href="{{ asset('/files/proposals/review_files/'~ review.EvaluationAttachment ) }}" class="font-14 m-0   btn btn-xs btn-soft-primary">
+															Grading report
+															<i class="fa fa-download material-icons  "></i>
+														</a>
+
+													{% endif %}
+
+													<hr class="hr-dashed my-4">
+
+{# <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <button type="button" class="btn btn-outline-secondary">Left</button>
+                                                    <button type="button" class="btn btn-outline-secondary">Middle</button>
+                                                    <button type="button" class="btn btn-outline-secondary">Right</button>
+                                                </div> #}
+												<br>
+													<ul class="list-group list-group-horizontal-md">
+														<li class="list-group-item">
+															{% if review.fromDirector %}
+																{{ include('review/_delete_form.html.twig') }}
+															{% else %}
+																<i class="fa fa-bell text-info material-icons  "></i>
+															{% endif %}
+
+														</li>
+
+														<li class="list-group-item">
+
+															{% if review.AllowToView=='' %}
+
+																<a href="{{ path('allocomment', {'id': review.id}) }}" class="btn btn-soft-primary btn-xs  mt-1" onsubmit="return confirm('Are you sure you want to sendcommentto PI ?');">
+																	Send   comment to PI</a>
+															{% elseif review.AllowToView=='1'  %}
+
+																<a href="{{ path('undo_allocomment', {'id': review.id}) }}" class="btn btn-soft-danger btn-xs  mt-1">
+																	Unsend comment from PI</a>
+
+														{% else %}
+															</li>
+														</li>
+														<li class="list-group-item">
+															<i class="la la-angle-double-right text-info me-2"></i>
+															{% if submission.awardgranted==1 %}
+
+																<a href="" class='container btn btn-outline-success mt-2 btn-sm  '>Winner
+																	<i class="fa fa-check text-success"></i>
+																</a>
+
+															{% elseif submission.awardgranted=='0' %}
+																<a href="{{ path('grant_winner', {'id': submission.id}) }}" class='container btn btn-outline-danger mt-2 btn-sm  '>Not granted</a>
+
+															{% elseif  submission.awardgranted is null  %}
+																<a href="{{ path('grant_winner', {'id': submission.id}) }}" class='container btn mt-2 btn-primary btn-sm  '>Declare grant</a>
+
+																{% else %}
+																{# <i class="fa fa-check text-success"></i> #}
+
+															{% endif %}
+
+														</li>
+													</ul>
+
+
+												{% endif %}
+
+
+											</div>
+										</div>
+
+
+										{% else %}
+
+									{% endfor %}
+
+
+													<hr class="hr-dashed my-4">
+								 
+
+									<div class="card">
+
+										<div class="card-header">
+											<h5 class="text-secondary">Director decision</h5>
+										</div>
+										<div class="card-body">
+
+											{{ form_start(adminvevisionform) }}
+											{{ form_widget(adminvevisionform) }}
+											<button class="btn btn-primary">{{ button_label|default('Submit Review') }}</button>
+											{{ form_end(adminvevisionform) }}
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+							<br>
+							<br>
+							<br>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-3">
+		<div class="card team-card">
+			<div class="card-body">
+				{% if submission.awardgranted %}
+					<div class="ribbon2 rib2-success">
+						<span class="ribbon4-band ribbon4-band-primary text-white text-center">
+ 							<i class="fas fa-badge-check"></i>
+						</span>
+					</div>
+				{% endif %}
+
+				<div class="float-end">
+					<div class="dropdown d-inline-block"></div>
+				</div>
+				<div class="media align-items-center">
+
+					{% if submission.author.userInfo and submission.author.userInfo.image %}
+
+
+						<img src="{{ asset('files/profile_pictures/'~submission.author.userInfo.image ) }}" alt="" class="rounded-circle user-img">
+					{% else %}
+
+						<img src="{{ asset('/img/defaultuser.png') }}" alt="" class="rounded-circle user-img">
+
+
+					{% endif %}
+
+
+					<div class="online-circle">
+						<i class="fa fa-circle text-success"></i>
+					</div>
+					<div class="media-body ms-3 align-self-center">
+						<h4 class="team-leader m-0">
+						<a href='{{path('researcher',{'id':submission.author.id})}}'>
+							
+								{{submission.author.userInfo}}
+								</a>
+								</h4>
+						<p class="text-muted font-12 mb-0">  Principal Investigator</p>
+						
+					</div>
+				</div>
+				<h4 class="m-0 mt-4 font-14 font-weight-semibold">{{submission.CallForProposal.ResearchType}}
+				</h4>
+				<p class="text-muted mb-0 font-14 font-weight-semibold">
+					{{submission.title}}</p>
+				<small class="text-muted mb-0">
+					{% if submission.sentAt %}
+						{{ submission.sentAt|date() }}
+					{% endif %}
+					<small>
+
+						<div class="mt-4 d-flex justify-content-between">
+							<div class="img-group">
+
+
+								{% if submission.author.userInfo and  submission.author.userInfo.image %}
+
+									<a class="user-avatar user-avatar-group" href="##{{submission.id}}">
+										<img src="{{ asset('files/profile_pictures/'~submission.author.userInfo.image ) }}" alt="user" class="rounded-circle thumb-xxs">
+									</a>
+
+								{% else %}
+									<a class="user-avatar user-avatar-group" href="#{{submission.id}}">
+										<img src="{{ asset('/img/defaultuser.png') }}" alt="user" class="rounded-circle thumb-xxs">
+									</a>
+								{% endif %}
+
+
+								{% for member in submission.coAuthors %}
+
+
+									{% if member.researcher.userInfo and member.researcher.userInfo.image %}
+
+										<a class="user-avatar user-avatar-group" href="##{{submission.id}}">
+											<img src="{{ asset('files/profile_pictures/'~member.researcher.userInfo.image ) }}" alt="user" class="rounded-circle thumb-xxs">
+										</a>
+
+
+ 									{% else %}
+										<a class="user-avatar user-avatar-group" href="##{{submission.id}}">
+											<img src="{{ asset('/img/defaultuser.png') }}" alt="user" class="rounded-circle thumb-xxs">
+										</a>
+									{% endif %}
+
+									{% else %}No Co-PI has been involved
+								{% endfor %}
+
+
+								<a href="#" class="avatar-box thumb-xxs align-self-center">
+									<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+										+{{ submission.coAuthors|length   }}
+									</span>
+								</a>
+
+							</div>
+
+						</div>
+						<br>
+
+
+						<a class="badge bg-primary align-right" href="{{ path('research_sumary', {'uid': submission.uidentifier }) }}">
+							PDF
+							<i class="fa fa-download"></i>
+						</a>
+						
+						<hr class="hr-dashed my-4">
+						{{ include('submission/includes/progress.html.twig') }}
+
+
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header ">
+						<h4 class="font-18 m-0 fw-bold">Attachments</h4>
+
+					</div>
+					<div class="card-body ">
+						<a href="{{ asset('/uploads/submission/'~ submission.proposal ) }}" class="btn btn-info btn-xs float-right"> Concept note
+								<i class="fa fa-download material-icons warning"></i>
+							</a>
+<br>
+					
+
+						{% for submissionattachment in submission.submissionAttachements %}
+							<a href="{{ asset('/uploads/submission/'~ submissionattachment.file ) }}" class="btn btn-info btn-xs float-right">
+								{{submissionattachment.name}}
+								<i class="fa fa-download material-icons warning"></i>
+							</a>
+						{% else %}
+							<span class="label label-danger">-</span>
+						{% endfor %}
+						<hr class="hr-dashed my-4">
+
+						<a class="btn btn-block btn-info btn-xs "
+						 href="{{ path('short_list_findone', {'id': submission.id }) }}">
+							Check if the researcher name is in proposal  
+							 
+						</a>
+
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header ">
+						<h4 class="font-18 m-0 fw-bold">Co-PI confirmation:</h4>
+
+					</div>
+
+					<div class="card-body ">
+
+
+						{% for member in submission.coAuthors %}
+							{{loop.index}}{# {{member.researcher}} #}
+							<a href='{{path('researcher',{'id':member.researcher.id})}}'>
+								{{ member.researcher.userInfo }}</a>
+							{% if member.confirmed=='1' %}
+								<i class="fa fa-check text-success"></i>
+							{% elseif member.confirmed==''    %}
+								<i class="fa fa-times-circle text-danger"></i>
+
+
+								{# {% elseif member.confirmed=='0'    %}  <i class="fa fa-close text-danger"></i>      #}
+							{% else  %}
+								<i class="fa fa-close text-danger"></i>
+							{% endif %}<br>{% else %}No Co-PI has been involved
+						{% endfor %}
+					</div>
+				</div>
+				<div class="card">
+
+					<div class="card-header">
+						<div class="row align-items-center">
+							<div class="col">
+								<h4 class="card-title">
+									Reviewers
+									<a href="#" class="avatar-box thumb-xxs align-self-center">
+										<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+											{{ review_assignments|length   }}
+										</span>
+									</a>
+								</h4>
+								Assignment  information
+							</div>
+							<div class="col-auto">
+								<a href="{{ path('review_assignment_new', {'id': submission.id}) }}" class='  btn btn-sm btn-soft-primary btn-xs   '>
+									Add  Reviewer</a>
+							</div>
+							<!--end col-->
+						</div>
+
+					</div>
+
+					<div class="card-body ">
+
+
+						{% for review_assignment in review_assignments %}
+
+							<div class="card">
+								<div class="card-body ">
+
+								
+
+														{% if review_assignment.reviewer.isReviewer  %}
+															
+															<div class="ribbon1 rib1-primary">
+															<span class="text-white text-center rib1-primary">+
+																		{{review_assignment.reviewer.reviewAssignments|length}}</span>
+														</div>
+														
+														 
+														{% else %}
+														<div class="ribbon1 rib1-success">
+															<span class="text-white text-center rib1-success">+
+																		{{review_assignment.reviewer.reviewAssignments|length}}</span>
+														</div>
+														{% endif %}
+
+
+									<div class="media align-items-center">
+
+										{% if review_assignment.reviewer.userInfo  and review_assignment.reviewer.userInfo.image  %}
+
+											<img src="{{ asset('files/profile_pictures/'~review_assignment.reviewer.userInfo.image ) }}" alt="" class="rounded-circle thumb-xs">
+										{% else %}
+
+											<img src="{{ asset('/img/defaultuser.png') }}" alt="" class="rounded-circle thumb-xs">
+										{% endif %}
+										<div class="media-body ms-3 align-self-center">
+											<h4 class="team-leader m-0">
+
+												<a href="{{ path('researcher', {'id': review_assignment.reviewer.id}) }}" class='font-16 m-0
+																																																																																																																																							  mb-1 align-right'>{{ review_assignment.reviewer }}
+
+												</a>
+											</h4>
+											<p class="text-muted font-12 mb-0">
+												{% if review_assignment.reviewer.isReviewer  %}
+													<span class="text-soft-primary">External
+													</span>
+
+												{% else %}
+													<span class="text-soft-success">Internal
+
+
+													</span>
+												{% endif %}
+											</p>
+										</div>
+									</div>
+
+
+									<a href="#" class="avatar-box thumb-xxs align-self-center">
+										<span class="avatar-title bg-soft-dark rounded-circle font-10 font-weight-normal">
+											{{loop.index}}
+										</span>
+									</a>
+
+									{% if review_assignment.reassigned %}
+
+										<a href="#" class="avatar-box thumb-xxs align-self-center">
+											<span class="avatar-title bg-soft-danger rounded-circle font-13 font-weight-normal">
+												Re
+											</span>
+										</a>
+									{% endif %}
+
+
+									<p class="text-muted  mb-0 font-13">
+										<span class="text-dark text-muted">
+											Invitation Sent :
+											{{ review_assignment.InvitationSentAt ? review_assignment.InvitationSentAt|date('Y-m-d H:i') : '' }}
+										</span>
+										<br>
+										<span class="text-dark text-muted">
+											Invitaion duedate:
+											{{ review_assignment.InvitationDueDate ? review_assignment.InvitationDueDate|date('Y-m-d') : '' }}
+										</span>
+										<br>
+										<span class="text-dark text-muted">
+											Review duedate:
+											{{ review_assignment.duedate ? review_assignment.duedate|date('Y-m-d') : '' }}
+										</span>
+										<br>
+										<span class="text-dark text-muted">
+											Invitaion  response:
+											{% if  review_assignment.Declined %}
+												<span class="text-danger ">
+													Declined</span>
+											{% elseif  review_assignment.Closed %}
+
+												<span class="text-primary">
+													Closed</span>
+											{% elseif  review_assignment.IsAccepted %}
+
+												<span class="text-info">
+													Reviewing</span>
+											{% elseif  review_assignment.InactiveAssignment == 1 %}
+												<span class="badge bg-danger">Inactive
+												</span>
+												<br>
+
+											{% else   %}
+
+												<span class="text-warning">
+													Pending</span>
+
+
+											{% endif   %}
+
+											{% for review in review_assignment.reviews %}
+			<hr class="hr-dashed my-4">
+
+<h5>
+													Decision:
+
+													{% if   review.remark==1 %}
+														<span class="text-danger">
+															Declined</span>
+
+													{% elseif   review.remark==2 %}
+														<span class="text-warning">
+															Accepted with major revision</span>
+													{% elseif   review.remark==3 %}
+														<span class="text-warning">
+															Accepted with minor revision
+														</span>
+													{% elseif   review.remark==4 %}
+
+														<span class="text-success">
+															Accepted
+														</span>
+
+
+													{% endif   %}
+
+												</h5>
+												{% if  review.AllowToView  %}
+
+													<small class="text-info">
+														Comment sent</small>
+
+												{% endif   %}
+
+											{% endfor %}
+													<hr class="hr-dashed my-2">
+										 
+
+
+										</span>
+
+									</p>
+									<div class="row mt-4 d-flex align-items-center">
+										<div class="col">
+
+											<div class="row mt-2 d-flex align-items-center">
+												<div
+													class="col">
+
+
+													{# {{ include('review_assignment/_delete_form.html.twig') }} #}
+													<form method="post" action="{{ path('unassign', {'id': review_assignment.id}) }}" onsubmit="return confirm('Are you sure you want to unassign{{review_assignment.reviewer }} from reviewers list?');">
+														<input type="hidden" name="_method" value="DELETE">
+														<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ review_assignment.id) }}">
+
+														 
+															 <a href="{{path('his_assignment',{'id':review_assignment.reviewer.id})}}" class="btn btn-sm btn-soft-purple">
+																	 Invitations
+																</a>  
+														<a href="{{ path('unassign', {'id': review_assignment.id}) }}" class="btn btn-sm btn-soft-warning btn-sm" onclick="return confirm('Are you sure you want to delete  {{review_assignment.reviewer }} from reviewers list?');">
+															Unassign</a>
+
+														{% if review_assignment.closed %}
+
+
+															<a href="{{ path('reassign', {'id': review_assignment.id}) }}" class='btn btn-sm btn-soft-primary btn-sm '>
+																Re-assign</a>
+														{% endif %}
+
+
+													</form>
+
+													{# <script src="{{ asset('ui/js/jquery.min.js') }}"></script> #}
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% else %}No reviewers has been assigned yet
+
+						{% endfor %}
+					</div>
+				</div>
+			{% endblock %}

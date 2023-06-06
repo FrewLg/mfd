@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ReviewChecklist index{% endblock %}
+
+{% block body %}
+    <h1>ReviewChecklist index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>AnswerType</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for review_checklist in review_checklists %}
+            <tr>
+                <td>{{ review_checklist.id }}</td>
+                <td>{{ review_checklist.name }}</td>
+                <td>{{ review_checklist.answerType }}</td>
+                <td>
+                    <a href="{{ path('i_r_b_review_checklist_show', {'id': review_checklist.id}) }}">show</a>
+                    <a href="{{ path('i_r_b_review_checklist_edit', {'id': review_checklist.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('i_r_b_review_checklist_new') }}">Create new</a>
+{% endblock %}

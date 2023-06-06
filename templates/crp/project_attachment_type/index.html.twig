@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProjectAttachmentType index{% endblock %}
+
+{% block body %}
+    <h1>ProjectAttachmentType index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project_attachment_type in project_attachment_types %}
+            <tr>
+                <td>{{ project_attachment_type.id }}</td>
+                <td>{{ project_attachment_type.name }}</td>
+                <td>{{ project_attachment_type.description }}</td>
+                <td>
+                    <a href="{{ path('app_c_r_p_project_attachment_type_show', {'id': project_attachment_type.id}) }}">show</a>
+                    <a href="{{ path('app_c_r_p_project_attachment_type_edit', {'id': project_attachment_type.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_c_r_p_project_attachment_type_new') }}">Create new</a>
+{% endblock %}

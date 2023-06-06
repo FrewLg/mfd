@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ProjectType{% endblock %}
+
+{% block body %}
+    <h1>Edit ProjectType</h1>
+
+    {{ include('irb/project_type/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('i_r_b_project_type_index') }}" class="mt-1 btn btn-primary">back to list</a>
+
+    {{ include('irb/project_type/_delete_form.html.twig') }}
+{% endblock %}

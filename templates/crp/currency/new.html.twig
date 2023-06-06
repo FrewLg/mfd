@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Currency{% endblock %}
+
+{% block body %}
+    <h1>Create new Currency</h1>
+
+    {{ include('crp/currency/_form.html.twig') }}
+
+    <a href="{{ path('app_c_r_p_currency_index') }}">back to list</a>
+{% endblock %}

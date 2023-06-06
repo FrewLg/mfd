@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ProjectAttachment{% endblock %}
+
+{% block body %}
+    <h1>Create new ProjectAttachment</h1>
+
+    {{ include('crp/project_attachment/_form.html.twig') }}
+
+    <a href="{{ path('app_c_r_p_project_attachment_index') }}">back to list</a>
+{% endblock %}

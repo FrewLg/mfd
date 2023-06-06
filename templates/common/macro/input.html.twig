@@ -1,0 +1,9 @@
+{% macro input(name,class) %}
+
+	<div class="form-group col-4">
+		<label>{{ form_label(name) }}
+ 		</label>
+		{{ form_widget(name,{"attr":{"placeholder":"Enter "~name.vars.name}}) }}
+		{{ form_errors(name) }}
+	</div>
+{% endmacro %}

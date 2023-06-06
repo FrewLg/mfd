@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ProjectProgress{% endblock %}
+
+{% block body %}
+    <h1>Edit ProjectProgress</h1>
+
+    {{ include('crp/project_progress/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_c_r_p_project_progress_index') }}">back to list</a>
+
+    {{ include('crp/project_progress/_delete_form.html.twig') }}
+{% endblock %}

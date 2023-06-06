@@ -1,0 +1,36 @@
+{% extends "print.html.twig" %}
+
+{% block body %}
+	<h5>
+		Approved
+	</h5>
+	<p>
+		To:
+		{{ certificate.irbApplication.submittedBy }}
+	</p>
+	<p>
+		Subject: Ethical Approval of Research Protocol
+	</p>
+	<p>
+		The IRB of '"Institute of Health"' has reviewed your research project titled
+		<b>
+			<u>“{{ certificate.irbApplication.title }}”</u>
+		</b>
+		Thus, this is to notify that this research protocol has presented to the IRB meets the ethical and Scientific standards outlined in national and international guidelines.
+		<br>
+		Hence, we are pleased to inform you that your research protocol is ethically cleared under the following strict conditions:
+		<ol>
+			<li>Any significant deviation from the methodological details indicated in the approved protocol must be communicated to the IRB before it has been implemented.</li>
+			<li>Approval shall be only for a period of twelve months. The principal investigator is required to submit an application for the renewal of the ethical approval.</li>
+			<li>The Committee must be notified, in writing, of any alteration to the project including unforeseen events/circumstances that might affect the acceptability of the approved protocol.</li>
+			<li>The Principal researcher is required to immediately notify the committee in the event of any adverse effects on participants or of any unforeseen events that might affect continued ethical acceptability or amendment to the original consent form.</li>
+			<li>The inability of the Principal Researcher to continue in that role, or any other change in research personnel involved in the project; should be communicated.</li>
+		</ol>
+	</p>
+	<p>
+		The IRB wishes you every success in your research.<br>
+		{{certificate.ApprovedBy }}<br>
+		IRB, Chairperson<br>
+		Name, email, contact adress
+	</p>
+{% endblock %}

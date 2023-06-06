@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ProjectAttachment{% endblock %}
+
+{% block body %}
+    <h1>Edit ProjectAttachment</h1>
+
+    {{ include('crp/project_attachment/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_c_r_p_project_attachment_index') }}">back to list</a>
+
+    {{ include('crp/project_attachment/_delete_form.html.twig') }}
+{% endblock %}

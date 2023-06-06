@@ -1,0 +1,43 @@
+{% if  is_granted("vw_usr") or   is_granted("vw_usr_grp") or  is_granted("vw_perm") %}
+
+	<li>
+		<a href="javascript: void(0);">
+			<i class="fas fa-users align-self-center menu-icon"></i>
+			<span>User management</span>
+			<span class="menu-arrow">
+				<i class="mdi mdi-chevron-right"></i>
+			</span>
+		</a>
+
+		<ul class="nav-second-level" aria-expanded="false">
+
+			{% if is_granted("vw_usr") %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('user_index') }}">
+						<i class="ti-control-record"></i>
+						Users
+					</a>
+				</li>
+			{% endif %}
+
+			{% if is_granted("vw_usr_grp") %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('user_group_index') }}">
+						<i class="ti-control-record"></i>
+						User Groups
+					</a>
+				</li>
+			{% endif %}
+
+			{% if is_granted("vw_perm") %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('permission_index') }}">
+						<i class="ti-control-record"></i>
+
+						Permission
+					</a>
+				</li>
+			{% endif %}
+		</ul>
+	</li>
+{% endif %}

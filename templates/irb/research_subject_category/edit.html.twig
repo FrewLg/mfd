@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ResearchSubjectCategory{% endblock %}
+
+{% block body %}
+    <h1>Edit ResearchSubjectCategory</h1>
+
+    {{ include('irb/research_subject_category/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('i_r_b_research_subject_category_index') }}" class="mt-1 btn btn-primary">back to list</a>
+
+    {{ include('irb/research_subject_category/_delete_form.html.twig') }}
+{% endblock %}

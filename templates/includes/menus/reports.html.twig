@@ -1,0 +1,38 @@
+{% if is_granted("rprts_nv_tr") %}
+
+	<li>
+		<a href="javascript: void(0);">
+			<i class=" fas fa-chart-pie align-self-center menu-icon"></i>
+			<span>Reports</span>
+			<span class="menu-arrow">
+				<i class="mdi mdi-chevron-right"></i>
+			</span>
+		</a>
+		<ul class="nav-second-level" aria-expanded="false">
+			{% if is_granted("vw_app_sb_rp") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('orgdashboard') }}">
+						<i class="ti-control-record"></i>Organizational  Report</a>
+				</li>
+
+			{% endif %}
+			{% if is_granted("vw_app_sb_rp") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('irb_report') }}">
+						<i class="ti-control-record"></i>IRB Report</a>
+				</li>
+
+			{% endif %}
+			{% if is_granted("vw_gn_ds") %}
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<i class="ti-control-record"></i>
+						Tranining and conference report
+					</a>
+				</li>
+			{% endif %}
+		</ul>
+	</li>
+{% endif %}

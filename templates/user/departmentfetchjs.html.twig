@@ -1,0 +1,29 @@
+	<script>
+		$(() => {
+$('.college').trigger('change')
+})
+$('.college').change(function () { // $('.choose').prop('disabled', true);
+var college = $('.college').val()
+// console.log(college)
+var select = $('.dep')
+$.ajax({
+url:"{{ path('department_fetch') }}",
+method: "POST",
+data: {
+college: college
+},
+dataType: "json",
+success: function (data) {
+$('.dep').children().remove()
+{% if user.userInfo.department=="" %}
+select.append('<option  id="dep" name="department"    value=""  >' + '-- Select department -- ' + '</option>');
+{% else %}select.append('<option  id="dep" name="department"    value="   {{ user.userInfo.department }}"  >' + '{{ user.userInfo.department }}' + '</option>');
+{% endif %}
+for (let [key, value] of Object.entries(data)) {
+select.append('<option>' + value.name + '</option>');
+$("#dep").prop("required", true)
+}
+}
+});
+})
+	</script>

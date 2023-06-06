@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block container_title %}Subscription
+{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								User 	Subscription
+							</h4>
+							Total: ({{subscriptions|length}})
+						</div>
+						<!--end col-->
+						<div
+							class="col-auto">{# <a href="{{ path(' ') }}" class='btn btn-primary btn-sm'>
+																								Create   new
+																							</a> #}
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>User</th>
+								<th>Calls</th>
+								<th>News</th>
+								<th>New submission</th>
+								<th>Announcement</th>
+								<th>Email</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							{% for subscription in subscriptions %}
+								<tr>
+									<td>{{ subscription.id }}</td>
+									<td>{{ subscription.user }}</td>
+									<td>{{ subscription.calls ? 'Yes' : 'No' }}</td>
+									<td>{{ subscription.news ? 'Yes' : 'No' }}</td>
+									<td>{{ subscription.newSubmission ? 'Yes' : 'No' }}</td>
+									<td>{{ subscription.announcement ? 'Yes' : 'No' }}</td>
+									<td>{{ subscription.email }}</td>
+
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="7">no records found</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+{% endblock %}

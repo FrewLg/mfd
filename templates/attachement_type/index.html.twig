@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Attachement Type  
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								Attachement Type  
+							</h4>
+							Total: ({{attachement_types|length}})
+						</div>
+						<!--end col-->
+						<div class="col-auto">
+							<a href="{{ path('attachement_type_new') }}" class='btn btn-primary btn-sm'>
+								Create   new
+							</a>
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Name</th>
+								<th>actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for attachement_type in attachement_types %}
+								<tr>
+									<td>{{ loop.index }}</td>
+									<td>{{ attachement_type.name }}</td>
+									<td>
+										<a href="{{ path('attachement_type_show', {'id': attachement_type.id}) }}" class="btn btn-sm btn-soft-primary">show</a>
+										<a href="{{ path('attachement_type_edit', {'id': attachement_type.id}) }}" class="btn btn-sm btn-soft-warning">edit</a>
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="3">no records found</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

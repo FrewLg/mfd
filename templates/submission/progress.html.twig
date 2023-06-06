@@ -1,0 +1,63 @@
+<div class="progress" style="height: 13px;">
+ <div class="progress-bar  progress-bar-striped  progress-bar-animated  
+
+{% if submission.complete==0%}    progress-bar-info" style="width:1%"   
+
+ role="progressbar" aria-valuenow="50"    title="Incomplete submission"
+ aria-valuemin="0" aria-valuemax="100">0%
+ 
+  {% elseif submission.published==1%}   progress-bar-info" style="width:100%"
+ role="progressbar" aria-valuenow="50"  title="Published"
+ aria-valuemin="0" aria-valuemax="100"> 100%
+{% elseif submission.researchReports|length>2 %}    progress-bar-info" style="width:90%" 
+ role="progressbar" aria-valuenow="50"  title="Research Reports sent"
+ aria-valuemin="0" aria-valuemax="100"> 90%
+ 
+{% elseif submission.researchReports|length>1 %}   progress-bar-info" style="width:80%" 
+ role="progressbar" aria-valuenow="50"  title="Research Reports sent"
+ aria-valuemin="0" aria-valuemax="100"> 80%
+ 
+ {% elseif submission.researchReports|length>0 %}    progress-bar-success" style="width:70%" 
+ role="progressbar" aria-valuenow="50"  title="Research Reports sent"
+ aria-valuemin="0" aria-valuemax="100" style='height =102'> 70%
+ 
+ 
+ 
+{% elseif submission.researchReportSubmissionSettings|length>0 %}   progress-bar-info" style="width:50%" 
+ role="progressbar" aria-valuenow="50"  title="Research Report Submission Settings made"
+ aria-valuemin="0" aria-valuemax="100">50%
+ 
+ {% elseif submission.awardgranted==1  %}  progress-bar-warning " progress-bar-info" style="width:40%" 
+ role="progressbar" aria-valuenow="50"  title="Award granted"
+ aria-valuemin="0" aria-valuemax="100"> 40%
+ 
+ {% elseif submission.reviews|length>2 %}   progress-bar-info" style="width:30%" 
+ role="progressbar" aria-valuenow="50"   title="Review Decisions made"
+ aria-valuemin="0" aria-valuemax="100" > 30%
+  
+  {% elseif submission.reviewAssignments|length>1 %}    progress-bar-info" style="width:20%" 
+ role="progressbar" aria-valuenow="50"    title="Reviewer Assigned"
+ aria-valuemin="0" aria-valuemax="100"> 20%
+
+
+
+
+{% elseif submission.complete==1  %}    progress-bar-info" style="width:10%" 
+ role="progressbar" aria-valuenow="50"    title="Complete submission"
+ aria-valuemin="0" aria-valuemax="100"> 10%
+
+  
+  {% else  %}   progress-bar-info" style="width:1%"   
+
+ role="progressbar" aria-valuenow="50"    title="Incomplete submission"
+ aria-valuemin="0" aria-valuemax="100">1%
+
+ 
+  {% endif %} 
+ 
+ 	</div>
+ </div> 
+ 
+ 
+ 
+  

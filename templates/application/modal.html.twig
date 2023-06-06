@@ -1,0 +1,136 @@
+{% macro displayAttachment(attachment) %}
+
+	<div class="col-md-12 parent">
+		<div class="row">
+			<div class="col-1 my-checkbox">
+				{{form_widget(attachment.checked)}}
+			</div>
+			<div class="col-6">
+				{{attachment.type.vars.data}}
+				{{form_widget(attachment.type,{"attr":{"hidden":true }})}}
+			</div>
+			<div class="col-3 my-hidden d-none">
+				{{form_widget(attachment.uploadFile,{"attr":{"class":"form-control" }})}}
+				
+				
+				
+				
+			</div>
+		</div>
+	</div>
+	<hr>
+
+{% endmacro %}
+<div class="modal fade bd-example-modal-xl" id="exampleModalSecondary" tabindex="-1" role="dialog" aria-labelledby="exampleModalSecondary1" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h6 class="modal-title m-0 text-white" id="exampleModalSecondary1">{% trans %}New amendment request{% endtrans %} </h6>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<!--end modal-header-->
+			{{ form_start(form) }}
+			<div class="modal-body">
+				<div class="row">
+					{{ form_widget(form) }}
+
+				</div>
+				<!--end row-->
+			</div>
+			<!--end modal-body-->
+			<div class="modal-footer">
+
+				<button class="btn btn-success " type="submit">{{ button_label|default('Send request') }}</button>
+				<button type="button" class="btn btn-danger " data-bs-dismiss="modal">Close</button>
+			</div>
+			<!--end modal-footer-->
+			{{ form_end(form) }}
+		</div>
+		<!--end modal-content-->
+	</div>
+	<!--end modal-dialog-->
+</div>
+{#  #}
+
+<div class="modal fade bd-example-modal-xl" id="revision-modal" tabindex="-1" role="dialog" aria-labelledby="modal2" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h6 class="modal-title m-0 text-white" id="modal2">{% trans %}Send Revision{% endtrans %}</h6>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<!--end modal-header-->
+			{{ form_start(form2) }}
+			<div class="modal-body">
+				<div class="row">
+                    <label class="form-label mt-3 mb-1">{% trans %} DOCUMENT ATTACHMENTS{% endtrans %}<span class='text-danger'>*</span>
+				</label>
+	
+
+				<div class="row ">
+				{% for attachment in form2.revisionAttachments %}
+                
+						{{ _self.displayAttachment(attachment) }}
+					{% endfor %}
+				</div>
+
+				</div>
+				<!--end row-->
+			</div>
+			<!--end modal-body-->
+			<div class="modal-footer">
+
+				<button class="btn btn-success " type="submit">{{ button_label|default('Send Revision') }}</button>
+				<button type="button" class="btn btn-danger " data-bs-dismiss="modal">Close</button>
+			</div>
+			<!--end modal-footer-->
+			{{ form_end(form2) }}
+		</div>
+		<!--end modal-content-->
+	</div>
+	<!--end modal-dialog-->
+</div>
+
+
+{# modal assign reviewer #}
+<div class="modal fade bd-example-modal-xl" id="assign-reviewer" tabindex="-1" role="dialog" aria-labelledby="modal2" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h6 class="modal-title m-0 text-white" id="modal2">{% trans %}Send Revision{% endtrans %}</h6>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<!--end modal-header-->
+			
+			<div class="modal-body">
+				<div class="row">
+                    <label class="form-label mt-3 mb-1">{% trans %} DOCUMENT ATTACHMENTS{% endtrans %}<span class='text-danger'>*</span>
+				</label>
+	
+
+				<div class="row ">
+			
+				</div>
+
+				</div>
+				<!--end row-->
+			</div>
+			<!--end modal-body-->
+			<div class="modal-footer">
+
+				<button class="btn btn-success " type="submit">{{ button_label|default('Send Revision') }}</button>
+				<button type="button" class="btn btn-danger " data-bs-dismiss="modal">Close</button>
+			</div>
+			<!--end modal-footer-->
+			
+		</div>
+		<!--end modal-content-->
+	</div>
+	<!--end modal-dialog-->
+</div>
+
+
+

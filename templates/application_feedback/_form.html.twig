@@ -1,0 +1,36 @@
+<div class="card col-md-11 m-3">
+	<div class="card-header">
+		<h4 class="card-title">{% trans %}Feedbacks{% endtrans %}</h4>
+
+	</div>
+	<!--end card-header-->
+	<div class="card-body">
+		<div class="profile">
+			<p>
+				{% for feedback in application.applicationFeedback %}
+
+
+					{% if feedback.feedbackFrom.userInfo.image   %}
+						<img src="{{ asset('files/profile_pictures/'~ feedback.feedbackFrom.userInfo.image ) }}" class="d-block mx-auto rounded-circle thumb-md" alt="profile">
+					{% else %}
+						<img src="{{ asset('/img/defaultuser.png') }}" class="d-block mx-auto rounded-circle thumb-md" alt="profile">
+					{% endif %}
+
+					<span class='text-'>
+						{{ feedback.feedbackFrom}}
+					</span>
+
+				</p>
+				<span class="text-muted mb-0">{{feedback.createdAt | date('Y-m-d h:i a')}}</span>
+			</p>
+			<p>
+				{{feedback.description|raw}}</p>
+		{% endfor %}
+		{{ form_start(appfeedbfrom) }}
+		{{ form_widget(appfeedbfrom) }}
+		<button class="btn btn-soft-primary">{{ button_label|default('Send feedback') }}</button>
+		{{ form_end(appfeedbfrom) }}
+
+	</div>
+	<!--end /tableresponsive-->
+</div></div>{# {{ include('application_feedback/keydown.html.twig') }} #}

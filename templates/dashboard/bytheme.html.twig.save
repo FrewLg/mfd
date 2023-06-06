@@ -1,0 +1,251 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Thematic Area
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Submissions</h4>
+					<p class="text-muted mb-0">
+
+						{# <span class='badge bg-soft-success m-0 '>Submissions under
+							{{allowedCall}}
+							call
+						</span> #}
+					</p>
+				</div>
+				<!--end card-header-->
+				<div class="card-body">
+					<div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+						<div class="row">
+							<div class="col-sm-12 col-md-6">
+								<a href="{{ path('allbythemeex', {'id': allowedCall.id}) }}" class='btn btn-soft-info  btn-xs mb-1 btn-block'>Export all  in Excel
+								</a>
+
+								<a href="{{ path('review_result', {'id': allowedCall.id}) }}" class='btn btn-soft-purple  btn-xs mb-1 btn-block'>Export result in  Excel
+								</a>
+							</div>
+							<div class="col-sm-12 col-md-6">
+								<span class='badge bg-soft-success m-0 '>
+									{{allowedCall.college.prefix}}
+
+								</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="table-responsive">
+									<table class="table table-bordered">
+
+										<tbody>
+											{% for thematic_area in thematic_areas %}
+												<tr class='text-info m-1' style='background-color:#0c213a'>
+													<td>{{ loop.index }}</td>
+													<td>
+														<h5 class='text-info m-0 '>{{ thematic_area.name }}
+
+															<span class='badge bg-soft-success m-0 '>
+																Under this call
+																<a href="#" class="avatar-box thumb-xxs align-self-center">
+																	<span class="avatar-title bg-soft-success rounded-circle font-13 font-weight-normal">
+																		{{ thematic_area.submissions|filter(call =>  call.callForProposal.id == allowedCall.id ) |length}}
+																	</span>
+																</a>
+
+															</span>
+														</h5>
+													</td>
+													<td>
+														<h5 class='text-danger m-0 '>
+															<span class='badge bg-soft-danger'>So far
+
+																<a href="#" class="avatar-box thumb-xxs align-self-center">
+																	<span class="avatar-title bg-soft-danger rounded-circle font-13 font-weight-normal">
+																		{{thematic_area.submissions|length}}
+																	</span>
+																</a>
+															</span>
+
+														</h5>
+													</td>
+												</tr>
+												<tr>
+													<td colspan='4'>
+						{% if   thematic_area.submissions|filter(call =>  call.callForProposal.id == allowedCall.id ) |length > 0 %}
+
+
+															<table id="datatable" class="table   table-bordered table-striped table-responsive">
+																<thead class='thead-light'>
+																	<tr class='head'>
+																		<th>#</th>
+																		<th>Title</th>
+																		<th>Researcher(PI)</th>
+																		<th>Submission Date</th>
+																		<th>Progress</th>
+																		<th>Status</th>
+
+																	</tr>
+																</thead>
+																<tbody>
+					{% for submission in thematic_area.submissions|filter(call =>  call.callForProposal.id == allowedCall.id )  %}
+
+																		<tr {% if submission.complete=='completed' %} class='text-' {% elseif submission.complete==''%} class='text-danger' {% endif %}>
+																			<td>
+																				<a href="{{ path('submission_show', {'id': submission.id}) }}" class="text-secondary">
+																					{{ loop.index }}
+																				</a>
+
+																			</td>
+																			<td>
+
+
+																				{% if app.user.id==submission.author.id  %}
+																					<a href="{{ path('submission_status', {'id': submission.id}) }}" class='text-primary '>
+																						{{ submission.title }}
+																					</a>
+
+
+																				{% else %}
+																					<a href="{{ path('submission_show', {'id': submission.id}) }}" class="text-primary">
+																						{{ submission.title }}
+																					</a>
+																				{% endif %}
+																			</td>
+
+																			<td>{{ submission.author.userInfo }}
+
+																				{% if app.user.id==submission.author.id  %}
+																					<span class="badge bg-soft-success">Thi is you</span>
+
+																				{% endif %}
+
+																				<a href="#" class="avatar-box thumb-xxs align-self-center">
+																					<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+																						+{{ submission.coAuthors|length   }}
+																					</span>
+																				</a>
+
+																				{% set count = 0 %}
+																				{% for  confirmation in submission.coAuthors('confirmed') %}
+																					{% set count = count + 1 %}
+
+																					{% if  confirmation.confirmed()|length==0  %}
+
+																						<a href="#" class="avatar-box thumb-xxs align-self-center">
+
+																							<span class='avatar-title bg-soft-danger rounded-circle font-13 font-weight-normal'>
+																								{{count}}
+																								{% if count==0 %}
+
+																									{% elseif count<=1 %}
+																										<sup>st</sup>
+																									{% elseif count<=2%}
+																										<sup>nd</sup>
+																									{% elseif count<=3%}
+																										<sup>rd</sup>
+																									{% elseif count>=4%}
+																										<sup>th</sup>
+																								{% endif %}
+																							</span>
+																						</a>
+
+																					{% endif %}
+
+
+																				{% endfor %}
+
+
+																			</td>
+
+
+																			<td>
+																				{% if submission.sentAt %}
+																					{{ submission.sentAt|date('d-m-y h:s a') }}
+																				{% endif %}
+																			</td>
+																			<td>
+																				{{ include('submission/includes/progress.html.twig') }}
+
+																			</td>
+																			<td nowrap="nowrap">
+
+																				{% if submission.awardgranted ==1  %}
+
+																					<a class='badge bg-soft-success mt-2 bg-xs btn-block'>Winner
+																						{# <i class="fa fa-check text-success"></i> #}
+																					</a>
+																				{% elseif   submission.reviewAssignments|length>0  %}
+
+																					<a href="#" class="avatar-box thumb-xxs align-self-center">
+																						<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+																							{{submission.reviewAssignments|length}}R
+																						</span>
+
+																					</a>
+																				{% else   %}
+																					<a class='badge bg-soft-danger mt-2 bg-xs btn-block'>Not Assigned
+																					</a>
+
+																				{% endif %}
+
+
+																				{% set count = 0 %}
+																				{% for  confirmation in submission.reviewAssignments('closed') %}
+																					{% set count = count + 1 %}
+
+																					{% if  confirmation.closed()|length==0  %}
+
+																						<a href="#" class="avatar-box thumb-xxs align-self-center">
+
+																							<span class='avatar-title bg-soft-danger rounded-circle font-13 font-weight-normal'>
+																								{{count}}
+																								{% if count==0 %}
+
+																									{% elseif count<=1 %}
+																										<sup>st</sup>
+																									{% elseif count<=2%}
+																										<sup>nd</sup>
+																									{% elseif count<=3%}
+																										<sup>rd</sup>
+																									{% elseif count>=4%}
+																										<sup>th</sup>
+																								{% endif %}
+																							</span>
+																						</a>
+
+																					{% endif %}
+																				{% endfor %}
+																			</td>
+
+																		</tr>
+																	{% else %}
+
+																		<td colspan="8">no records found</td>
+																	{% endfor %}
+																</tbody>
+															</table>
+
+														{% else %}
+															<span class="badge bg-soft-danger">No submission has been made under "{{thematic_area.name}}"  thematic area with this call!</span>
+														{% endif %}
+													</td>
+												</tr>
+												{% else %}no records found
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

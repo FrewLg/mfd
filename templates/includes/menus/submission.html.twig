@@ -1,0 +1,57 @@
+
+	<li>
+
+		<a href="javascript: void(0);">
+			<i class=" fas fa-paper-plane align-self-center menu-icon"></i>
+			<span>Proposal Submissions</span>
+			<span class="menu-arrow">
+				<i class="mdi mdi-chevron-right"></i>
+			</span>
+		</a>
+		<ul class="nav-second-level" aria-expanded="false">
+			{% if is_granted("vprcs") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('vprs_calls') }}">
+						<i class="ti-control-record"></i>All Submissions</a>
+				</li>
+			{% elseif is_granted("coordinators") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('coll_coordinators') }}">
+						<i class="ti-control-record"></i>All Submissions</a>
+				</li>
+			{% elseif is_granted("vw_all_sub") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('all_calls') }}">
+						<i class="ti-control-record"></i>All Submissions</a>
+				</li>
+
+			{% endif %}
+
+			
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('myreviews') }}">
+						<i class="ti-control-record"></i>
+						My submission</a>
+				</li>
+			
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('membership') }}">
+						<i class="ti-control-record"></i>
+						My co-authorship</a>
+				</li>
+	
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('myassigned') }}">
+						<i class="ti-control-record"></i>
+						My assigned<span class="badge bg-soft-primary">{{ app.user.reviewAssignments|length}}</span></a>
+				</li>
+		
+
+
+		</ul>
+	</li>
+</li>

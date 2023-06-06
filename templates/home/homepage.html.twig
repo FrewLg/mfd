@@ -1,0 +1,178 @@
+{% extends 'homelayout.html.twig' %}
+{% block breadcrumb %}{% endblock %}
+{# {% block pagehead %}Home
+{% endblock %} #}
+{% block title %}Home
+{% endblock %}
+
+
+{% block body %}
+
+	{#% include 'page_includes/header_report.html.twig'%#}
+
+	<meta property="og:url" content="https://research.ju.edu.et/call-for-proposals/45c6511210cb942387708990398a8bf9/details"/>
+	<meta property="og:type" content="JU"/>
+	<meta property="og:title" content="RMS Announcements"/>
+	<meta property="og:description" content=" Research and IRB Portal"/>
+	<meta property="og:image" content="https://research.ju.edu.et/call-for-proposals/45c6511210cb942387708990398a8bf9/details"/>
+
+
+	<h2 class="entry-title">
+		Recent call for proposals</h2>
+
+ 
+
+	{% for call_for_proposal in call_for_proposals %}
+
+ <fieldset class='card m-2 p-3'>
+   
+
+		<div class="col-lg-12 features-text wow fadeInLeft animated" style="visibility: visible; animation-name: fadeInLeft;">
+
+			{# <article class="entry"> #}
+
+			{# <div class="entry-img">
+			                <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+			              </div> #}
+
+				<h2 class="entry-title"> <a href="{{ path('call_for_proposal_show', {'uidentifier': call_for_proposal.uidentifier }) }}">
+					{{ call_for_proposal.heading|striptags|slice(0, 170)|raw }}
+				</a>
+			</h2>
+
+			<div class="entry-meta">
+				<ul>
+					<li class="d-flex align-items-center">
+						<i class="fa fa-house"></i>
+						<a href="#">
+						{% if call_for_proposal.college %}
+						{{ call_for_proposal.college.prefix }}
+							
+						{% else %}
+						<i class="bi bi-house text-info"></i>
+							
+							<span class="badge bg bg-info"> Center </span>
+						{% endif %}
+						</a>
+					</li>
+					<li class="d-flex align-items-center">
+						<i class="bi bi-clock"></i>
+						<a href="#">
+							<time datetime="2020-01-01">
+								{{ call_for_proposal.postDate ? call_for_proposal.postDate|date('M d Y  h:s') : '' }}</time>
+						</a>
+					</li>
+					<li class="d-flex align-items-center">
+						<a href="#"></a>
+					</li>
+					{%if call_for_proposal.ResearchType.name is defined %}
+						<li class="d-flex align-items-center">
+							<i class="bi bi-chat-dots"></i>
+							<a href="#">{{ call_for_proposal.ResearchType.name }}</a>
+						</li>
+						{% endif%}
+
+						
+						
+					</ul>
+				</div>
+
+				<div class="entry-content">
+					<p>
+						{{ call_for_proposal.subject|striptags|slice(0, 170)|raw }}
+					</p>
+				</div>
+				
+{% if  call_for_proposal.fundingScheme %}
+					Funding Schemes:
+					<ul class>
+						
+							{% for fundingscheme in call_for_proposal.fundingScheme %}
+								
+						<li>
+								{{fundingscheme.name}}
+					</li>
+ {% endfor %}
+					</ul>
+
+						{% else %}
+							
+						{% endif %}
+
+			</div>
+    
+ </fieldset>
+		{% else %}
+
+			<td colspan="7">No calls made yet</td>
+
+		{% endfor %}
+
+		<br><h4 class="esntry-title">
+			<a href="{{path('call_for_proposal_all')}}">
+				See all call for proposals
+				<i class='fa fa-arrow-right'></i>
+			</a>
+			<br>
+
+			{% block pagination%}
+				<div class="pagination-block">
+					<div class="navigation">
+						{{ knp_pagination_render(call_for_proposals) }}
+					</div>
+
+				{% endblock %}
+
+
+				{% if  announcements|length > 0 %}
+					<h4>
+						Recent announcements</h4>
+
+					{% for call_for_proposal in announcements %}
+
+						<article class="col-lg-9 post ttm-blog-classic clearfix">
+
+
+							<div class="ttm-blog-classic-content">
+								<div class="ttm-post-entry-header">
+									<div class="post-meta">
+										<small class="ttm-meta-line ">
+
+											{{ call_for_proposal.posetedAt ? call_for_proposal.posetedAt|date('Y-m-d H:s') : '' }}
+
+										</small>
+									</div>
+									<a href="{{ path('announcement_show', {'id': call_for_proposal.id }) }}">
+										{{ call_for_proposal.subject |raw}}
+
+									</a>
+
+									<p
+										style="font-family:arial; text-align:justify;">{# {{ call_for_proposal.body|striptags|slice(0, 170)|raw }} #}
+									</p>
+
+								</div>
+
+							</div>
+						</article>
+					{% endfor %}
+
+
+				{% endif %}
+
+
+				{# <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.0/chart.min.js"></script> #}
+
+			{% endblock %}
+
+
+			{% block aside %}
+			{% if is_granted('ROLE_USER') %}
+
+
+			{% else  %}
+
+
+				</div>
+			{% endif  %}
+		{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CollegeThematicArea{% endblock %}
+
+{% block body %}
+    <h1>CollegeThematicArea</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ college_thematic_area.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ college_thematic_area.name }}</td>
+            </tr>
+            <tr>
+                <th>Descryption</th>
+                <td>{{ college_thematic_area.descryption }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_college_thematic_area_index') }}">back to list</a>
+
+    <a href="{{ path('app_college_thematic_area_edit', {'id': college_thematic_area.id}) }}">edit</a>
+
+    {{ include('college_thematic_area/_delete_form.html.twig') }}
+{% endblock %}

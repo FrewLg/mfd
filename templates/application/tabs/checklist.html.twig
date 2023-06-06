@@ -1,0 +1,198 @@
+<div class="tab-pane p-3  active" id="review-checklist" role="tabpanel">
+	<div class="card">
+		<div class="card-header">
+
+			<h5>IRB application review checklist
+			</h5>
+		</div>
+		<div class="card-body">
+			<p>
+				<b>INFORMATION FOR THE REVIEWER:</b>
+				This is a word document, so you may download it to your computer to complete. Each of the components below must be adequately addressed within the application in order to be approved by the IRB. Please indicate whether the PI has given adequate consideration and safeguards to the following areas of concern.
+				<span class="bg-warning">
+					Note any concerns, recommendations or questions in the reviewer’s comment section for each component.
+				</span>
+			</p>
+			<p>
+				For expedited reviews save completed reviews as a WORD document and return to the committee chair. For a full committee review, email a copy to the chair and bring a copy to the committee meeting. The chair will summarize and compile the reviews. Copies of the reviewer checklist will be made available to applications, institutional officials, or federal officials upon request.
+			</p>
+			<p>
+
+				Concerns and questions noted by reviewer(s) must be satisfactorily addressed by the applicant prior to final project approval.
+			</p>
+
+
+			<div>
+				<form method="POST" onSubmit="return confirm('Save changes')">
+                <input hidden name="review-checklist" value="true"/>
+					<table class="table table-bordered table-hover">
+
+						<tbody>
+
+							{% for checklist_group in irb_review_checklist_group %}
+								<tr>
+									<th>{{toRoman(loop.index)}}.
+										{{checklist_group}}</th>
+
+									<th>YES</th>
+									<th>NO</th>
+									<th>NA</th>
+								</tr>
+								{% for checklist in checklist_group.reviewChecklists|filter(checklist =>  (checklist.answerType==1 and not checklist.parent)) %}
+
+									{% if checklist.reviewChecklists|length >0 %}
+										<tr>
+											<th>
+												<b style="margin-left:10px">{{toAlpha(loop.index)}}.
+													{{checklist}}</b>
+											</th>
+											<th>YES</th>
+											<th>NO</th>
+											<th>NA</th>
+										</tr>
+										{% for child in checklist.reviewChecklists %}
+											<tr>
+												<th>
+													<p style="margin-left:20px">{{loop.index}}.
+														{{child}}</p>
+												</th>
+												<td><input type="radio" required name="checklist[{{child.id}}]" value="yes"></td>
+												<td><input type="radio" required name="checklist[{{child.id}}]" value="yes"></td>
+												<td><input type="radio" required name="checklist[{{child.id}}]" value="yes"></td>
+											</tr>
+										{% endfor %}
+									{% else %}
+
+
+										<tr>
+											<td>
+												<p style="margin-left:10px">{{toAlpha(loop.index)}}.
+													{{checklist}}</p>
+											</td>
+											<td><input type="radio" required name="checklist[{{checklist.id}}]" value="yes"></td>
+											<td><input type="radio" required name="checklist[{{checklist.id}}]" value="yes"></td>
+											<td><input type="radio" required name="checklist[{{checklist.id}}]" value="yes"></td>
+										</tr>
+									{% endif %}
+
+								{% endfor %}
+								{% for checklist in checklist_group.reviewChecklists|filter(checklist =>  checklist.answerType==2) %}
+
+									<tr>
+										<td colspan="4">{{checklist}}
+											<textarea name="checklist[{{checklist.id}}]" class=" form-control"></textarea>
+										</td>
+
+
+									</tr>
+								{% endfor %}
+
+							{% endfor %}
+						</tbody>
+					</table>
+
+					<div class="mb-3 row">
+						<label class="col-md-3 my-2 form-label">WAIVERS:</label>
+						<p>Does the application contain a request for the committee to waive any aspects of consent or other standard IRB guidelines?
+
+							<div class="col-md-9">
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="waivers" id="waivers1" value="No" checked="">
+									<label class="form-check-label" for="waivers1">
+										NO
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="waivers" id="waivers2" value="Yes">
+									<label class="form-check-label" for="waivers2">
+										YES
+									</label>
+								</div>
+							</div>
+						</p>
+					</div>
+					<div class="mb-3 row">
+						<label class="col-md-3 my-2 form-label">RISK LEVEL:</label>
+						
+							<div class="col-md-9">
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="risk_level" id="risk_level1" value="Minimal risk" checked="">
+									<label class="form-check-label" for="risk_level1">
+										Minimal risk
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="risk_level" id="risk_level2" value="Greater than minimal risk">
+									<label class="form-check-label" for="risk_level2">
+										Greater than minimal risk
+									</label>
+								</div>
+							</div>
+						</p>
+					</div>
+                    	<div class="mb-3 row">
+						<label class="col-md-3 my-2 form-label">RECOMMENDATION: </label>
+						
+							<div class="col-md-9">
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="recommendation" id="recommendation1" value="Table proposal (provide rationale)" checked="">
+									<label class="form-check-label" for="recommendation1">
+										Table proposal (provide rationale):
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="recommendation" id="recommendation1" value="Approved" checked="">
+									<label class="form-check-label" for="recommendation1">
+										Approve
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="recommendation" id="recommendation2" value="Disapproved">
+									<label class="form-check-label" for="recommendation2">
+										Disapprove
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="recommendation" id="recommendation2" value="Approve with the following stipulations/changes">
+									<label class="form-check-label" for="recommendation2">
+										Approve with the following stipulations/changes:
+									</label>
+								</div>
+							</div>
+						</p>
+					</div>
+
+                    	<div class="mb-3 row">
+						<label class="col-md-3 my-2 form-label">HOW OFTEN THIS STUDY SHOUD BE REVIEWED: </label>
+						
+							<div class="col-md-9">
+								
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="recommendation" id="recommendation1" value="option1" checked="">
+									<label class="form-check-label" for="recommendation1">
+										6 months
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="recommendation" id="recommendation2" value="option2">
+									<label class="form-check-label" for="recommendation2">
+										12 months
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="recommendation" id="recommendation2" value="option2">
+									<label class="form-check-label" for="recommendation2">
+                                    Other									</label>
+								</div>
+							</div>
+						</p>
+					</div>
+					<button class="btn btn-primary float-end btn-block btn-lg">{{ button_label|default('Submit Review') }}</button>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

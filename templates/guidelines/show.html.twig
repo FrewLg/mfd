@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guidelines
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="card">
+		<div class="card-header">
+			Guideline for</div>
+		<div class="card-body">{{ guideline.guideline|raw }}
+			<tr>
+				<th>Created_at</th>
+				<td>{{ guideline.createdAt ? guideline.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Updated_at</th>
+				<td>{{ guideline.updatedAt ? guideline.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+
+				<a href="{{ path('guidelines_index') }}">back to list</a>
+
+				<a href="{{ path('guidelines_edit', {'id': guideline.id}) }}">edit</a>
+			</tr>
+		</div>
+	</div>
+
+{% endblock %}

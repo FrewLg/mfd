@@ -1,0 +1,61 @@
+{% if call is defined %}
+	<a href="{{ path('theme_by_college', {'id': call.id }) }}"  class='btn btn-purple btn-sm btn-block'> All by college</a>
+	<hr>
+	<a href="{{ path('theme_by_coll', {'id': call.id }) }}"  class='btn btn-primary btn-sm btn-block'> All by theme</a>
+	<hr>
+		{% if  is_granted('mng_brd_mbr') %}
+
+
+	<form action="" class="float form-horizontal flex-column form-inline " method="POST">
+		<input hidden name="change-fundingScheme" value="true"/>
+		{# <input hidden name="call" value="{{call.fundingScheme}}"/> #}
+		<select name="fundingScheme" class="form-control" onchange="if(confirm('Funding scheme')){this.form.submit()}">
+			<optgroup label="--Funding Scheme--">
+     <option value="" disabled selected>Select your option</option>
+			{% for schemes in call.fundingScheme %}
+				<option value="{{schemes.id}}"  name='{{ schemes.name}}'>{{ schemes.name}}</option> 
+				
+			{% endfor %}
+				 
+			</optgroup>
+
+		</select>
+	</form>
+														{% endif %}
+
+	<hr>
+	<a href="{{ path('callresearch_theams' , {'id': call.id }) }} " class='btn btn-warning  btn-sm btn-block'>
+		Researchers
+	</a>
+	<hr>
+
+	<a href="{{ path('allreviewers', {'id': call.id }) }}" class='btn btn-info  btn-sm btn-block'>
+		Internal Reviewers
+
+	</a>
+	<hr>
+
+	<a href="{{ path('alexternalreviewers', {'id': call.id }) }}" class='btn btn-info  btn-sm btn-block'>
+		External  Reviewers
+
+	</a>
+	<hr>
+
+	<a href="{{ path('allawarded', {'id': call.id }) }}" class='btn btn-success  btn-sm btn-block'>
+		All winners
+
+	</a>
+
+	<hr>
+	<a href="{{ path('alert', {'id': call.id }) }}" class='btn btn-warning btn-sm btn-block' onclick="return confirm('Are you sure you want to submit message ?');">
+		Co-PI Reminder</a>
+	<hr>
+
+	<a href="{{ path('allaccepted', {'id': call.id }) }}" class='btn btn-success btn-xs  btn-block'>Review decisions filter
+	</a>
+	<hr>
+
+	{# <a href="{{ path('submission_filter', {'filter': 'rv'}) }}" class='btn btn-warning btn-xs  btn-block'>Review assigned</a> #}
+{% else %}
+
+{% endif %}

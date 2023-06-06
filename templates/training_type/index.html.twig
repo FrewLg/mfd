@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Training Type
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								Training Type
+							</h4>
+							Total: ({{training_types|length}})
+						</div>
+						<!--end col-->
+						<div class="col-auto">
+							<a href="{{ path('training_type_new') }}" class='btn btn-primary btn-sm'>
+								Create   new
+							</a>
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Name</th>
+								<th>Description</th>
+								<th>actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for training_type in training_types %}
+								<tr>
+									<td>{{ training_type.id }}</td>
+									<td>{{ training_type.name }}</td>
+									<td>{{ training_type.description }}</td>
+									<td>
+										<a href="{{ path('training_type_show', {'id': training_type.id}) }}" class="btn btn-xs btn-soft-primary">show</a>
+										<a href="{{ path('training_type_edit', {'id': training_type.id}) }}" class="btn btn-xs btn-soft-warning">edit</a>
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="4">no records found</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	{% endblock %}

@@ -1,0 +1,7 @@
+{% if collaborative_research_project.projectProgress.progress is defined %}
+ <small class="float-end ms-2 pt-1 font-10">{{collaborative_research_project.projectProgress.progress}}%</small>
+<div class="progress mt-2" style="height:3px;">
+	<div class="progress-bar bg-{{collaborative_research_project.projectProgress.progressColor}}" role="progressbar"
+	 style="width: {{collaborative_research_project.projectProgress.progress}}%;" aria-valuenow="92" aria-valuemin="0" title="{{collaborative_research_project.projectProgress.name}}" aria-valuemax="100"></div>
+</div> 
+{% endif %}

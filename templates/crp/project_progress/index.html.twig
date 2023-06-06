@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProjectProgress index{% endblock %}
+
+{% block body %}
+    <h1>ProjectProgress index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Progress</th>
+                <th>ProgressColor</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project_progress in project_progresses %}
+            <tr>
+                <td>{{ project_progress.id }}</td>
+                <td>{{ project_progress.name }}</td>
+                <td>{{ project_progress.progress }}</td>
+                <td>{{ project_progress.progressColor }}</td>
+                <td>
+                    <a href="{{ path('app_c_r_p_project_progress_show', {'id': project_progress.id}) }}">show</a>
+                    <a href="{{ path('app_c_r_p_project_progress_edit', {'id': project_progress.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_c_r_p_project_progress_new') }}">Create new</a>
+{% endblock %}

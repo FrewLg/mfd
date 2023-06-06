@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+<div class="row">
+	<div class="form-group col-4">
+        	<label >{{ form_label(form.user) }}</label>
+		{{ form_widget(form.user) }}
+	</div>
+
+	<div class="form-group col-4">
+			<label>{{ form_label(form.role) }}</label>
+            {{ form_widget(form.role) }}
+	</div>
+<button class="btn btn-primary btn-xs m-0  col-4">{{ button_label|default('Save') }}</button>
+
+</div>
+
+{{ form_end(form) }}
+					

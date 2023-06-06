@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CollaborativeResearchProject index{% endblock %}
+
+{% block body %}
+    <h1> </h1>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								Collaborative Research Projects
+							</h4>
+							Total: ({{collaborative_research_projects|length}})
+						</div>
+						<!--end col-->
+						<div class="col-auto">
+							<a href="{{ path('app_c_r_p_collaborative_research_project_new') }}" class='btn btn-primary btn-sm'>
+								Create   new
+							</a>
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				<div class="card-body">
+					
+					<table class="table table-hover mb-0 table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                {# <th>Short Description</th>  #}
+                <th nowrap='nowrap'>Principal Investigator</th> 
+
+                <th>Funding Organization</th> 
+                <th>Amount Of Grant</th> 
+                <th>Project Type</th> 
+                <th>Project Status</th> 
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for collaborative_research_project in collaborative_research_projects %}
+            <tr>
+
+                <td>{{ loop.index }}</td>
+                <td>
+            <a class='text-soft-primary' href="{{ path('app_c_r_p_collaborative_research_project_show', {'id': collaborative_research_project.id}) }}">
+                
+                {{ collaborative_research_project.title }}</a></td>
+                {# <td>{{ collaborative_research_project.shortDescription }}</td>  #}
+                <td>
+                {% if collaborative_research_project.PrincipalInvestigator.userInfo.image %}
+
+										<a class="user-avatar user-avatar-group" href="##{{collaborative_research_project.id}}">
+											<img src="{{ asset('files/profile_pictures/'~collaborative_research_project.PrincipalInvestigator.userInfo.image ) }}" title="{{collaborative_research_project.PrincipalInvestigator}}" alt="user" class="thumb-sm rounded me-2">
+										</a>
+
+
+									{% else %}
+										<a class="user-avatar user-avatar-group" href="##{{collaborative_research_project.id}}">
+											<img src="{{ asset('/img/defaultuser.png') }}" alt="user" title="{{collaborative_research_project.PrincipalInvestigator.userInfo}}"  class="thumb-sm rounded me-2">
+										</a>
+									{% endif %}
+
+                 {{ collaborative_research_project.PrincipalInvestigator }}</td> 
+                <td> {% if   collaborative_research_project.fundingOrganization %}
+                    {% for fo in collaborative_research_project.fundingOrganization %}
+                        
+                        <span title='{{fo.name}}' class="badge bg-soft-{{fo.acronymColor}} bg-xs">
+						<small>{{fo.acronym}}</small>
+												</span>
+                    {% endfor %}
+                {% endif %}   
+                 
+                                                </td> 
+                <td>{{ collaborative_research_project.AmountOfGrant }} 
+                 {{ collaborative_research_project.Currency }}</td>
+                <td>{{ collaborative_research_project.ProjectType }}</td>
+                <td> 
+                <span title='{{collaborative_research_project.ProjectStatus}}' class="badge bg-soft-{{collaborative_research_project.ProjectStatus.statusColor}} bg-xs">
+												<small>{{collaborative_research_project.ProjectStatus.status}}</small>
+												</span>
+                </td>
+                 <td nowrap='nowrap'>
+                    {# <a href="{{ path('app_c_r_p_collaborative_research_project_show', {'id': collaborative_research_project.id}) }}" class="btn btn-xs btn-soft-info">show</a>
+                    <a href="{{ path('app_c_r_p_collaborative_research_project_edit', {'id': collaborative_research_project.id}) }}" class="btn btn-xs btn-soft-warning">edit</a> #}
+    		{{ include('crp/collaborative_research_project/includes/progress.html.twig') }}
+                </td>
+            </tr>
+            
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    	{# {{ knp_pagination_render(email_messages) }} #}
+				</div>
+			</div>
+		</div>
+	</div>
+ 
+{% endblock %}

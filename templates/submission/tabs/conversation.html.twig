@@ -1,0 +1,186 @@
+<div class="tab-pane  " id="conversation">
+
+	<div class="row">
+		<div class="col-8">
+			<a href="{{ path('opendiscussion', {'id': submission.id}) }}" class="btn btn-primary mb-2">
+				Open discussion
+				<i class="fab fa-quinscape"></i>
+			</a>
+
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="chat-box-left">
+
+					<div class="chat-list" data-simplebar="">
+						<div class="tab-content " id="pills-tabContent">
+							<div
+								class="tab-pane fade show active" id="general_chat">
+
+								<!--end media-->
+								{% for discussion in submission.discussions %}
+									<!--end media-->
+									<a href="#" class="media  {% if discussion.status==0  %} new-message{% endif %}
+											">
+										<div class="media-left">
+											<img src="{{ asset('assets/images/users/user-8.jpg')}}" alt="user" class="rounded-circle thumb-md">
+											<span class="round-10 bg-secondary"></span>
+										</div>
+										<!-- media-left -->
+										<div class="media-body">
+											<div>
+												<h6>Opened diacussion</h6>
+												{# <p>How are you Friend...</p> #}
+											</div>
+											<div>
+												<span>{{ discussion.createdAt|date('d M y')}}</span>
+											</div>
+										</div>
+										<!-- end media-body -->
+									</a>
+								{% else %}
+									No conversation has been started on this submission yet!
+								{% endfor %}
+
+							</div>
+						</div>
+						<!--end tab-content-->
+					</div>
+				</div>
+				<div class="chat-box-right">
+					<div class="chat-header">
+						<a href="#" class="media">
+							<div class="media-left">
+								<img src="assets/images/users/user-4.jpg" alt="user" class="rounded-circle thumb-md">
+							</div>
+							<!-- media-left -->
+							<div class="media-body">
+								<div>
+									<h6 class="m-0">Participant1</h6>
+									{# <p class="mb-0">Last seen: 2 hours ago</p> #}
+								</div>
+							</div>
+							<!-- end media-body -->
+						</a>
+						<!--end media-->
+						<div class="chat-features">
+							<div class="d-none d-sm-inline-block">
+								<a href="#">
+									<i class="fas fa-phone"></i>
+								</a>
+								<a href="#">
+									<i class="fas fa-video"></i>
+								</a>
+								<a href="#">
+									<i class="fas fa-trash-alt"></i>
+								</a>
+								<a href="#">
+									<i class="fas fa-ellipsis-v"></i>
+								</a>
+							</div>
+						</div>
+						<!-- end chat-features -->
+					</div>
+					<!-- end chat-header -->
+					<div class="chat-body" data-simplebar="init">
+						<div class="simplebar-wrapper" style="margin: -16px;">
+							<div class="simplebar-height-auto-observer-wrapper">
+								<div class="simplebar-height-auto-observer"></div>
+							</div>
+							<div class="simplebar-mask">
+								<div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+									<div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
+										<div class="simplebar-content" style="padding: 16px;">
+											<div
+												class="chat-detail">
+
+												<!--end media-->
+												{% for discussions in submission.discussions  %}
+													{% for chat in discussions.chats  %}
+
+														<div class="media">
+															<div class="media-body
+																	                                                                                    	{% if  chat.sentFrom==app.user   %}  reverse {% endif%}">
+																<div class="chat-msg">
+																	<p>Good Morning !</p>
+																</div>
+																<div class="chat-msg">
+																	<p>There are many variations of passages of Lorem Ipsum available.</p>
+																</div>
+															</div>
+															<!--end media-body-->
+															<div class="media-img">
+																<img src="{{ asset('assets/images/users/user-8.jpg')}}" alt="user" class="rounded-circle thumb-md">
+															</div>
+														</div>
+														<!--end media-->
+													{% endfor %}
+												{% endfor %}
+
+
+												<!--end media-->
+											</div>
+											<!-- end chat-detail -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="simplebar-placeholder" style="width: auto; height: 803px;"></div>
+						</div>
+						<div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+							<div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+						</div>
+						<div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+							<div class="simplebar-scrollbar" style="height: 418px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+						</div>
+					</div>
+					<!-- end chat-body -->
+					<div class="chat-footer">
+						<div class="row">
+							{{ form_start(chatform) }}
+
+							<div class="col-12 col-md-9">
+								<span class="chat-admin">
+									{% if app.user.userInfo and app.user.userInfo.image %}
+										<img src="{{ asset('files/profile_pictures/'~app.user.userInfo.image ) }}" alt="" class="rounded-circle thumb-sm">
+									{% else %}
+										<img src="{{ asset('/img/defaultuser.png') }}" class="rounded-circle thumb-sm ">
+									{% endif %}
+									{# <input type="text" class="form-control" placeholder="Type something here..."> #}
+									{{ form_widget(chatform.message)}}
+								</div>
+								<!-- col-8 -->
+								<div class="col-3 text-right">
+									<div
+										class="d-none d-sm-inline-block chat-features">
+										{# <a href="#">
+																											<i class="fas fa-camera"></i>
+																										</a> #}
+										<a href="#">
+											<i class="fas fa-paperclip"></i>
+										</a>
+
+
+										<button class="btn">{{ button_label|default('Save') }}
+											<i class="fas fa-telegram"></i>
+										</button>
+
+
+									</div>
+
+								</div>
+								{{ form_end(chatform) }}
+
+								<!-- end col -->
+							</div>
+							<!-- end row -->
+						</div>
+						<!-- end chat-footer -->
+					</div>
+					<!--end chat-box-right -->
+				</div>
+				<!-- end col -->
+			</div>
+
+		</div>
+	</div>

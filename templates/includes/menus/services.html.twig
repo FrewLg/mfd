@@ -1,0 +1,35 @@
+{% if is_granted("vw_srv_tr") %}
+
+	<li>
+		<a
+			href="javascript: void(0);">
+			<!-- <i data-feather="home" class="align-self-center menu-icon"></i> -->
+			<i class="fas fa-cart-plus align-self-center menu-icon"></i>
+			<span>Announcement and feedbacks</span>
+			<span class="menu-arrow">
+				<i class="mdi mdi-chevron-right"></i>
+			</span>
+		</a>
+		<ul class="nav-second-level" aria-expanded="false">
+
+			{% if is_granted("vw_annc") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('announcement_new') }}">
+						<i class="ti-control-record"></i>
+						Announcement</a>
+				</li>
+			{% endif %}
+
+			{% if is_granted("vw_usr_fdbc") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('user_feedback_index') }}">
+						<i class="ti-control-record"></i>User feedback
+					</a>
+				</li>
+			{% endif %}
+
+		</ul>
+	</li>
+{% endif %}

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Amendment
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								All Amendment  
+							</h4>
+							Total: ({{amendments|length}})
+
+						</div>
+						<!--end col-->
+						<div class="col-auto">
+
+
+							<a href="{{ path('i_r_b_amendment_new') }}" class='btn btn-primary btn-sm'>
+								Create   new
+							</a>
+
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				<!--end card-header-->
+				<div class="card-body">
+
+
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Purpose</th>
+								<th>Changes</th>
+								<th>Recruitment</th>
+								<th>Procedures</th>
+								<th>actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for amendment in amendments %}
+								<tr>
+									<td>{{ amendment.id }}</td>
+									<td>{{ amendment.purpose }}</td>
+									<td>{{ amendment.changes }}</td>
+									<td>{{ amendment.recruitment }}</td>
+									<td>{{ amendment.procedures }}</td>
+									<td>
+										<a href="{{ path('i_r_b_amendment_show', {'id': amendment.id}) }}" class="btn btn-primary">show</a>
+										<a href="{{ path('i_r_b_amendment_edit', {'id': amendment.id}) }}" class="btn btn-warning">edit</a>
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="6">no records found</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

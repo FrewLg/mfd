@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ReviewChecklistGroup{% endblock %}
+
+{% block body %}
+    <h1>Create new ReviewChecklistGroup</h1>
+
+    {{ include('irb/review_checklist_group/_form.html.twig') }}
+
+    <a href="{{ path('i_r_b_review_checklist_group_index') }}">back to list</a>
+{% endblock %}

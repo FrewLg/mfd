@@ -1,0 +1,227 @@
+<div class="card">
+	<div class="card-header">
+		New call for proposal
+	</div>
+	<div class="card-body m-2 p-2">
+
+		{{ form_start(form) }}
+
+
+		<div class="row">
+			<div class="col-lg-6">
+
+				{{ form_label(form.research_type) }}<b class='text-danger'>*</b>
+				{{ form_widget(form.research_type)}}
+
+			</div>
+			<div class="col-lg-6">
+
+				{{ form_label(form.deadline) }}<b class='text-danger'>*</b>
+				{{ form_widget(form.deadline)}}
+
+			</div>
+
+
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+
+				{{ form_label(form.funding_source) }}
+				{{ form_widget(form.funding_source)}}
+
+			</div>
+			<div class="col-lg-6">
+
+				{{ form_label(form.attachement) }}
+				{{ form_widget(form.attachement)}}
+
+			</div>
+
+
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<hr class="hr-dashed my-4">
+				Important dates
+				<hr class="hr-dashed my-4">
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-6">
+
+				{{ form_label(form.review_process_start ) }}<b class='text-danger'>*</b>
+				{{ form_widget(form.review_process_start)}}
+
+			</div>
+			<div class="col-lg-6">
+
+				{{ form_label(form.review_process_end) }}<b class='text-danger'>*</b>
+				{{ form_widget(form.review_process_end)}}
+
+			</div>
+
+
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+
+				{{ form_label(form.reviewers_decision_will_be_communicated_at ) }}<b class='text-danger'>*</b>
+				{{ form_widget(form.reviewers_decision_will_be_communicated_at)}}
+
+			</div>
+			<div class="col-lg-6">
+
+				{{ form_label(form.project_starts_on) }}<b class='text-danger'>*</b>
+				{{ form_widget(form.project_starts_on)}}
+
+			</div>
+
+
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				
+				<hr class="hr-dashed my-4">
+ 
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+
+			<div class="card">
+			<div class="card-header">
+			Eligibility
+			</div>
+				<div class="card-body">
+
+ 
+
+				<div class="checkbox checkbox-success checkbox-circle">
+                                        <input id="checkbox-10" type="checkbox" checked="">
+				{{ form_widget(form.allow_non_academic_staff_as_pi)}}
+
+
+                                         
+                                    </div>
+									<div class="checkbox checkbox-success checkbox-circle">
+                                        <input id="checkbox-10" type="checkbox" checked="">
+				{{ form_widget(form.allow_pi_from_other_university)}}
+
+                                          
+                                    </div>
+
+				<div class="checkbox checkbox-success checkbox-circle">
+                                        <input id="checkbox-10" type="checkbox" checked="">
+				{{ form_widget(form.commitment_from_other_research)}}
+
+                                         
+                                    </div>
+									<div class="checkbox checkbox-success checkbox-circle">
+                                        <input id="checkbox-10" type="checkbox" checked="">
+				{{ form_widget(form.coPoConfirmation)}}
+   
+
+			</div>
+			<div class="checkbox checkbox-success checkbox-circle">
+                                        <input id="checkbox-10" type="checkbox" checked="">
+				{{ form_widget(form.is_call_from_center)}}
+
+                                         
+                                    </div>
+			</div>
+			</div>
+
+				
+		 
+
+		 
+		 
+
+
+			</div>
+			<div class="col-lg-6">
+			<div class="card">
+
+					
+				 
+			<div class="card-header">
+
+Funding Info				</div>
+
+			<div class="card-body">
+					{{ form_widget(form.fundingScheme)}}
+
+					
+				</div>
+				</div>
+				</div>
+				</div>
+		 	<div class="row">
+			<div class="col-lg-12">
+				
+				<hr class="hr-dashed my-4">
+			
+                <hr class="hr-dashed my-4">
+
+			</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+
+					{{ form_label(form.thematicArea) }}
+					{{ form_widget(form.thematicArea)}}
+
+				</div>
+		</div>
+ 
+        <div class="row">
+			<div class="col-lg-12">
+				
+				<hr class="hr-dashed my-4">
+				Notices
+                <hr class="hr-dashed my-4">
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+
+				{{ form_label(form.subject) }}<b class='text-danger'>*</b>
+				{{ form_widget(form.subject)}}
+
+			</div>
+
+
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+
+				{{ form_label(form.heading) }}<b class='text-danger'>*</b>
+				{{ form_widget(form.heading)}}
+
+			</div>
+
+
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+
+				{{ form_label(form.guidelines) }}<b class='text-danger'>*</b>
+				{{ form_widget(form.guidelines)}}
+
+			</div>
+
+
+		</div>
+
+
+		<button class="btn btn-info m-2">{{ button_label|default('Save') }}</button>
+		{{ form_end(form) }}
+	</div>
+</div>

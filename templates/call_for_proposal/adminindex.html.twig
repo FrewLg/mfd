@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+{% block title %}Calls
+{% endblock %}
+{% block container_title %}Calls
+{% endblock %}
+
+{% block header_contenttwo %}
+
+	{% if is_granted('modify_call_pr') %}
+
+		<a href="{{ path('call_for_proposal_new') }}" class='btn btn-primary btn-sm'>
+			Make a new call for proposal</a>
+<a href="{{ path('download', {'uid': call_for_proposal.uidentifier }) }}" class="btn btn-soft-primary">Donload Attachments</a>
+<a href="{{ path('filedownload', {'uid': call_for_proposal.uidentifier }) }}" class="btn btn-soft-danger">Donload Attachments</a>
+
+	{% endif %}
+
+{% endblock %}
+
+
+{% block body %}
+
+	 
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								All call for papers
+							</h4>
+							Total: ({{call_for_proposals.totalItemCount}})
+
+						</div>
+						<!--end col-->
+						<div class="col-auto">
+
+							{% if is_granted('modify_call_pr') %}
+
+								<a href="{{ path('call_for_proposal_new') }}" class='btn btn-primary btn-sm'>
+									Make a new call for proposal</a>
+							{% endif %}
+
+						</div>
+						<!--end col-->
+					</div>
+
+					{# <a href="{{ path('submission_firststepold', {'uidentifier': call_for_proposal.uidentifier}) }}"  class="dropdown-item">[test]Submit proposal</a> #}
+
+					<!--end row-->
+				</div>
+				<!--end card-header-->
+				<div class="card-body">
+					<div class="table-responsive browser_users table-bordered">
+
+						<div class="table-responsive">
+
+							<table class="table table-bordered table-striped table-responsive">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Call name</th>
+										<th>Post date</th>
+
+										<th>Funding Schemes</th>
+										<th>Deadline</th>
+
+										{# <th>Announced from </th> #}
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for call_for_proposal in call_for_proposals %}
+										<tr>
+											<td>{{ loop.index  }}</td>
+											<td>
+											<a href="{{ path('call__details', {'id': call_for_proposal.id }) }}" title='Show details' class='text-purple font-12  fw-bold '>
+													
+											{{ call_for_proposal.college |raw }}
+												{{ call_for_proposal.postDate ? call_for_proposal.postDate|date('M-Y') : '' }}
+										 </a>
+											</td>
+											
+											<td>
+												{{ call_for_proposal.postDate ? call_for_proposal.postDate|date('Y-m-d H:i') : '' }}
+											</td>
+											<td>
+											{% for fc in call_for_proposal.fundingScheme %}
+												
+											<span class="badge bg-soft-{{ fc.acronymColor }}">{{ fc.name }}</span>
+											{% endfor %}</td>
+											<td class='text-center'>
+											
+											{% if date(call_for_proposal.deadline) < date()   %}
+											<span class="badge bg-soft-danger">
+												{{ call_for_proposal.deadline ? call_for_proposal.deadline|date('Y-m-d H:i') : '' }}</span>
+
+{% else %}
+											<span class="badge bg-soft-success">	{{ call_for_proposal.deadline ? call_for_proposal.deadline|date('Y-m-d H:i') : '' }}</span>
+
+{% endif %}
+
+											</td> 
+											
+											<td nowrap="nowrap">
+												
+												{% if is_granted('mng_rprts') and call_for_proposal.researchReportPhase %}
+
+													<a href="{{ path('call_research_reports', {'id': call_for_proposal.id }) }}" title='Reports' class='btn btn-soft-secondary btn-sm'>
+														<i class='fas fa-chart-line '></i>
+														Reports
+													</a>
+												{% endif %}
+												{% if is_granted('modify_call_pr') %} 
+													<a href="{{ path('call__edit', {'id': call_for_proposal.id}) }}" title='Edit call' class="btn btn-sm btn-soft-warning">
+														<i class='fas fa-pen '></i>
+													</a>
+													
+												{% endif %}
+
+ 											
+												{% if is_granted('vw_all_sub') %} 
+												<a href="{{ path('callresponses', {'id': call_for_proposal.id }) }}" title='Call response' class='btn btn-soft-purple btn-sm'>
+
+													<i class='fas fa-paper-plane '></i>
+													({{call_for_proposal.submissions|length}})</a>
+			{% elseif is_granted("coordinators") %}
+												<a href="{{ path('coordinators', {'id': call_for_proposal.id }) }}" title='Call response' class='btn btn-soft-purple btn-sm'>
+
+
+													<i class='fas fa-paper-plane '></i>
+													({{call_for_proposal.submissions|length}})</a>
+												{% endif %}
+												
+
+											
+							<div class="float-end">                                        
+                                        <div class="dropdown d-inline-block text-success">
+                                            <a class="dropdown-toggle arrow-none" id="dLabel1" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                                <i class="las la-ellipsis-v font-24 text-muted text-success"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end text-success" aria-labelledby="dLabel1" style="">
+ 												<a href="{{ path('call_dashboard', {'id': call_for_proposal.id}) }}"  class="dropdown-item"  title='Call Dashbord'>
+													<i class='fas fa-chart-bar '></i> Visualized report
+												</a>
+ 												<a href="{{ path('theme_by_coll', {'id': call_for_proposal.id }) }}" class='dropdown-item' title='Show submissions by theme'>
+													<i class='fas fa-chart-pie '></i>
+													Theme 
+
+													<span class="avatar-box thumb-xxs align-self-center">
+														<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+															{{call_for_proposal.submissions|length}}
+														</span>
+
+													</span>
+												</a>           
+												
+												<a href="{{ path('allawarded', {'id': call_for_proposal.id}) }}" class='dropdown-item' title='Winners'>
+														<i class='fas fa-certificate '></i> Winners
+													</a>
+													                                 </div>
+                                        </div>
+                                    </div>
+											</td>
+
+										</tr>
+									{% else %}
+										<tr>
+											<td colspan="8">no records found</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+
+						<div class="navigation">
+							{{ knp_pagination_render(call_for_proposals) }}
+						</div>
+
+						<!--end table-->
+					</div>
+					<!--end /div-->
+				</div>
+				<!--end card-body-->
+			</div>
+			<!--end card-->
+		</div>
+	</div>
+
+
+{% endblock %}

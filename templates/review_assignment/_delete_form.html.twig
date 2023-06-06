@@ -1,0 +1,36 @@
+{% if review_assignment.closed %}
+
+
+	<a href="{{ path('reassign', {'id': review_assignment.id}) }}" class='btn btn-warning btn-xs '>
+		Allow updating</a>
+
+{% else %}
+
+	<button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Primary
+		<i class="mdi mdi-chevron-down"></i>
+	</button>
+	<div class="dropdown-menu" style="">
+			<a href="{{ path('updatedate', {'id': review_assignment.id}) }}" class=" dropdown-item">Change date</a>
+
+		
+
+	<form method="post" action="{{ path('review_assignment_delete', {'id': review_assignment.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+
+		<input type="hidden" name="_method" value="DELETE">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ review_assignment.id) }}">
+		<a href="{{ path('review_assignment_edit', {'id': review_assignment.id}) }}" class="dropdown-item">Edit</a>
+
+		<button class="dropdown-item">
+			Unassign
+		</button>
+
+
+	</form>
+
+	<button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#showDetailsModal{{review_assignment.id}}">
+	Details
+</button>
+	</div>
+{% endif %}
+
+

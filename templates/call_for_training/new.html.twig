@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CallForTraining
+{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								Create new </h4>
+                                
+						</div>
+						 
+					</div>
+
+
+					<!--end row-->
+				</div>
+				<!--end card-header-->
+				<div class="card-body">
+
+					{{ include('call_for_training/_form.html.twig') }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

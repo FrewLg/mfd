@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="col-sm-12">
+		<div class="page-title-box">
+			<div class="row">
+				<div class="col">
+					<h4 class="page-title">
+						{% block pagetitle %}
+							{{app_name}}
+						{% endblock %}
+					</h4>
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item">
+							<a href="{{path('homepage')}}">Home</a>
+						</li>
+						{% block breadcrumb %}{% endblock %}
+					</ol>
+				</div>
+				<!--end col-->
+				<div class="col-auto align-self-center"> {% block header_contenttwo %}{% endblock %}
+
+
+					</div>
+					<!--end col-->
+				</div>
+				<!--end row-->
+			</div>
+
+			{% for label,messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{label}} alert-dismissible fade show border-0 mb-0" role="alert">
+					
+					{{ message |raw}}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			{% endfor %}
+			{% endfor %}
+
+
+		<!--end page-title-box-->
+	</div>
+	<!--end col-->
+</div>

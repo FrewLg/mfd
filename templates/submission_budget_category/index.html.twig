@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Submission Budget Category  
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								Submission Budget Category  
+							</h4>
+							Total: ({{submission_budget_categories|length}})
+						</div>
+						<!--end col-->
+						<div class="col-auto">
+							<a href="{{ path('submission_budget_category_new') }}" class='btn btn-primary btn-sm'>
+								Create   new
+							</a>
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Name</th>
+								<th>actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for submission_budget_category in submission_budget_categories %}
+								<tr>
+									<td>{{ loop.index }}</td>
+									<td>{{ submission_budget_category.name }}</td>
+									<td>
+										<a href="{{ path('submission_budget_category_show', {'id': submission_budget_category.id}) }}" class="btn btn-xs btn-soft-info">show</a>
+										<a href="{{ path('submission_budget_category_edit', {'id': submission_budget_category.id}) }}" class="btn btn-xs btn-soft-warning">edit</a>
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="3">no records found</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

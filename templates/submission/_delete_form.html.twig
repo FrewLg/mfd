@@ -1,0 +1,12 @@
+		{% if  submission.submissionStatus is not null %}
+<span class="badge bg-{{submission.submissionStatus.statusColor}}">{{submission.submissionStatus.name}}
+</span>
+{% else %}
+
+<form method="post" action="{{ path('submission_delete', {'id': submission.id}) }}"
+ onsubmit="return confirm('Are you sure you want to withdraw this submission?');">
+      <button  class="btn btn-soft-danger btn-block btn-sm" >Withdraw</button>
+
+</form>
+						
+{% endif %} 

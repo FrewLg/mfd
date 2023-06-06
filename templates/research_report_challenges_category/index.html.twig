@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Research Report Challenges Categories List{% endblock %}
+
+{% block body %}
+    <h3>Research Report Challenges Categories List</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>College</th>
+                <th>Created At</th>
+                <th>Is Active</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for research_report_challenges_category in research_report_challenges_categories %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ research_report_challenges_category.name }}</td>
+                <td>{{ research_report_challenges_category.college }}</td>
+                <td>{{ research_report_challenges_category.createdAt ? research_report_challenges_category.createdAt|date('Y-m-d H:iA') : '' }}</td>
+                <td>{{ research_report_challenges_category.isActive ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('research_report_challenges_category_show', {'id': research_report_challenges_category.id}) }}">show</a>
+                    <a href="{{ path('research_report_challenges_category_edit', {'id': research_report_challenges_category.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('research_report_challenges_category_new') }}">Create new</a>
+{% endblock %}

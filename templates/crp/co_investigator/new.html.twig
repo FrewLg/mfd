@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CoInvestigator{% endblock %}
+
+{% block body %}
+    <h1>Create new CoInvestigator</h1>
+
+    {{ include('crp/co_investigator/_form.html.twig') }}
+
+    <a href="{{ path('app_c_r_p_co_investigator_index') }}">back to list</a>
+{% endblock %}

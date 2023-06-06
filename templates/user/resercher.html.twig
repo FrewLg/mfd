@@ -1,0 +1,644 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile
+{% endblock %}
+{% block container_title %}Profile
+{% endblock %}
+{% block header_contenttwo %}Profile
+{% endblock %}
+
+
+{% macro displayContent(researches) %}
+
+	<div class="col-md-4">
+		<div class="form-group select-wizard">
+			<label class="bmd-label-floating">Title</label>
+			{{form_widget(researches.title)}}
+
+		</div>
+	</div>
+
+
+	<div class="col-md-2">
+		<div class="form-group select-wizard">
+			<label class="bmd-label-floating">Allotted budget</label>
+			{{form_widget(researches.allotted_budget)}}
+
+		</div>
+	</div>
+
+	<div class="col-md-1">
+		<div class="form-group select-wizard">
+			<label class="bmd-label-floating">Year</label>
+			{{form_widget(researches.year)}}
+
+		</div>
+	</div>
+
+	<div class="col-md-2">
+		<div class="form-group select-wizard">
+			{{form_widget(researches.successfully_completed )}}
+
+		</div>
+	</div>
+
+	{#  
+													<div class="col-md-2">
+														<div class="form-group select-wizard">
+														Upload approval of your clearance<br>
+															{{form_widget(researches.imageFile )}}
+												
+														</div>
+													</div> #}
+
+
+	<div class="col-md-1">
+		<div class="form-group">
+
+			<button type="button" class=" btn btn-danger btn-sm close  remove-collection-widget mt-4   bgc-h-danger-l2 radius-round ">
+				<span aria-hidden="true">×</span>
+
+			</button>
+		</div>
+	</div>
+{% endmacro %}
+
+{% block body %}
+
+
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body p-0"></div>
+				<!--end card-body-->
+				<div class="card-body">
+					<div class="dastone-profile">
+						<div class="row">
+							<div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+								<div class="dastone-profile-main">
+									<div class="dastone-profile-main-pic">
+										
+										{% if    user.userInfo.image %}
+
+											<img src="{{ asset('files/profile_pictures/'~user.userInfo.image ) }}" alt="" class="rounded-circle" style="width:110px; height:110px;">
+										{% else %}
+											<img src="{{ asset('/img/defaultuser.png') }}" class="rounded-circle circle-border  " alt="profile" style="width:110px; height:110px;">
+										{% endif %}
+
+									</div>
+									<div class="dastone-profile_user-detail">
+										<h5 class="dastone-user-name">{{ user.userInfo.suffix   }}
+											{{ user}}</h5>
+										<p class="mb-0 dastone-user-name-post">
+											{% if userInfo.affiliation is defined %}
+
+												{{ userInfo.affiliation }}
+												{% else %}
+											{% endif %} 
+										
+										{% if user.userInfo.educationLevel %}
+												({{ user.userInfo.educationLevel }})
+											{% endif %}
+
+											{{ user.userInfo.academicRank   }},
+											{% if user.userInfo.department  is defined %}
+												Department of
+
+												{{ user.userInfo.department   }}
+												{% else %}
+											{% endif %}
+											,
+											{{ user.userInfo.college  }}
+
+
+										</p>
+									</div>
+								</div>
+							</div>
+							<!--end col-->
+
+							<div class="col-lg-4 ms-auto align-self-center">
+								<ul class="list-unstyled personal-detail mb-0">
+									<li class="">
+										<i class="ti ti-mobile me-2 text-secondary font-16 align-middle"></i>
+										<b>
+											Phone Number
+										</b>
+										:
+										{{ user.userInfo.phoneNumber }}</li>
+									<li class="mt-2">
+										<i class="ti ti-email text-secondary font-16 align-middle me-2"></i>
+										<b>
+											Email
+										</b>
+										:
+										{{ user.email }}</li>
+
+									<li class="mt-2">
+										<i class="ti ti-user text-secondary font-16 align-middle me-2"></i>
+										<b>
+											Gender:</b>
+										{{ user.userInfo.gender }}
+
+									</li>
+									<li class="mt-2">
+										<i class="ti ti-home text-secondary font-16 align-middle me-2"></i>
+										<b>
+											Affiliation:
+
+										</b>
+										{% if user.userInfo.educationLevel %}
+											({{ user.userInfo.educationLevel }})
+										{% endif %}
+
+										{% if user.userInfo.academicRank %}
+											{{ user.userInfo.academicRank }}
+											,
+										{% endif %}
+
+
+										{% if user.userInfo.department  is defined %}
+											Department of
+
+											{{ user.userInfo.department   }}
+											{% else %}
+										{% endif %}
+
+
+										{% if user.userInfo.college %}
+											at
+											{{ user.userInfo.college }}
+										{% endif %}
+
+										<a href="" class="font-14 text-primary">
+											{% if userInfo.affiliation is defined %}
+
+												{{ userInfo.affiliation }}
+												{% else %}
+											{% endif %}
+										</a>
+									</li>
+								</ul>
+
+							</div>
+							<!--end col-->
+							<div class="col-lg-4 align-self-center">
+								<div class="row">
+									<div class="col-auto text-end border-end">
+										<button type="button" class="btn btn-soft-primary btn-icon-circle btn-icon-circle-sm mb-2">
+											<i class="fa fa-book"></i>
+										</button>
+										<p class="mb-0 fw-semibold">Publications</p>
+{{user.Publications|length}}
+									</div>
+									<!--end col-->
+									<div class="col-auto">
+										<button type="button" class="btn btn-soft-info btn-icon-circle btn-icon-circle-sm mb-2">
+											<i class="fa fa-book"></i>
+										</button>
+										<p class="mb-0 fw-semibold">Trainings</p>
+
+
+									</div>
+									<!--end col-->
+								</div>
+								<!--end row-->
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!--end f_profile-->
+				</div>
+				<!--end card-body-->
+			</div>
+			<!--end card-->
+		</div>
+		<!--end col-->
+	</div>
+	<div class="pb-4">
+		<ul class="nav-border nav nav-pills mb-0" id="pills-tab" role="tablist">
+
+			<li class="nav-item">
+				<a class="nav-link active" id="settings_detail_tab" data-bs-toggle="pill" href="#About">About</a>
+			</li>
+			{% if is_granted("vw_all_sub")%}
+
+				<li class="nav-item">
+					<a class="nav-link " id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project">Proposal submissions</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" id="portfolio_detail_tab" data-bs-toggle="pill" href="#Profile_Portfolio">Project Membership</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link  " id="userrevisions" data-bs-toggle="pill" href="#revisions">Review assignments</a>
+				</li>
+
+			{% endif  %}
+
+
+			<li class="nav-item">
+				<a class="nav-link  " id="publications_tab" data-bs-toggle="pill" href="#Publications">Publications</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link" id="Conferences_tab" data-bs-toggle="pill" href="#Conferences">Conferences</a>
+			</li>
+
+
+		</ul>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="tab-content" id="pills-tabContent">
+				{% if is_granted("vw_all_sub")%}
+
+					<div class="tab-pane fade " id="Profile_Project" role="tabpanel" aria-labelledby="Profile_Project_tab">
+
+						<div class="row">
+							<div class="col-12">
+								<div class="card">
+									<div class="card-header">
+
+										<div class="row align-items-center">
+											<div class="col">
+												<h4 class="card-title">Proposal submissions
+
+													{% if user.submissions|length>0%}
+
+														<a href="#" class="avatar-box thumb-xxs align-self-center">
+															<span class="avatar-title bg-soft-primary rounded-circle font-13 font-weight-normal">
+																{{user.submissions|length}}
+
+															</span>
+														</a>
+														{% else %}
+
+													{% endif %}
+												</h4>
+											</div>
+											<!--end col-->
+										</div>
+									</div>
+
+									<div class="card-body ">
+										{% for submission in user.submissions %}
+											<h5 class="">
+												<a href="{{ path('submission_show', {'id': submission.id}) }}" class='text-primary   '>
+													{{ submission.title }}
+												</a>
+
+
+												{% if submission.awardgranted %}
+
+													<a href="#" class="avatar-box thumb-xxs align-self-center">
+														<span class="avatar-title bg-soft-success rounded-circle font-13 font-weight-normal">
+															W
+														</span>
+													</a>
+													{% else %}
+
+												{% endif %}
+
+											</h5>
+											{{ submission.callForProposal.college }}
+											<br>
+											<small class="mb-0   text-muted">{{ submission.sentAt|date('d M Y ') }}</small>
+
+										{% endfor %}
+									</div>
+									<!--end card-body-->
+								</div>
+								<!--end card-->
+							</div>
+							<!--end col-->
+							<div class="col-3"></div>
+						</div>
+					</div>
+
+				{% endif %}
+
+				<!--end tab-pane-->
+				<div class="tab-pane fade " id="Publications" role="tabpanel" aria-labelledby="publications_tab">
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="row align-items-center">
+										<div class="col">
+											<h4 class="card-title">Publications
+
+												{% if user.Publications|length>0%}
+
+													<a href="#" class="avatar-box thumb-xxs align-self-center">
+														<span class="avatar-title bg-soft-primary rounded-circle font-13 font-weight-normal">
+															{{user.Publications|length}}
+
+														</span>
+													</a>
+													{% else %}
+
+												{% endif %}
+											</h4>
+										</div>
+										<!--end col-->
+									</div>
+									<!--end row-->
+								</div>
+
+								<div class="card-body ">
+									<ol>
+										{% for publication in user.Publications %}
+											<li>
+												<h4 class="mb-0 fw-semibold ">
+													{{ publication.title}}
+												</h4>
+												<p class="mb-0 fw-semibold text-muted">Journal :
+													{{ publication.journalName}}</p>
+												<p class="mb-0 fw-semibold text-muted">Year of Publication:
+													{{ publication.publishedAt|date('d M Y ') }}</p>
+												DOI:
+												<a href="{{publication.Doi}}" class="mb-0 fw-semibold  ">{{ publication.Doi }}</a>
+
+
+												<a href="{{ asset('/files/users_publications/'~ publication.ArticleDocument ) }}" class="btn btn-info btn-xs float-right">
+													Download
+													<i class="fa fa-download material-icons warning"></i>
+												</a>
+
+											</li>
+
+										{% endfor %}
+									</ol>
+
+								</div>
+								<!--end card-body-->
+							</div>
+							<!--end card-->
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				{% if is_granted("vw_all_sub")%}
+
+					<div class="tab-pane fade " id="revisions" role="tabpanel" aria-labelledby="userrevisions">
+
+						<div class="row">
+							<div class="col-12">
+								<div class="card">
+									<div class="card-header">
+										<div class="row align-items-center">
+											<div class="col">
+												<h4 class="card-title">Review assignments
+
+													{% if user.reviewAssignments|length>0%}
+
+														<a href="#" class="avatar-box thumb-xxs align-self-center">
+															<span class="avatar-title bg-soft-primary rounded-circle font-13 font-weight-normal">
+																{{user.reviewAssignments|length}}
+
+															</span>
+														</a>
+														{% else %}
+
+													{% endif %}
+												</h4>
+											</div>
+											<!--end col-->
+										</div>
+										<!--end row-->
+									</div>
+
+									<div class="card-body ">
+										<ol>
+											{% for submission in user.reviewAssignments %}
+												{# <li>	{{loop.index}}</li> #}
+												<li>
+													<a href="{{ path('submission_show', {'id': submission.submission.id}) }}" class='text-primary   '>
+														{{ submission.submission.title }}
+													</a>
+												</li>
+											{% endfor %}
+										</ol>
+									</div>
+									<!--end card-body-->
+								</div>
+								<!--end card-->
+							</div>
+							<!--end col-->
+						</div>
+					</div>
+				{% endif %}
+
+				<div class="tab-pane fade" id="Conferences" role="tabpanel" aria-labelledby="Conferences_tab">
+					<div class="row">
+						<div class="col-lg-9">
+							<div
+								class="row">
+
+								<!--end col-->
+								<div class="col-lg-6">
+									<div class="card">
+										<div class="card-body  report-card"></div>
+										<!--end card-body-->
+									</div>
+									<!--end card-->
+								</div>
+								<!--end col-->
+							</div>
+							<!--end row-->
+
+
+							<!--end card-->
+						</div>
+						<!--end col-->
+						<div class="col-lg-3">
+							<div class="card">
+								<div
+									class="card-header"><!--end row-->
+								</div>
+								<!--end card-header-->
+								<div class="card-body"></div>
+								<!--end card-body-->
+							</div>
+
+
+							<div class="card"></div>
+						</div>
+						<!--end card-->
+					</div>
+					<!--end col-->
+				</div>
+				<!--end row-->
+				{% if is_granted("vw_all_sub")%}
+
+					<div class="tab-pane fade" id="Profile_Portfolio" role="tabpanel" aria-labelledby="portfolio_detail_tab">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+
+										<div class="row align-items-center">
+											<div class="col">
+												<h4 class="card-title">Proposal membership
+
+													{% if user.coAuthors|length>0%}
+
+														<a href="#" class="avatar-box thumb-xxs align-self-center">
+															<span class="avatar-title bg-soft-primary rounded-circle font-13 font-weight-normal">
+																{{user.coAuthors|length}}
+
+															</span>
+														</a>
+														{% else %}
+
+													{% endif %}
+												</h4>
+											</div>
+											<!--end col-->
+										</div>
+									</div>
+
+									<div class="card-body ">
+										{% for submission in user.coAuthors %}
+											<h5 class="">
+
+												<a href="{{ path('submission_show', {'id': submission.submission.id}) }}" class='text-primary   '>
+													{{ submission.submission.title }}
+												</a>
+
+
+												{% if submission.submission.awardgranted %}
+
+													<a href="#" class="avatar-box thumb-xxs align-self-center">
+														<span class="avatar-title bg-soft-success rounded-circle font-13 font-weight-normal">
+															W
+
+														</span>
+													</a>
+													{% else %}
+
+												{% endif %}
+
+											</h5>
+											{# {{ submission.callForProposal.college }} #}
+<h6 class='text-muted'>PI: {{submission.submission.author}}</h6>  
+
+											<small class="mb-0   text-muted">{{ submission.submission.sentAt|date('d M Y ') }}</small>
+										{% endfor %}
+
+										{%if user.coAuthors|length > 2%}
+<h6 class='text-muted'> <a href='{{ path('memberships', {'id': user.id}) }}'>See all proposal membership of {{user.userInfo}}</a>
+</h6>
+										
+												{% endif %}
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				{% endif %}
+
+				<div class="tab-pane fade active show" id="About" role="tabpanel" aria-labelledby="settings_detail_tab">
+					<div class="row">
+						<div class="col-lg-12   col-xl-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="row align-items-center">
+										<div class="col">
+											<h4 class="card-title">Personal Information</h4>
+										</div>
+										<!--end col-->
+									</div>
+									<!--end row-->
+								</div>
+								<!--end card-header-->
+								<div class="card-body">
+
+
+									<div class="row">
+										<div class="col-sm-12">
+
+
+											{% for submission in user.userGroup %}{% endfor %}
+											{# {% for submission in user.trainingParticipants %}
+																																																																																																																																				{{loop.index}}
+																																																																																																																																				{{submission.callForTraining.name}}
+																																																																																																																																			{% endfor %} #}
+
+
+											<table class="table table-bordered">
+												<tbody>
+
+													<tr>
+														<th>Researcher:</th>
+														<td>
+															{{ user.userInfo}}
+														</td>
+													</tr>
+
+													<tr>
+														<th>College</th>
+														<td>{{ user.userInfo.college }}</td>
+													</tr>
+													<tr>
+														<th>Department</th>
+														<td>{{ user.userInfo.department }}</td>
+													</tr>
+													<tr>
+														<th>Alternative Email</th>
+														<td>{{ user.userInfo.alternativeEmail }}</td>
+													</tr>
+													<tr>
+														<th>Academic Rank</th>
+														<td>{{ user.userInfo.academicRank }}</td>
+													</tr>
+													<tr>
+														<th>Education Level</th>
+														<td>{{ user.userInfo.educationLevel }}</td>
+
+													</tr>
+
+				{% if is_granted("vw_all_sub")%}
+
+													<tr>
+														<th>CV</th>
+														<td>
+															{% if user.userInfo.CV != NULL  %}
+
+																<a href="{{ asset('/files/collaborators_cv/'~ user.userInfo.CV ) }}" class="btn btn-info btn-xs float-right">
+																	Download    CV
+																	<i class="fa fa-download material-icons warning"></i>
+																</a>
+																{% else %}
+
+															{% endif %}
+
+														</td>
+													</tr>
+															{% endif %}
+
+												</tbody>
+											</table>
+
+
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{% endblock %}

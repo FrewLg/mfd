@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ProjectType{% endblock %}
+
+{% block body %}
+    <h1>Create new ProjectType</h1>
+
+    {{ include('irb/project_type/_form.html.twig') }}
+
+    <a href="{{ path('i_r_b_project_type_index') }}" class="mt-1 btn btn-primary">back to list</a>
+{% endblock %}

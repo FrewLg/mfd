@@ -1,0 +1,168 @@
+
+
+	<li>
+		<a href="javascript: void(0);">
+			<i class="fas fa-check-circle align-self-center menu-icon"></i>
+			<span>IRB Ethical Clearance</span>
+			<span class="menu-arrow">
+				<i class="mdi mdi-chevron-right"></i>
+			</span>
+		</a> 
+		
+	 
+
+		<ul class="nav-second-level" aria-expanded="false">
+			{% if is_granted("vw_irb_dbrd") %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('application_index') }}">
+						<i class="ti-control-record"></i>Dashboard</a>
+				</li>
+
+			{% endif %}
+
+ 	{# {% if is_granted('ROLE_ADMIN') or is_granted("vw_irb_dbrd") or is_granted("vw_irb_rqst") or
+is_granted("ROLE_SECRETARY") or is_granted("vw_all_irb_assgn") or is_granted("vw_brd_mmbr") or is_granted("mng_brd_mtng") or 
+ is_granted('mng_irb_pr_typ') or is_granted('mng_irb_app_typ') or is_granted('mng_irb_atch_typ') or is_granted('mng_irb_rsub_cat') or
+is_granted('mng_irb_rsub') or is_granted('mng_irb_guid_atc') 
+  %} #}
+				<li class="nav-item">
+					
+			 {% if is_granted("ROLE_CHAIR") or is_granted("ROLE_VICE_CHAIR")    or is_granted("ROLE_SECRETARY")   or is_granted("ROLE_COORDINATOR")   %}
+
+					<a class="nav-link" href="{{ path('application_index') }}">
+						<i class="ti-control-record"></i>
+							All Applications</a>
+						{% elseif  is_granted("ROLE_USER")%} 
+						<a class="nav-link" href="{{ path('myapplication') }}">
+						<i class="ti-control-record"></i> My Applications</a>
+
+
+
+						{% endif %}
+					</a>
+				</li>
+				
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('application_new') }}">
+						<i class="ti-control-record"></i> New  IRB Application   
+
+					</a>
+				</li>
+
+				{% if is_granted("ROLE_SECRETARY")  or is_granted("ROLE_VICE_CHAIR") or is_granted("ROLE_CHAIR")    or is_granted("ROLE_MEMBER")   %}
+				 
+		 
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('irb_myassigned') }}">
+						<i class="ti-control-record"></i>
+
+						My Assigned<span class="badge bg-soft-success">{{app.user.iRBReviewAssignments|length  }}</span>
+
+					</a>
+				</li>
+
+			{% endif %}
+
+			{% if is_granted("vw_brd_mmbr")  or is_granted("ROLE_CHAIR")  %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('board_member_index') }}">
+						<i class="ti-control-record"></i>Board Members</a>
+				</li>
+
+			{% endif %}
+			{% if is_granted("vw_brd_mmbr")  or is_granted("ROLE_CHAIR")  %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('clearances') }}">
+						<i class="ti-control-record"></i>Clearances Issued</a>
+				</li>
+
+			{% endif %}
+			{% if is_granted("mng_brd_mtng") or is_granted("ROLE_SECRETARY") or is_granted("ROLE_CHAIR")  %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('i_r_b_meeting_index') }}">
+						<i class="ti-control-record"></i>Board Meeting</a>
+				</li>
+
+			{% endif %}
+					{% if is_granted('mng_irb_setting') %}
+
+
+			<li>
+				<a href="javascript: void(0);">
+					<i class="fas fa-cog align-self-center menu-icon"></i>
+					<span>Setting</span>
+					<span class="menu-arrow">
+						<i class="mdi mdi-chevron-right"></i>
+					</span>
+				</a>
+				<ul class="nav-second-level" aria-expanded="false">
+
+					{% if is_granted('mng_irb_pr_typ') %}
+
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('i_r_b_project_type_index') }}">
+								<i class="ti-control-record"></i>
+
+								Project Type
+
+							</a>
+						</li>
+					{% endif %}
+
+					{% if is_granted('mng_irb_app_typ') %}
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('i_r_b_application_type_index') }}">
+								<i class="ti-control-record"></i>
+								{% trans %}Application Type{% endtrans %}
+							</a>
+						</li>
+
+					{% endif %}
+					{% if is_granted('mng_irb_atch_typ') %}
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('i_r_b_attachment_type_index') }}">
+								<i class="ti-control-record"></i>
+								{% trans %}Attachment Type{% endtrans %}
+							</a>
+						</li>
+					{% endif %}
+
+
+					{% if is_granted('mng_irb_rsub_cat') %}
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('i_r_b_research_subject_category_index') }}">
+								<i class="ti-control-record"></i>
+								{% trans %}Research Subject Category{% endtrans %}
+							</a>
+						</li>
+					{% endif %}
+					{% if is_granted('mng_irb_rsub') %}
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('i_r_b_research_subject_index') }}">
+								<i class="ti-control-record"></i>
+								{% trans %}Research Subject{% endtrans %}
+							</a>
+						</li>
+					{% endif %}
+					{% if is_granted('mng_irb_guid_atc') %}
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('irbcollege_details') }}">
+								<i class="ti-control-record"></i>
+								{% trans %}Guideline attachemnts{% endtrans %}
+							</a>
+						</li>
+					{% endif %}
+
+				</ul>
+			</li> 
+			{% endif %}
+
+		</ul>
+	</li>
+ 

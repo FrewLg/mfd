@@ -1,0 +1,42 @@
+{% if  is_granted("vw_clg") or is_granted("vw_dept") or  is_granted("vw_drtr_offc")   %}
+
+	<li>
+		<a
+			href="javascript: void(0);">
+			<!-- <i data-feather="home" class="align-self-center menu-icon"></i> -->
+			<i class="fas fa-network-wired align-self-center menu-icon"></i>
+			<span>Work units</span>
+			<span class="menu-arrow">
+				<i class="mdi mdi-chevron-right"></i>
+			</span>
+		</a>
+		<ul class="nav-second-level" aria-expanded="false">
+
+			{% if is_granted("vw_clg") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('college_details') }}">
+						<i class="ti-control-record"></i>Colleges
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_dept") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('department_index') }}">
+						<i class="ti-control-record"></i>Department
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_dir_off") %}
+
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('directorate_office_index') }}">
+						<i class="ti-control-record"></i>Directorate office
+					</a>
+				</li>
+			{% endif %}
+		</ul>
+	</li>
+{% endif %}

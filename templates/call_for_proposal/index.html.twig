@@ -1,0 +1,74 @@
+{% extends 'homelayout.html.twig' %}
+
+{% block title %}Call for proposal{% endblock %}
+ 
+{% block pagehead %}Call For Proposal {% endblock %}
+{% block breadcrumb %} <li class="breadcrumb-item active">Call For Proposal</li>  {% endblock %} 
+{% block body %}
+  {% for call_for_proposal in call_for_proposals %}
+
+        <div class="col-lg-12 features-text wow fadeInLeft animated" style="visibility: visible; animation-name: fadeInLeft;">
+ <fieldset class='card m-2 p-3'>
+
+{# <article class="entry"> #}
+
+              {# <div class="entry-img">
+                <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+              </div> #}
+
+              <h2 class="entry-title">
+                <a href="{{ path('call_for_proposal_show', {'uidentifier': call_for_proposal.uidentifier }) }}">
+				{{ call_for_proposal.heading|striptags|slice(0, 170)|raw }}  </a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="fa fa-house"></i> <a href="#">
+                  {% if call_for_proposal.college %}
+						
+							<span class="badge bg bg-info"> {{ call_for_proposal.college.prefix }} </span>
+
+							
+						{% else %}
+						<i class="bi bi-house text-info"></i>
+							
+							<span class="badge bg bg-info"> Center </span>
+						{% endif %}
+                   </a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="2020-01-01">
+				  {{ call_for_proposal.postDate ? call_for_proposal.postDate|date('M d Y  h:s') : '' }}</time></a></li>
+                  <li class="d-flex align-items-center"> <a href="#"></a></li>
+{%if call_for_proposal.ResearchType.name is defined %}         
+         <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">{{ call_for_proposal.ResearchType.name }}</a></li>
+{% endif%}
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>
+                  {{ call_for_proposal.subject|striptags|slice(0, 170)|raw }}  </p>
+              </div>
+
+
+</div>
+ </fieldset>
+
+		{% else %}
+
+			<td colspan="7">No active calls are available !</td>
+
+		{% endfor %}
+ 
+
+                    {% block pagination%}
+
+                   {% endblock %}
+                        
+                        <div class="pagination-block">
+<div class="navigation">
+            {{ knp_pagination_render(call_for_proposals) }}
+        </div>
+                           
+                        </div>
+
+{% endblock %}

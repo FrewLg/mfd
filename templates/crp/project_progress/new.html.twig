@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ProjectProgress{% endblock %}
+
+{% block body %}
+    <h1>Create new ProjectProgress</h1>
+
+    {{ include('crp/project_progress/_form.html.twig') }}
+
+    <a href="{{ path('app_c_r_p_project_progress_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,172 @@
+{% if is_granted("vw_stng_tree") %}
+
+	<li>
+		<a href="javascript: void(0);">
+			<i class="fas fa-cogs align-self-center menu-icon"></i>
+			<span>Settings</span>
+			<span class="menu-arrow">
+				<i class="mdi mdi-chevron-right"></i>
+			</span>
+		</a>
+		<ul class="nav-second-level" aria-expanded="false">
+			{% if is_granted("vw_atch_typ") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('attachement_type_index') }}">
+
+						<i class="ti-control-record"></i>Attachment type
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_st_stng") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('app_setting') }}">
+
+						<i class="ti-control-record"></i>Site settings
+					</a>
+				</li>
+			{% endif %}
+
+
+			{% if is_granted("vw_bc_stng") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('app_backup_setting') }}">
+						<i class="ti-control-record"></i>Backup settings
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_gn_stng") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('general_setting') }}">
+						<i class="ti-control-record"></i>General settings
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_ac_yr") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('academic_year_index') }}">
+
+						<i class="ti-control-record"></i>Academic year
+					</a>
+				</li>
+			{% endif %}
+			
+			{% if is_granted("vw_sb_bdgt_cat") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('app_funding_scheme_index') }}">
+
+						<i class="ti-control-record"></i>Funding Scheme
+					</a>
+				</li>
+			{% endif %}
+			
+			{% if is_granted("vw_ev_frm_o") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('evaluation_form_option_index') }}">
+
+						<i class="ti-control-record"></i>Evaluation form option
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_ev_frm") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('evaluation_form_index') }}">
+
+						<i class="ti-control-record"></i>Evaluation form
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_prf_ttl") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('title_index') }}">
+
+						<i class="ti-control-record"></i>User prefix titles
+					</a>
+				</li>
+
+			{% endif %}
+			{% if is_granted("vw_prf_ttl") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('suffixe_index') }}">
+
+						<i class="ti-control-record"></i>Suffix
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_prf_ttl") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('academic_rank_index') }}">
+
+						<i class="ti-control-record"></i>Academic rank index
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_tr_typ") %}
+
+				<li class="nav-item">
+
+					<a class="nav-link" href="{{ path('training_type_index') }}">
+
+						<i class="ti-control-record"></i>Training type
+					</a>
+				</li>
+			{% endif %}
+
+			{% if is_granted("vw_sbsc") %}
+
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('subscription_index') }}">
+						<i class="ti-control-record"></i>
+						Subscription
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_em_msg") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('email_message_index') }}">
+						<i class="ti-control-record"></i>Email messages
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_sb_bdgt_cat") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('submission_budget_category_index') }}">
+
+						<i class="ti-control-record"></i>Submission budget  category
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_sb_bdgt_cat") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('app_submission_status_index') }}">
+
+						<i class="ti-control-record"></i>Submission status
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_sb_bdgt_cat") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('research_report_challenges_category_index') }}">
+
+						<i class="ti-control-record"></i>Research Challenges category
+					</a>
+				</li>
+			{% endif %}
+		</ul>
+	</li>
+{% endif %}

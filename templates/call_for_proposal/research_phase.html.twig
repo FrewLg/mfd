@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Call for proposal
+{% endblock %}
+
+{% block styles %}
+
+	{# <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}"> #}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
+{% block pagehead %}Call For Proposal
+{% endblock %}
+{% block breadcrumb %}
+	<li class="breadcrumb-item active">Call For Proposal</li>
+{% endblock %}
+{% block body %}
+
+	<div class="card">
+
+		<div class="card-header ">
+
+			<div class="float-right ">
+				<a href="{{ path('all_calls') }} " class='btn btn-info btn-sm'>
+					Back
+				</a>
+			</div>
+			<div class="h4 ">
+				Call For Proposal
+			</div>
+		</div>
+		<div
+			class="card-body ">
+			{# <div class="social-feed-box p-3"> #}
+
+			<div class="row">
+
+				<div class="col-md-5  ">
+
+					<div class="card"> 
+
+						<div class="card-header ">
+							<div class="h5">Make a report setting
+							</div>
+						</div>
+
+						<div class="card-body ">
+
+							{{ form_start(form,{"attr":{"onsubmit":"return confirm('are you sure?')"}}) }}
+							{{ form_widget(form) }}
+							<button class="btn btn-primary btn-lg float-right">{{ research_report_phase ? "Update":"Save" }}</button>
+							{{ form_end(form) }}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5 offset-1">
+					<div class="card">
+						<div class="card-header ">
+							<div class="h5">Report setting details</div>
+						</div>
+						<div class="card-body ">
+
+
+							{% if research_report_phase %}
+
+
+								<div class="p  text-bold">
+									Note:-
+									{{research_report_phase.note}}
+								</div>
+								<div class="p text-black">
+									<ul>
+										<li>Start Date:-
+											{{research_report_phase.startDate|date('F d,Y')}}</li>
+										<li>End Date:-
+											{{research_report_phase.endDate|date('F d,Y')}}</li>
+										<li>Number of Phases:-
+											{{research_report_phase.numberOfPhases}}</li>
+										<li>Tolerable Days:-
+											{{research_report_phase.tolerableDay}}
+											Days</li>
+										<li>Minimum Days after last report:-
+											{{research_report_phase.maximumDuration}}
+											Days</li>
+									</ul>
+
+								</div>
+							{% else %}
+								Not created yet
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
+{% block script %}
+	<script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script type="text/javascript">
+		$(function () {
+$('.js-datepicker').datetimepicker();
+});
+	</script>
+{% endblock %}

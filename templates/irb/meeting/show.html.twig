@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Meeting
+{% endblock %}
+
+{% block body %}
+	<h1>Meeting</h1>
+
+	<table class="table">
+		<tbody>
+
+			<tr>
+				<th>Number</th>
+				<td>{{ meeting.number }}</td>
+			</tr>
+			<tr>
+				<th>Meeting schedule date</th>
+				<td>{{ meeting.heldAt ? meeting.heldAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			{% if meeting.minuteTakenAt %}
+				
+			<tr>
+				<th>Meeting minute taken at</th>
+				<td>{{ meeting.minuteTakenAt ? meeting.minuteTakenAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Meeting minute taken by</th>
+				<td>{{ meeting.minuteTakenBy }}</td>
+			</tr>
+			{% endif %}
+		</tbody>
+	</table>
+
+	<div class="h3 text-blue">Attendee</div>
+	<table class="table table-bordered w-50">
+		<thead>
+			<th>Member</th>
+			<th>Role</th>
+		</thead>
+		<tbody>
+			{% for attendee in meeting.attendee %}
+
+				<tr>
+					<th>{{attendee}}</th>
+					<th>{{attendee.role}}</th>
+
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+    	<div class="h3 text-blue">Applications</div>
+
+	<table class="table table-bordered ">
+		<thead>
+			<th>Title</th>
+			<th>PI</th>
+		</thead>
+		<tbody>
+       
+      
+			{% for app in meeting.applications %}
+
+				<tr>
+					<th>{{app.title}}</th>
+					<th>{{app.submittedBy}}</th>
+
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+
+	<a class="btn btn-primary" href="{{ path('i_r_b_meeting_index') }}">back to list</a>
+
+	<a class="btn btn-warning" href="{{ path('i_r_b_meeting_edit', {'id': meeting.id}) }}">Edit</a>
+	<a class="btn btn-warning" href="{{ path('i_r_b_meeting_minute', {'id': meeting.id}) }}">Take Minute</a>
+
+	{{ include('irb/meeting/_delete_form.html.twig') }}
+{% endblock %}

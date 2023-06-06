@@ -1,0 +1,9 @@
+translations:
+
+
+overview:
+    page_title: "Overview"
+    show_grid: "Translation grid"
+    msg_latest_translation: "Latest translation date: %date% UTC."
+    domain: "Domain"
+    no_stats: "No data to display."

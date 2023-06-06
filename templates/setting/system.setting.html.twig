@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}General Settings
+{% endblock %}
+{% block maintitle %}General Settings
+{% endblock %}
+
+{% block body %}
+
+	<div class="card card-info">
+		<div class="card-header">
+			<div class="card-title">General Settings</div>
+		</div>
+		<div class="card-body">
+
+			
+			<table class="table">
+				<tbody>
+                {% for setting in settings %}
+                    
+              
+						{% if setting.type ==1 %}
+					<tr>
+						<th>{{setting.name}}</th>
+						<td>
+							
+							<input  class="xsm setting-checkbox" type="checkbox" data-on-text="Yes" data-off-text="No" name="status-checkbox" {{setting.value ? "checked":""}} data-bootstrap-switch data-off-color="danger" data-on-color="success" data-code="{{setting.code}}" value="1">
+					
+						</td>
+					</tr>
+						{% endif %}
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block script %}
+	<script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+	<script>
+		$("input[data-bootstrap-switch]").each(function () {
+
+$(this).bootstrapSwitch('state', $(this).prop('checked'));
+
+});
+
+
+$('.setting-input').on("change",function(){
+
+
+code = $(this).attr('data-code');
+value = $(this).val();
+console.log(code);
+console.log(value);
+$.ajax({
+type: "POST",
+
+url: "{{ path('general_setting') }}",
+data: "setting=true&code=" + code + "&value=" + value,
+success: function (xml) {}
+});
+
+
+
+})
+$('.setting-checkbox').on('switchChange.bootstrapSwitch', function (event, state) {
+
+console.log(1);
+
+code = $(this).attr('data-code')
+if ($(this).is(':checked')) {
+value = 1
+} else {
+value = 0
+
+}
+
+
+$.ajax({
+type: "POST",
+dataType: "xml",
+url: "{{ path('general_setting') }}",
+data: "setting=true&code=" + code + "&value=" + value,
+success: function (xml) {}
+});
+
+
+});
+	</script>
+{% endblock %}

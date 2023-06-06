@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Submission Status{% endblock %}
+
+{% block body %}
+ 
+    {{ include('submission_status/_form.html.twig') }}
+		<script src="{{ asset('Anyar/assets/js/script.js') }}"></script>
+
+    <a href="{{ path('app_submission_status_index') }}">back to list</a>
+  
+{% endblock %}
+
+ {% block script %}
+    <script>
+setInterval(saveData, 5000);
+function saveData(){
+ 
+ //var postid = $('#submission_status[name]').val(); 
+ var postid = $('#name').val(); 
+
+ if(postid != ''  ){
+  
+  $.ajax({
+   url: "{{ path('app_submission_status_test') }}",
+   type: 'post',
+   //data: {name:postid},
+   data: $('#Form').serialize(),
+   success: function(response){
+    $('#postid').val(response);
+   } 
+  });
+ }
+ 
+}
+
+</script>
+ {% endblock %}
+

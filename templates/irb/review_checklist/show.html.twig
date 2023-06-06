@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ReviewChecklist{% endblock %}
+
+{% block body %}
+    <h1>ReviewChecklist</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ review_checklist.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ review_checklist.name }}</td>
+            </tr>
+            <tr>
+                <th>AnswerType</th>
+                <td>{{ review_checklist.answerType }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('i_r_b_review_checklist_index') }}">back to list</a>
+
+    <a href="{{ path('i_r_b_review_checklist_edit', {'id': review_checklist.id}) }}">edit</a>
+
+    {{ include('irb/review_checklist/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,618 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Application
+{% endblock %}
+
+{% macro displayResearchSubject(subject) %}
+	<div class="col-md-6 parent">
+		<div class="row">
+			<div class="col-1 {{ subject.subject.vars.data.type == 1 ? " my-checkbox" : " " }}">
+				{{form_widget(subject.checked,{attr:{class:"form-control " ~ subject.subject.vars.data.type == 1 ? "enable-other":"" }})}}
+
+			</div>
+			<div class="col-4">
+				{{form_widget(subject.subject,{"attr":{"hidden":true }})}}
+
+				{{subject.subject.vars.data}}
+
+				{% if subject.subject.vars.data.type == 1 %}
+					<div class="my-hidden d-none">
+
+						{{form_widget(subject.other,{"attr":{"placeholder":"Specify"}})}}
+					</div>
+				{% endif %}
+
+			</div>
+			<div class="col-4 row form-group">
+				<label class="col-1">#</label>
+				<div class="col-8">
+					{{form_widget(subject.number,{"attr":{"class":" col-8"}})}}
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+
+{% endmacro %}
+
+{% macro displayMitigation(strategy) %}
+	<div class="col-md-12 parent">
+		<div class="row">
+		{% if strategy.strategy.vars.data.formGroup %}
+	
+		<div class="col-1 my-checkbox check-group group-{{strategy.strategy.vars.data.formGroup.id}}" data-group="{{strategy.strategy.vars.data.formGroup.id}}">
+	
+			{{form_widget(strategy.checked,{"attr":{"class":"form-control","required":true }})}}
+	
+		</div>
+		{% else %}
+		{{form_widget(strategy.checked,{"attr":{"hidden":true ,"checked":true}})}}
+	{% endif %}
+		
+			<div class="col-10">
+				{{form_widget(strategy.strategy,{"attr":{"hidden":true }})}}
+
+				{{strategy.strategy.vars.data}}
+				{{strategy.strategy.vars.data.description}}
+				
+
+			</div>
+			{% if  strategy.strategy.vars.data.type == 1 or strategy.strategy.vars.data.formGroup == null %}
+
+					<div class="col-7   {{ strategy.strategy.vars.data.formGroup ? "my-hidden  d-none":"" }}">
+						{{form_widget(strategy.description,{"attr":{"required":strategy.strategy.vars.data.formGroup ? false:true}})}}
+					</div>
+				{% endif %}
+
+
+
+		</div>
+	</div>
+<hr>
+
+{% endmacro %}
+{% macro displayReview(review) %}
+	<div class="col-md-6">
+		<div class="row">
+			<div class="col-1">
+				{{form_widget(review.checked,{"attr":{"class":"form-control" }})}}
+			</div>
+			<div class="col-4">
+				{{form_widget(review.review,{"attr":{"hidden":true }})}}
+				{{review.review.vars.data}}
+			</div>
+		</div>
+	</div>
+
+
+{% endmacro %}
+{% macro displayAttachment(attachment) %}
+
+	<div class="col-md-12 parent">
+		<div class="row">
+			<div class="col-1 my-checkbox">
+				{{form_widget(attachment.checked,{"attr":{"checked":attachment.type.vars.data.isRequired,"disabled":attachment.type.vars.data.isRequired}})}}
+			</div>
+			<div class="col-6">
+				{{attachment.type.vars.data}}
+				{{form_widget(attachment.type,{"attr":{"hidden":true }})}}
+			</div>
+			<div class="col-3 {{ attachment.type.vars.data.isRequired ? "":"my-hidden d-none" }}">
+				{{form_widget(attachment.uploadFile,{"attr":{"class":"form-control" ,"required":attachment.type.vars.data.isRequired}})}}
+				
+				
+				
+				
+			</div>
+		</div>
+	</div>
+	<hr>
+
+{% endmacro %}
+
+
+{% macro displayContent(coAuthor) %}
+	{# {{form_row(vitalSignTestResult)}} #}
+
+	<div class="col-md-1">
+		<div class="form-group select-wizard">
+			<label class="bmd-label-floating">{% trans %}Title{% endtrans %}</label>
+			{{form_widget(coAuthor.title)}}
+
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="form-group select-wizard">
+			<label class="bmd-label-floating">{% trans %}Name of CO-PI{% endtrans %} </label>
+			{{form_widget(coAuthor.name)}}
+
+		</div>
+	</div>
+
+	<div class="col-md-3">
+		<div class="form-group select-wizard">
+			<label class="bmd-label-floating">{% trans %}Department{% endtrans %}</label>
+			{{form_widget(coAuthor.department)}}
+
+		</div>
+	</div>
+		<div class="col-md-2">
+		<div class="form-group select-wizard">
+			<label class="bmd-label-floating">{% trans %}Role{% endtrans %} </label>
+			{{form_widget(coAuthor.role)}}
+
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div class="form-group select-wizard">
+			<label class="bmd-label-floating">{% trans %}Email{% endtrans %} </label>
+			{{form_widget(coAuthor.email)}}
+
+		</div>
+	</div>	
+
+
+
+	{# <div class="col-md-2">
+				<div class="form-group select-wizard">
+					<label class="bmd-label-floating">Role</label>
+					{{form_widget(coAuthor.role)}}
+		
+				</div>
+			</div> #}
+
+	<div class="col-md-1">
+		<div class="form-group">
+
+			<button type="button" class=" btn btn-danger btn-sm close  remove-collection-widget mt-4   bgc-h-danger-l2 radius-round ">
+				<span aria-hidden="true">×</span>
+
+			</button>
+		</div>
+	</div>
+{% endmacro %}
+{% block body %}
+
+	<div class="row ">
+	<div class="col col-9  ">
+	<div class="card ">
+	<div class="card-header  "> New application </div>
+	<div class="card-boy m-3 p-3">
+
+		{{ form_start(form,{ "attr":{"id":"form-horizontal", "class":"form-group"}}) }}
+
+	
+	
+
+
+
+		<h3> {% trans %}Overview{% endtrans %}</h3>
+		<fieldset>
+
+
+			<div class="row mb-3">
+				<legend class="col-form-label col-sm-2 pt-0">Submit proposal/protocol</legend>
+				<div class="col-sm-10">
+					{{ form_widget(form.type) }}
+
+				</div>
+			</div>
+			<div class="form-material d-none" id="div-pi">
+				<div class="form-group">
+					<label class="form-label mt-3 mb-1">{% trans %}Project /Research PI{% endtrans %}<span class='text-danger'>*</span>
+					</label>
+					{{ form_widget(form.pi,{'attr':{'class':'form-control'}}) }}
+
+				</div>
+			</div>
+			<div class="form-material  "  >
+				<div class="form-group">
+					<label class="form-label mt-3 mb-1">{% trans %}Application  to Institute/College {% endtrans %}<span class='text-danger'>*</span>
+					</label>
+					{{ form_widget(form.college,{'attr':{'class':'form-control'}}) }}
+
+				</div>
+			</div>
+			<div class="form-material">
+				<div class="form-group">
+					<label class="form-label mt-3 mb-1">{% trans %} Project /Research Title{% endtrans %}<span class='text-danger'>*</span>
+					</label>
+
+					{{ form_widget(form.title,{'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="form-group">
+
+
+					<label for="txtLastNameBilling" class="form-label mt-3 mb-1">{% trans %} 
+						Project Description (provide a one paragraph description of your {% endtrans %}project or study)</label>
+					<span class='text-danger'>*</span>
+					{{ form_widget(form.description,{'attr':{'class':'form-control'}}) }}
+					<br>
+				</div>
+
+
+				<div class="form-group row">
+					<div class="form-group col-md-6">
+						<label class="form-label mt-3 mb-1">{% trans %} Project Start Date{% endtrans %}<span class='text-danger'>*</span>
+						</label>
+						{{ form_widget(form.startDate,{'attr':{'class':'form-control'}}) }}
+					</div>
+					<div class="form-group col-md-6">
+						<label class="form-label mt-3 mb-1">{% trans %} Project End Date{% endtrans %}<span class='text-danger'>*</span>
+						</label>
+						{{ form_widget(form.endDate,{'attr':{'class':'form-control'}}) }}
+					</div>
+
+
+				</div>
+				<div class="form-group">
+
+					<label class="form-label mt-3 mb-1">{% trans %} Project Location (where work will be done){% endtrans %}<span class='text-danger'>*</span>
+					</label>
+
+					{{ form_widget(form.location,{'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="form-group row">
+				
+
+				<div class="form-group col-md-6">
+
+					<label class="form-label mt-3 mb-1">{% trans %} Project Type{% endtrans %}<span class='text-danger'>*</span>
+					</label>
+
+					{{ form_widget(form.projectType,{'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="form-group col-md-6">
+
+			<label class="form-label mt-3 mb-1">{% trans %} Application Type{% endtrans %}<span class='text-danger'>*</span>
+			</label>
+
+			{{ form_widget(form.applicationType,{'attr':{'class':'form-control'}}) }}
+		</div>
+			</div>
+			
+
+
+				<ul  class="m-t-5">
+					{% for category in subject_category %}
+						<label class="form-label mt-3 mb-1">{% trans %} Research Subjects{% endtrans %}({{category.name}})<span class='text-danger'>*</span>
+						</label>
+
+						<div class="row ">
+						{% for subject in form.applicationResearchSubjects | filter(sub => sub.vars.data.subject.category == category) %}
+								{{ _self.displayResearchSubject(subject) }}
+							{% endfor %}
+						</div>
+					{% endfor %}
+				</ul>
+
+
+			</fieldset>
+			<h3> {% trans %} Members {% endtrans %}</h3>
+			<fieldset>
+				<div>
+					<div class="row">
+						<div class="col-12">
+							<button type="button" class="btn btn-primary add-another-collection-widget btn btn-sm btn-bd-primary float-right " data-list-selector="#contact-fields-list">
+								<span aria-hidden="true">+</span>
+								Add Research members
+							</button>
+							<ul id="contact-fields-list" class="m-t-5" data-prototype="{{_self.displayContent(form.members.vars.prototype)|e }}" data-widget-tags="{{ '<div class="row "></div>'|e }}" data-widget-counter="{{ form.members|length }}">
+								{% for coAuthor in form.members %}
+									<div class="row ">
+										{{ _self.displayContent(coAuthor) }}
+									</div>
+								{% endfor %}
+							</ul>
+
+
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+		<h3> {% trans %} Mitigation Strategies {% endtrans %}</h3>
+			<fieldset>
+				<h5>COVID-19 Mitigation Strategies Associated with Data Collection</h5>
+				{% for group in mitigation_strategy_group %}
+					<label class="form-label mt-3 mb-1">{{group.name}}<span class='text-danger'></span>
+					</label>
+	
+					{% for strategy in form.applicationMitigationStrategies | filter(strat => strat.vars.data.strategy.formGroup == group) %}
+						<div class="row">
+							{{ _self.displayMitigation(strategy) }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+				{% for strategy in form.applicationMitigationStrategies | filter(strat => strat.vars.data.strategy.formGroup == null) %}
+						<div class="row">
+							{{ _self.displayMitigation(strategy) }}
+						</div>
+				{% endfor %}
+			</fieldset>
+
+		<h3> {% trans %} ATTACHMENTS {% endtrans %}</h3>
+			<fieldset>
+				<label class="form-label mt-3 mb-1">{% trans %} DOCUMENT ATTACHMENTS{% endtrans %}<span class='text-danger'>*</span>
+				</label>
+	
+				<div class="row ">
+				{% for attachment in form.applicationAttachments %}
+						{{ _self.displayAttachment(attachment) }}
+					{% endfor %}
+				</div>
+	
+	
+			</fieldset>
+
+	{# <h3> {% trans %} REVIEW STATUS {% endtrans %}</h3>
+		<fieldset>
+			<h5>DETERMINING REVIEW STATUS: Exempt, Expedited, or Full</h5>
+			{% for review_group in review_status_group %}
+				<label class="form-label mt-3 mb-1"> {{review_group.name}}<span class='text-danger'>*</span>
+				</label>
+
+				{% for review in form.applicationReviews | filter(strat => strat.vars.data.review.reviewGroup == review_group) %}
+					<div class="row ">
+						{{ _self.displayReview(review) }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</fieldset> #}
+
+			<h3> {% trans %} Confirmation {% endtrans %}</h3>
+			<fieldset>
+			
+				In making this application, I certify that I:
+				<ol>
+					<li>Have reviewed all information on the Jimma University Institutional Review Board for Human Subjects’ Protection on the Portal at
+						<a href="http://ju.edu.et/irb">www.ju.edu.et/irb</a>
+					</li>
+					<li>Intend to comply with the Jimma University IRB policies.</li>
+					<li>Agree to comply with federal, state, and local laws regarding the protection of human participants in research.</li>
+					<li>Will submit any future changes to the research project for IRB review and approval prior to implementation.</li>
+					<li>Agree any adverse events that occur in the course of the study will be promptly reported to the IRB in writing.</li>
+					<li>Understand that records of the participants will be kept for at least three (3) years after the completion of the research for the purpose of IRB inquirie.</li>
+					<li>May begin research when the IRB gives notice of its approval.</li>
+				</ol>
+				<div class="mb-3">
+					<div class="form-check">
+						<input id="agree" type="checkbox" class="form-check-input">
+						<label class="form-check-label" > I HAVE READ AND UNDERSTOOD THE ABOVE POLICIES. AND AGREE TO ABIDE BY THEM.</label>
+						<br>
+						<div  class="text-danger d-none mt-4" id="agree-error">Please indicate that you have read and agree to the policies</div>
+					</div>
+                </div>
+
+
+			</fieldset>
+			
+			<div class="d-none" style="display:none;">{{ form_widget(form._token) }}</div>
+
+			{{ form_end(form,{'render_rest':false}) }}
+
+		</div>
+		</div>
+		</div>
+		<div class ="col-3">
+		<div class ="card">
+		<div class ="card-header">Form Templates Attachment
+		</div>
+		<div class ="card-body">
+<ol>
+{% for guideline_for_reviewer in  irbReviewAtachements %}
+	<li>								
+	
+	  <a class="badge bg-primary" href="{{ asset('files/guidelines/'~ guideline_for_reviewer.attachement ) }}">
+ {{guideline_for_reviewer.attachmentName}}							<i class="fa fa-download"></i>
+						</a>
+	</li>									 
+
+					  	{% else %}
+ 									{% endfor %} 
+</ol>
+		</div>
+		</div>
+		</div>
+		</div>
+
+	{% endblock %}
+
+
+	{% block script %}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" integrity="sha512-37T7leoNS06R80c8Ulq7cdCDU5MNQBwlYoy1TX/WUsLFC2eYNqtKlV0QjH7r8JpG/S0GUMZwebnVFLPd6SU5yg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="{{ asset('plugins/jquery-steps/jquery.steps.min.js')}}"></script>
+		<script>
+			$(document).ready(function () {
+				$(".custom-file-label").each(function(e,v){
+	$(v).remove();
+})
+				jQuery.validator.addMethod("greaterStart", function (value, element, params) {
+			
+    return this.optional(element) || new Date(value) >= new Date($(params).val());
+},'The project end date must be  later than the project start date.');
+
+var form = $("#form-horizontal");
+
+$("#form-horizontal").steps({
+headerTag: "h3",
+bodyTag: "fieldset",
+transitionEffect: "slideLeft",
+autoFocus: true,
+onStepChanging: function (event, currentIndex, newIndex) { // Allways allow previous action even if the current form is not valid!
+if (currentIndex > newIndex) {
+return true;
+}
+
+
+// Needed in some cases if the user went back (clean up)
+if (currentIndex < newIndex) { // To remove error styles
+form.find(".body:eq(" + newIndex + ") label.error").remove();
+form.find(".body:eq(" + newIndex + ") .error").removeClass("error");
+}
+
+form.validate().settings.ignore = ":disabled,:hidden";
+
+return form.valid();
+},
+onStepChanged: function (event, currentIndex, priorIndex) {
+if(currentIndex== 6){
+	if($( "input[name^='application[applicationReviews]']:checked" ).length == 0){
+		$("#additional").removeClass("d-none")
+		$("#application_uploadFile_file").prop("required",true)
+	}else{
+		$("#additional").addClass("d-none")
+		$("#application_uploadFile_file").prop("required",false)
+	}
+
+}
+
+},
+onFinishing: function (event, currentIndex) {
+
+
+
+
+form.validate().settings.ignore = ":disabled";
+if($("#agree").is(':checked')){
+	this.submit();
+}
+else{
+	$("#agree").addClass("error");
+	$("#agree-error").removeClass("d-none");
+	
+}
+return form.valid();
+},
+onFinished: function (event, currentIndex) {
+
+this.submit()
+
+}
+}).validate({
+errorPlacement: function errorPlacement(error, element) {
+element.after(error);
+},
+rules: {
+"submission[title]": {
+required: true,
+minlength: 5
+},
+"#submission_agree_to_the_terms_0": {
+required: true
+},
+"application[endDate]": {
+	required: true,
+        greaterStart: "#application_startDate"
+      }
+
+},
+messages: {
+"submission[agree_to_the_terms]": {
+required: "You need to agree with the Terms and Conditions before you continue."
+
+}
+}
+
+}
+);
+
+$.fn.steps.setStep = function (step) {
+var currentIndex = $(this).steps('getCurrentIndex');
+for (var i = 0; i < Math.abs(step - currentIndex); i++) {
+if (step > currentIndex) {
+$(this).steps('next');
+} else {
+$(this).steps('previous');
+}
+}
+};
+});
+		</script>
+		<script>
+			$(document).ready(function () {
+
+
+$(".my-checkbox input[type=checkbox]").each(function (e, v) {
+$(v).click(function (e) {
+	group=$(v).parentsUntil(".check-group").parent().attr("data-group")
+		if(group){
+			$(`.group-${group} input[type=checkbox]`).each(function(e2,v2){
+				$(v2).prop('checked', false);
+				$(v2).prop('required', false);
+				$(v2).parentsUntil(".parent").find(".my-hidden").addClass("d-none")
+				$(v2).parentsUntil(".parent").find(".my-hidden").find('input').prop('required', false);
+				$(v2).siblings('.error').remove();
+				$(v2).removeClass('error')
+			})
+			$(v).prop('checked', true);
+			
+			}
+if (e.target.checked) {
+
+$(this).parentsUntil(".parent").find(".my-hidden").removeClass("d-none")
+$(this).parentsUntil(".parent").find(".my-hidden").find('input').prop('required', true);
+} else {
+$(this).parentsUntil(".parent").find(".my-hidden").addClass("d-none")
+$(this).parentsUntil(".parent").find(".my-hidden").find('input').prop('required', false);
+
+
+}
+});
+});
+
+});
+
+
+jQuery(document).ready(function () {
+$('input[type=radio][name="application[type]"]').change(function () {
+
+if(this.value == '1') { 
+$("#div-pi").addClass("d-none")
+$('input[type=radio][name="application[type]"]').prop('required', false);
+}
+ else if (this.value == '2') {
+$("#div-pi").removeClass("d-none")
+$('input[type=radio][name="application[type]"]').prop('required', true);
+
+}
+});
+});
+jQuery(document).ready(function () {
+
+$(document).on('click', '.remove-collection-widget', function (e) {
+$(this).closest('.row').fadeOut().remove();
+$(".select2").select2();
+
+
+});
+$(document).on('click', '.add-another-collection-widget', function (e) {
+//{# $(".select2").select2(); #}
+
+var list = jQuery(jQuery(this).attr('data-list-selector'));
+
+var counter = list.data('widget-counter') || list.children().length;
+var newWidget = list.attr('data-prototype');
+
+newWidget = newWidget.replace(/__name__/g, counter);
+counter++;
+list.data('widget-counter', counter);
+var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+newElem.appendTo(list);
+$(".select").select2("destroy").select2();
+});
+});
+
+
+
+$(document).ready(function () {
+
+$(".select2").select2();
+	
+
+	
+	});
+		</script>
+	{% endblock %}

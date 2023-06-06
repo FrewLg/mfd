@@ -1,0 +1,237 @@
+<div class="tab-pane p-3  active" id="review-checklist" role="tabpanel">
+
+	{% for re in review_assignment %}
+
+		{% if re.allowToView ==1 and re.application.submittedBy == app.user  %}
+
+			<div class="card m-2">
+				<div class="card-header  bg-secondary">
+
+					<h5>Reviewer #{{loop.index}}
+					</h5>
+				</div>
+				<div class="card-body">
+
+
+					<form method="POST" onsubmit="return confirm('Save changes')">
+						<input hidden name="review-checklist" value="true"/>
+						<table class="table table-bordered table-hover">
+
+							<tbody>
+
+								{% for checklist_group in irb_review_checklist_group %}
+									<tr>
+										<th>{{toRoman(loop.index)}}.
+											{{checklist_group}}</th>
+
+										<th>Response</th>
+									</tr>
+									{% set parents = {} %}
+									{% for checklist in re.reviewerResponses|filter(  checklist =>  (checklist.checklist.answerType==1 and  checklist.checklist.checklistGroup ==  checklist_group) ) %}
+
+										{% if checklist.checklist.parent %}
+											{% set parents = parents|merge({("key" ~ checklist.checklist.parent.id):checklist.checklist.parent}) %}
+
+										{% else %}
+
+
+											<tr>
+												<td>
+													<p style="margin-left:10px">{{toAlpha(loop.index)}}.
+														{{checklist}}</p>
+												</td>
+												<td>{{ checklist.answer }}</td>
+											</tr>
+										{% endif %}
+
+									{% endfor %}
+									{% for checklist_parent in parents %}
+										<tr>
+											<th>
+												<b style="margin-left:10px">{{toRoman(loop.index)}}.
+													{{checklist_parent}}<b></th>
+
+													<th>Response</th>
+												</tr>
+												{% for checklist in re.reviewerResponses|filter(checklist =>  (checklist.checklist.answerType==1 and  checklist.checklist.parent ==  checklist_parent)) %}
+
+
+													<tr>
+														<td>
+															<p style="margin-left:20px">{{loop.index}}.
+																{{checklist}}</p>
+														</td>
+														<td>{{ checklist.answer }}</td>
+													</tr>
+
+												{% endfor %}
+											{% endfor %}
+
+
+										{% endfor %}
+									</tbody>
+								</table>
+
+								<div class="mb-3 row">
+									<label class="col-md-3 my-2 form-label">WAIVERS:</label>
+									<p>Does the application contain a request for the committee to waive any aspects of consent or other standard IRB guidelines?
+
+										<div class="col-md-9">
+											<u>
+												{{  re.waiver}}</u>
+										</div>
+									</p>
+
+								</div>
+								<div class="mb-3 row">
+									<label class="col-md-3 my-2 form-label">RISK LEVEL:</label>
+									<u>{{  re.riskLevel}}</u>
+
+
+								</div>
+								<div class="mb-3 row">
+									<label class="col-md-3 my-2 form-label">RECOMMENDATION:
+									</label>
+
+									<u>
+										{{  re.recommendation}}</u>
+
+								</div>
+
+								<div class="mb-3 row">
+									<label class="col-md-3 my-2 form-label">HOW OFTEN THIS STUDY SHOUD BE REVIEWED:
+									</label>
+									<u>
+										{{  re.howOftenStudyReviewed}}</u>
+								</div>
+							</tbody>
+						</tbody>
+					</form>
+				</div>
+			</div>
+		{% else %}
+
+			{% if is_granted("ROLE_VICE_CHAIR") or is_granted("ROLE_CHAIR")   or is_granted("ROLE_SECRETARY")   %}
+
+				<div class="card m-2">
+					<div class="card-header  bg-secondary">
+
+						<h5>Reviewer #{{loop.index}} {{re.irbreviewer}}
+						</h5>
+					</div>
+					<div class="card-body">
+
+
+						<form method="POST" onsubmit="return confirm('Save changes')">
+							<input hidden name="review-checklist" value="true"/>
+							<table class="table table-bordered table-hover">
+
+								<tbody>
+
+									{% for checklist_group in irb_review_checklist_group %}
+										<tr>
+											<th>{{toRoman(loop.index)}}.
+												{{checklist_group}}</th>
+
+											<th>Response</th>
+										</tr>
+										{% set parents = {} %}
+										{% for checklist in re.reviewerResponses|filter(  checklist =>  (checklist.checklist.answerType==1 and  checklist.checklist.checklistGroup ==  checklist_group) ) %}
+
+											{% if checklist.checklist.parent %}
+												{% set parents = parents|merge({("key" ~ checklist.checklist.parent.id):checklist.checklist.parent}) %}
+
+											{% else %}
+
+
+												<tr>
+													<td>
+														<p style="margin-left:10px">{{toAlpha(loop.index)}}.
+															{{checklist}}</p>
+													</td>
+													<td>{{ checklist.answer }}</td>
+												</tr>
+											{% endif %}
+
+										{% endfor %}
+										{% for checklist_parent in parents %}
+											<tr>
+												<th>
+													<b style="margin-left:10px">{{toRoman(loop.index)}}.
+														{{checklist_parent}}<b></th>
+
+														<th>Response</th>
+													</tr>
+													{% for checklist in re.reviewerResponses|filter(checklist =>  (checklist.checklist.answerType==1 and  checklist.checklist.parent ==  checklist_parent)) %}
+
+
+														<tr>
+															<td>
+																<p style="margin-left:20px">{{loop.index}}.
+																	{{checklist}}</p>
+															</td>
+															<td>{{ checklist.answer }}</td>
+														</tr>
+
+													{% endfor %}
+												{% endfor %}
+
+
+											{% endfor %}
+										</tbody>
+									</table>
+
+									<div class="mb-3 row">
+										<label class="col-md-3 my-2 form-label">WAIVERS:</label>
+										<p>Does the application contain a request for the committee to waive any aspects of consent or other standard IRB guidelines?
+
+											<div class="col-md-9">
+												<u>
+													{{  re.waiver}}</u>
+											</div>
+										</p>
+
+									</div>
+									<div class="mb-3 row">
+										<label class="col-md-3 my-2 form-label">RISK LEVEL:</label>
+										<u>{{  re.riskLevel}}</u>
+
+
+									</div>
+									<div class="mb-3 row">
+										<label class="col-md-3 my-2 form-label">RECOMMENDATION:
+										</label>
+
+										<u>
+											{{  re.recommendation}}</u>
+
+									</div>
+
+									<div class="mb-3 row">
+										<label class="col-md-3 my-2 form-label">HOW OFTEN THIS STUDY SHOUD BE REVIEWED:
+										</label>
+										<u>
+											{{  re.howOftenStudyReviewed}}</u>
+									</div>
+								</tbody>
+							</tbody>
+						</form>
+					</div>
+
+					{% if re.allowToView %}
+						<form>
+							<button type="button" class='btn m-4 btn-soft-success btn-lg'>
+								Comments sent</button>
+						</form>
+					{% else %}
+						<form method="post" action="{{ path('send_comment', {'id': re.id}) }}" onsubmit="return confirm('Are you sure you want to send review comments to PI ?');">
+							<input type="hidden" name="_token" value="{{ csrf_token('send' ~ re.id) }}">
+							<button class="btn btn-soft-primary btn-lg m-4 ">
+								Send comments to applicant</button>
+						</form>
+					{% endif %}
+				</div>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+</div>

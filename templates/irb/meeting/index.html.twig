@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Meetings
+{% endblock %}
+
+{% block body %}
+	<h1>Board Meeting History</h1>
+
+	<a class="btn btn-primary float-end" href="{{ path('i_r_b_meeting_new') }}">Create new meeting Scheduled</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Number</th>
+				<th>Meeting Date</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for meeting in meetings %}
+				<tr>
+					<td>{{ loop.index }}</td>
+					<td>
+						<a class="btn-link" href="{{ path('i_r_b_meeting_show', {'id': meeting.id}) }}">{{ meeting.number }}</a>
+					</td>
+					<td> {{meeting.heldAt|ago}}</td>
+					<td>
+						<span class=" badge badge-outline-{{meeting.status==1?"info":"warning"}}">{{ meeting.statusText }}</span>
+					</td>
+
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}
+

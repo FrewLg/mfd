@@ -1,0 +1,214 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Profile
+
+{% endblock %}
+
+{% block container_title %}Profile
+
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="card">
+		<div class="card-header">
+
+			<div class="row align-items-center">
+				<div class="col">
+					<h4 class="card-title">Proposal membership
+
+						{% if coAuthors|length>0%}
+
+							<a href="#" class="avatar-box thumb-xxs align-self-center">
+								<span class="avatar-title bg-soft-primary rounded-circle font-13 font-weight-normal">
+									{{coAuthors|length}}
+
+								</span>
+							</a>
+							{% else %}
+
+						{% endif %}
+					</h4>
+				</div>
+				<!--end col-->
+			</div>
+		</div>
+
+		<div class="card-body ">
+			{% for submission in coAuthors %}
+				<h5 class="">
+
+					<a href="{{ path('submission_show', {'id': submission.submission.id}) }}" class='text-primary   '>
+						{{ submission.submission.title }}
+					</a>
+
+
+					{% if submission.submission.awardgranted %}
+
+						<a href="#" class="avatar-box thumb-xxs align-self-center">
+							<span class="avatar-title bg-soft-success rounded-circle font-13 font-weight-normal">
+								W
+
+							</span>
+						</a>
+						{% else %}
+
+					{% endif %}
+
+				</h5>
+				<small class="mb-0   text-muted">{{ submission.submission.sentAt|date('d M Y ') }}</small>
+
+				{# {{ submission.submission.CallForProposal.college }} #}
+				<h6 class='text-muted'>PI:
+					{{submission.submission.author}}
+
+
+					<div class="mt-4 d-flex justify-content-between">
+						<div class="img-group">
+
+
+							{% if submission.submission.author.userInfo and  submission.submission.author.userInfo.image %}
+
+								<a class="user-avatar user-avatar-group" href="##{{submission.submission.id}}">
+									<img src="{{ asset('files/profile_pictures/'~submission.submission.author.userInfo.image ) }}" alt="user" class="rounded-circle thumb-xxs">
+								</a>
+
+							{% else %}
+								<a class="user-avatar user-avatar-group" href="apps-project-teams.html#{{submission.submission.id}}">
+									<img src="{{ asset('/img/defaultuser.png') }}" alt="user" class="rounded-circle thumb-xxs">
+								</a>
+							{% endif %}
+
+
+							{% for member in submission.submission.coAuthors %}
+
+
+								{% if member.researcher.userInfo and member.researcher.userInfo.image %}
+
+									<a class="user-avatar user-avatar-group" href="##{{submission.id}}">
+										<img src="{{ asset('files/profile_pictures/'~member.researcher.userInfo.image ) }}" alt="user" class="rounded-circle thumb-xxs">
+									</a>
+
+
+								{% else %}
+									<a class="user-avatar user-avatar-group" href="##{{submission.id}}">
+										<img src="{{ asset('/img/defaultuser.png') }}" alt="user" class="rounded-circle thumb-xxs">
+									</a>
+								{% endif %}
+
+								{% else %}No Co-PI has been involved
+							{% endfor %}
+
+
+							<a href="#" class="avatar-box thumb-xxs align-self-center">
+								<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+									+{{ submission.submission.coAuthors|length   }}
+								</span>
+							</a>
+
+						</div>
+
+					</div>
+				</h6>
+
+
+				<h4 class="m-0  font-14 font-weight-semibold">
+					{% if submission.submission.CallForProposal.ResearchType ==1%}
+
+						MEGA
+					{% elseif submission.submission.submission.CallForProposal.ResearchType ==2%}
+
+						COMMUNITY SERVICE
+					{% elseif submission.submission.submission.CallForProposal.ResearchType ==3%}
+
+						TECHNOLOGY TRANSFER
+					{% elseif submission.submission.submission.CallForProposal.ResearchType ==4%}
+
+						FEMALE GRANT
+					{% elseif submission.submission.submission.CallForProposal.ResearchType ==5%}
+
+						YOUTH GRANT
+					{% elseif submission.submission.submission.CallForProposal.ResearchType ==6%}
+
+						PG STUDENT
+
+
+					{% endif %}
+					Research Project
+
+				</h4>
+
+				<div class="progress" style="height: 13px;">
+					<div class="progress-bar  progress-bar-striped  progress-bar-animated
+						
+						{% if submission.submission.complete==0%}    progress-bar-info" style="width:1%" role="progressbar" aria-valuenow="50" title="Incomplete submission" aria-valuemin="0" aria-valuemax="100">0%
+
+					{% elseif submission.submission.published==1%}
+						progress-bar-info" style="width:100%"
+						 role="progressbar" aria-valuenow="50"  title="Published"
+						 aria-valuemin="0" aria-valuemax="100"> 100%
+					{% elseif submission.submission.researchReports|length>2 %}
+						progress-bar-info" style="width:90%" 
+						 role="progressbar" aria-valuenow="50"  title="Research Reports sent"
+						 aria-valuemin="0" aria-valuemax="100"> 90%
+
+					{% elseif submission.submission.researchReports|length>1 %}
+						progress-bar-info" style="width:80%" 
+						 role="progressbar" aria-valuenow="50"  title="Research Reports sent"
+						 aria-valuemin="0" aria-valuemax="100"> 80%
+
+					{% elseif submission.submission.researchReports|length>0 %}
+						progress-bar-success" style="width:70%" 
+						 role="progressbar" aria-valuenow="50"  title="Research Reports sent"
+						 aria-valuemin="0" aria-valuemax="100" style='height =102'> 70%
+
+
+					{% elseif submission.submission.researchReportSubmissionSettings|length>0 %}
+						progress-bar-info" style="width:50%" 
+						 role="progressbar" aria-valuenow="50"  title="Research Report Submission Settings made"
+						 aria-valuemin="0" aria-valuemax="100">50%
+
+					{% elseif submission.submission.awardgranted==1  %}
+						progress-bar-warning " progress-bar-info" style="width:40%" 
+						 role="progressbar" aria-valuenow="50"  title="Award granted"
+						 aria-valuemin="0" aria-valuemax="100"> 40%
+
+					{% elseif submission.submission.reviews|length>2 %}
+						progress-bar-info" style="width:30%" 
+						 role="progressbar" aria-valuenow="50"   title="Review Decisions made"
+						 aria-valuemin="0" aria-valuemax="100" > 30%
+
+					{% elseif submission.submission.reviewAssignments|length>1 %}
+						progress-bar-info" style="width:20%" 
+						 role="progressbar" aria-valuenow="50"    title="Reviewer Assigned"
+						 aria-valuemin="0" aria-valuemax="100"> 20%
+
+
+					{% elseif submission.submission.complete==1  %}
+						progress-bar-info" style="width:10%" 
+						 role="progressbar" aria-valuenow="50"    title="Complete submission"
+						 aria-valuemin="0" aria-valuemax="100"> 10%
+
+
+					{% else  %}
+						progress-bar-info" style="width:1%"   
+						
+						 role="progressbar" aria-valuenow="50"    title="Incomplete submission"
+						 aria-valuemin="0" aria-valuemax="100">1%
+
+
+					{% endif %}
+
+				</div>
+			</div>
+
+
+			<hr class="hr-dashed my-4">
+
+		{% endfor %}
+
+
+	</div>
+{% endblock %}

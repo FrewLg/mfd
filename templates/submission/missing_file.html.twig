@@ -1,0 +1,72 @@
+ <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLarge">
+                                                        Add a missing concept note file  here 
+                                                        </button>
+
+<div class="modal fade bd-example-modal-lg" id="exampleModalLarge" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h6 class="modal-title m-0" id="myLargeModalLabel">Attachment 
+                                                    
+                                                   
+                                    </h6>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div><!--end modal-header-->
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-5 text-center">
+
+                                                        <div class="card">
+                                                        <div class="card-header">
+Attachment
+                                                                               </div><!--end col-->                                                            
+
+                                                        <div class="card-body">
+                                                            								<ul class="list-group  m-0">
+
+                                                        
+                                        <li class="list-group-item"> 
+                                        {% if  submission.proposal %}
+
+
+						<a href="{{ asset('/uploads/submission/'~ submission.proposal ) }}" class="btn btn-soft-info btn-xs float-right"> 
+						Concept note
+								<i class="fa fa-download material-icons warning"></i>
+							</a>
+						{% else %}
+							<span class="badge bg-soft-danger">Concept note not found</span>
+
+						{% endif %} 
+                                                           {# <span class="badge bg-soft-success"> {{submission.proposal}} </span> #}
+                                                            </li> 
+                                                            </ul>
+                                                            {# <img src="assets/images/widgets/flame-5.png" alt="" class="img-fluid"> #}
+                                                        </div><!--end col-->
+                                                        </div><!--end col-->
+                                                        </div><!--end col-->
+                                                        
+                                                        <div class="col-lg-7 align-self-center">
+                                                        <div class="card">
+                                                        <div class="card-header">
+                                                     Upload   </div><!--end col-->                                                            
+
+                                                        <div class="card-body">
+                                                                 {# {{ include('crp/submission/_form.html.twig') }} #}
+    
+    {{ form_start(missingattachmentform) }}
+    {{ form_widget(missingattachmentform) }}
+    <button class="btn btn-soft-primary">{{ button_label|default('Save file') }}</button>
+{{ form_end(missingattachmentform) }}
+
+                                                        </div><!--end col-->                                                            
+                                                        </div><!--end col-->                                                            
+                                                        </div><!--end col-->                                                            
+                                                    </div><!--end row-->
+                                                    
+                                                </div><!--end modal-body-->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-soft-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                                </div><!--end modal-footer-->
+                                            </div><!--end modal-content-->
+                                        </div><!--end modal-dialog-->
+                                    </div><!--end modal-->

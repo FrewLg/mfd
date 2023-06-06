@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CoInvestigator{% endblock %}
+
+{% block body %}
+    <h1>Edit CoInvestigator</h1>
+
+    {{ include('crp/co_investigator/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_c_r_p_co_investigator_index') }}">back to list</a>
+
+    {{ include('crp/co_investigator/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Department index
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								Department
+							</h4>
+							Total:
+							<a href="#" class="avatar-box thumb-xxs align-self-center">
+								<span class="avatar-title bg-soft-success rounded-circle font-13 font-weight-normal">
+									{{alldepartments|length}}
+								</span>
+							</a>
+						</div>
+						<div class="col-auto">
+							<a href="{{ path('department_new') }}" class='btn btn-primary btn-sm'>
+								Create   new
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered  ">
+						<tbody>{% set count = 0 %}
+							{% for college in departments %}
+								<tr>
+									<td style='background-color:#0c213a'>
+										<h5 class='text-info m-0 '>
+											{{college.name}}</h5>
+										{% if app.user.userInfo.college== college.name %}
+											<span class='badge bg-soft-danger '>
+												Your college
+											</span>
+										{% endif  %}
+
+										<span class='badge bg-soft-success '>{{college.registeredUsers|length}}
+											Registered users
+										</span>
+										<span class='badge bg-soft-success '>{{college.callForProposals|length}}
+											Call For Proposals
+										</span>
+										<span class='badge bg-soft-success '>{{college.applications|length}}
+											IRB Ethical clearance  applications
+										</span>
+										<span class='badge bg-soft-success '>{{college.callForTrainings|length}}
+											Call For Trainings
+										</span>
+										<span class='badge bg-soft-success '>{{college.boardMembers|length}}
+											IRB Bord members
+										</span>
+										<span class='badge bg-soft-success '>{{college.collegeCoordinators|length}}
+											Coordinators
+										</span>
+										<span class='badge bg-soft-success '>{{college.thematicAreas|length}}
+											Thematic Areas
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<table class="table table-bordered table-striped">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Name</th>
+													<th>actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for department in college.collegeCoordinators %}
+												{{loop.index}}
+												{{department.coordinator}}
+												{% endfor %}
+
+															{% if app.user.userInfo.college== college.name or is_granted('ROLE_SUPER_ADMIN')%}
+
+												{% for department in college.departments %}
+
+													<tr>
+														<td>{{ loop.index }}</td>
+														<td>{{ department.name }}</td>
+														<td>
+
+																{# <a href="{{ path('department_show', {'id': department.id}) }}" class="btn btn-sm btn-soft-primary">show</a> #}
+																<a href="{{ path('department_edit', {'id': department.id}) }}" class="btn btn-sm btn-soft-warning">edit</a>
+
+
+
+														</td>
+													</tr>
+												{% else %}
+													<tr>
+														<td colspan="3">no records found</td>
+													</tr>
+												{% endfor %}
+															{% endif  %}
+
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="3">no records found</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

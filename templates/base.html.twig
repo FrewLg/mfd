@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>
+			{% block title %}{% endblock %}|
+			{{app_name}}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta content="{{ app_name }}" name="description"/>
+		<meta content="" name="author"/>
+		<meta
+		http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<!-- App favicon -->
+		<link rel="shortcut icon" href="{{ asset('files/site_setting/'~site_logo ) }}">
+		<link href="{{ asset('plugins/jvectormap/jquery-jvectormap-2.0.2.css')}}" rel="stylesheet">
+		<link rel="stylesheet" href="{{ asset('plugins/jquery-steps/jquery.steps.css')}}">
+		<link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
+		<link href="{{ asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css"/>
+		<link href="{{ asset('assets/css/metisMenu.min.css')}}" rel="stylesheet" type="text/css"/>
+		<link href="{{ asset('plugins/daterangepicker/daterangepicker.css')}}" rel="stylesheet" type="text/css"/>
+		<link href="{{ asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css"/>
+		<link rel='shortcut icon' type='image/x-icon' href='{{asset("julogo.png")}}'/>
+
+
+		<link rel="stylesheet" href="{{ asset('assets/tagsinput.css')}}"/>
+		<link rel="stylesheet" href="{{ asset('plugins/select2/select2.min.css')}}"/>
+		{# <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>  #}
+
+		{% block styles %}{% endblock %}
+
+	</head>
+
+	<body>
+		<!-- Left Sidenav -->
+		{% include "includes/sidenav.html.twig" %}
+		<div class="page-wrapper">
+			{% include "includes/topbar.html.twig" %}
+			<div class="page-content">
+				<div
+					class="container-fluid">
+					<!-- Page-Title -->
+					{% include "includes/pagetitle.html.twig" %}
+					<div class="col-auto align-self-center"></div>
+
+					{% block body %}{% endblock %}
+
+					<br>
+				</div>
+				<!-- container -->
+				<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+					<div class="offcanvas-header">
+						<h5 id="offcanvasRightLabel" class="m-0">Help</h5>
+						<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+					</div>
+					<div class="offcanvas-body"> {% block help_right %}{% endblock %}
+						</div>
+					</div>
+					<footer class="footer text-center text-sm-start">
+						&copy;
+						<script>
+							document.write(new Date().getFullYear())
+						</script>
+						{{ app_name }}
+						<span class="text-muted d-none d-sm-inline-block float-end">{{ app_name }}
+							<b class='text-info'>
+								Version 1.0</b>
+						</span>
+					</footer>
+					<!--end footer-->
+				</div>
+				<!-- end page content -->
+			</div>
+			<!-- end page-wrapper -->
+
+			<!-- jQuery -->
+			<script src="{{ asset('assets/js/jquery.min.js')}}"></script>
+			<script src="{{ asset('assets/js/bootstrap.bundle.min.js')}}"></script>
+			<script src="{{ asset('assets/js/metismenu.min.js')}}"></script>
+			<script src="{{ asset('assets/js/waves.js')}}"></script>
+			<script src="{{ asset('assets/js/simplebar.min.js')}}"></script>
+			<script src="{{ asset('assets/js/moment.js')}}"></script>
+			<script src="{{ asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+
+			{# <script src="{{ asset('assets/js/feather.min.js')}}"></script>
+									<script src="{{ asset('assets/js/app.js')}}"></script> #}
+			<script src="{{ asset('plugins/jvectormap/jquery-jvectormap-2.0.2.min.js')}}"></script>
+			<script src="{{ asset('plugins/jvectormap/jquery-jvectormap-us-aea-en.js')}}"></script>
+			<script src="{{ asset('assets/tagsinput.js')}}"></script>
+			{# <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> #}
+			<script src="{{ asset('plugins/select2/select2.min.js')}}"></script>
+
+
+			{% block script %}{% endblock %}
+
+
+			<script src="{{ asset('assets/js/feather.min.js')}}"></script>
+			<script src="{{ asset('assets/js/app.js')}}"></script>
+
+			{# <script>
+				  $(function () {
+$(".select2").select2();
+
+}) 
+			</script> #}
+
+		</body>
+
+	</html>

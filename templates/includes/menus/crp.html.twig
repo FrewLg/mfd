@@ -1,0 +1,88 @@
+	<li>
+		<a href="javascript: void(0);">
+			<i class=" fas fa-medal align-self-center menu-icon"></i>
+			<span>Collaborative Researches</span>
+			<span class="menu-arrow">
+				<i class="mdi mdi-chevron-right"></i>
+			</span>
+		</a>
+		<ul class="nav-second-level" aria-expanded="false">
+			{% if is_granted("vw_gntd_rsrch") %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('crpdashboard') }}">
+						<i class="ti-control-record"></i>
+						CRP Dashboard
+					</a>
+				</li>
+			{% endif  %}
+			{% if is_granted("vw_gntd_rsrch") %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('app_c_r_p_collaborative_research_project_index') }}">
+						<i class="ti-control-record"></i>
+						External Granted Researches
+					</a>
+				</li>
+			{% endif  %}
+			{% if is_granted("ROLE_USER") %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('my_colla_projs') }}">
+						<i class="ti-control-record"></i>
+						My projects
+					</a>
+				</li>
+			{% endif %}
+{% if is_granted('mng_crp_setting') %}
+			<li>
+				<a href="javascript: void(0);">
+					<i class="fas fa-cog align-self-center menu-icon"></i>
+					<span>Setting</span>
+					<span class="menu-arrow">
+						<i class="mdi mdi-chevron-right"></i>
+					</span>
+				</a>
+				<ul class="nav-second-level" aria-expanded="false">
+					{% if is_granted('mng_crp_pr_typ') %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_c_r_p_project_type_index') }}">
+								<i class="ti-control-record"></i>
+								Project Type
+							</a>
+						</li>
+				{% endif %}
+					{% if is_granted('mng_crp_app_typ') %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_c_r_p_project_status_index') }}">
+								<i class="ti-control-record"></i>
+								{% trans %}Project Status{% endtrans %}
+							</a>
+						</li>
+					{% endif %}
+					{% if is_granted('mng_crp_app_typ') %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_c_r_p_project_progress_index') }}">
+								<i class="ti-control-record"></i>
+								{% trans %}Project Progress{% endtrans %}
+							</a>
+						</li>
+					{% endif %}
+					{% if is_granted('mng_crp_atch_typ') %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_c_r_p_funding_organization_index') }}">
+								<i class="ti-control-record"></i>
+								{% trans %}Funding organization{% endtrans %}
+							</a>
+						</li>
+					{% endif %} 
+					{% if is_granted('mng_crp_atch_typ') %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_c_r_p_currency_index') }}">
+								<i class="ti-control-record"></i>
+								{% trans %}Currency{% endtrans %}
+							</a>
+						</li>
+					{% endif %}
+ 				</ul>
+			</li>
+			{% endif %}
+		</ul>
+</li> 

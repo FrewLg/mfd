@@ -1,0 +1,47 @@
+{% if is_granted("vw_cll_fr_prop") or is_granted("vw_cll_fr_trn") or  is_granted("vw_schps")  %}
+
+	<li>
+		<a href="javascript: void(0);">
+			<i class="fas fa-bell align-self-center menu-icon"></i>
+			<span>Opportunities and fundings
+			</span>
+			<span class="menu-arrow">
+				<i class="mdi mdi-chevron-right"></i>
+			</span>
+		</a>
+		<ul class="nav-second-level" aria-expanded="false">
+
+			{% if is_granted("vw_cll_fr_prop") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('all_calls') }}">
+						<i class="ti-control-record"></i>
+						Call for proposals
+
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_cll_fr_trn") %}
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('call_for_training_index') }}">
+						<i class="ti-control-record"></i>
+						Call for  training
+					</a>
+				</li>
+			{% endif %}
+			{% if is_granted("vw_schps") %}
+
+
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('scholarship_index_adm') }}">
+						<i class="ti-control-record"></i>
+						Scholarships
+
+					</a>
+				</li>
+			{% endif %}
+
+		</ul>
+	</li>
+{% endif %}

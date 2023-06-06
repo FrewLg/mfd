@@ -1,0 +1,242 @@
+						<table class="table   table-bordered table-striped table-responsive">
+							<thead class='thead-light'>
+								<tr>
+									<th>#</th>
+									<th>Title</th>
+									<th>Short Title</th>
+									<th>PI</th>
+									<th>College</th>
+									<th>Funding Scheme</th>
+									<th>Progress</th>
+									<th>Status</th>
+
+								</tr>
+							</thead>
+							<tbody>
+   			{% for submission in submissions|sort((a, b) => a.fundingScheme <=> b.fundingScheme ?: a.fundingScheme <=> b.fundingScheme)  %}
+ 
+								
+									<tr {% if submission.complete=='completed' %} class='text-' {% elseif submission.complete==''%} class='text-danger' {% endif %}>
+										<td>
+											<a href="{{ path('submission_show', {'id': submission.id}) }}" class="text-info">
+												{{ loop.index }}
+											</a>
+
+										</td>
+										<td>
+											{% if app.user.id==submission.author.id  %}
+												<a href="{{ path('submission_status', {'uidentifier': submission.uidentifier}) }}" class='text-info '>
+													{{ submission.title }}
+												</a>
+
+
+											{% else %}
+												<a href="{{ path('submission_show', {'id': submission.id}) }}" class="text-info">
+													{{ submission.title }}
+												</a>
+											{% endif %}
+
+										</td>
+										<td>
+{% if  submission.shorttitle %}
+{{ submission.shorttitle }}
+											{% endif %}
+										</td>
+										<td>
+										 {{ submission.author.userInfo }}
+
+																				{% if app.user.id==submission.author.id  %}
+																					<span class="badge bg-soft-success">Thi is you</span>
+
+																				{% endif %}
+
+																				<a href="#" class="avatar-box thumb-xxs align-self-center">
+																					<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+																						+{{ submission.coAuthors|length   }}
+																					</span>
+																				</a>
+										 {% if  submission.callForProposal.coPoConfirmation ==1 %}
+
+																				{% set count = 0 %}
+																				{% for  confirmation in submission.coAuthors('confirmed') %}
+																					{% set count = count + 1 %}
+
+																					{% if  confirmation.confirmed()|length==0  %}
+
+																						<a href="#" class="avatar-box thumb-xxs align-self-center">
+
+																							<span class='avatar-title bg-soft-danger rounded-circle font-13 font-weight-normal'>
+																								{{count}}
+																								{% if count==0 %}
+
+																									{% elseif count<=1 %}
+																										<sup>st</sup>
+																									{% elseif count<=2%}
+																										<sup>nd</sup>
+																									{% elseif count<=3%}
+																										<sup>rd</sup>
+																									{% elseif count>=4%}
+																										<sup>th</sup>
+																								{% endif %}
+																							</span>
+																						</a>
+
+																					{% endif %}
+
+
+																				{% endfor %}
+																					{% endif %}
+
+
+																			</td>
+										{# <td>
+											{{ submission.author.userInfo }}
+
+											{% if app.user.id==submission.author.id  %}
+												<span class="badge bg-success">Thi is you</span>
+
+											{% endif %}
+
+											<a href="#" class="avatar-box thumb-xxs align-self-center">
+												<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+													+{{ submission.coAuthors|length   }}
+												</span>
+											</a>
+	{% if  submission.callForProposal.coPoConfirmation ==1 %}
+
+											{% set count = 0 %}
+											{% for  confirmation in submission.coAuthors('confirmed') %}
+												{% set count = count + 1 %}
+
+												{% if  confirmation.confirmed()|length==0  %}
+
+													<a href="#" class="avatar-box thumb-xxs align-self-center">
+
+														<span class='avatar-title bg-soft-danger rounded-circle font-13 font-weight-normal'>
+															{{count}}
+															{% if count==0 %}
+
+																{% elseif count<=1 %}
+																	<sup>st</sup>
+																{% elseif count<=2%}
+																	<sup>nd</sup>
+																{% elseif count<=3%}
+																	<sup>rd</sup>
+																{% elseif count>=4%}
+																	<sup>th</sup>
+															{% endif %}
+														</span>
+													</a>
+
+												{% endif %}
+
+
+											{% endfor %}
+
+												{% endif %}
+
+										</td> #}
+
+
+										{# <td>
+											{% if submission.sentAt %}
+												{{ submission.sentAt|date('d-m-y h:s a') }}
+											{% endif %}
+										</td> #}
+										<td>
+														{{submission.college }}
+				{% if  submission.proposal %}
+						<a href="{{ asset('/uploads/submission/'~ submission.proposal ) }}" class="btn btn-soft-success btn-xs float-right"> 
+						 Con
+								<i class="fa fa-download material-icons warning"></i>
+							</a>
+						{% else %}
+							<span class="badge bg-soft-danger">X</span>
+
+						{% endif %} 
+	 						<br>=
+						{% for submissionattachment in submission.submissionAttachements %}
+							<a href="{{ asset('/uploads/submission/'~ submissionattachment.file ) }}" class="btn btn-soft-success btn-xs float-right">{{submissionattachment.name|slice(0, 3)}}
+								<i class="fa fa-download material-icons warning"></i>
+							</a>
+						{% else %}
+							<span class="label label-danger">-</span>
+						{% endfor %}
+										</td>
+										<td>
+											{% if submission.fundingScheme %}
+											
+												<span title='{{submission.fundingScheme.description}}' class="badge bg-soft-{{submission.fundingScheme.acronymColor}} bg-xs">
+												<small>{{submission.fundingScheme.acronym}}</small>
+												</span>
+
+										{% endif %}
+										</td>
+										<td>
+											{{ include('submission/includes/progress.html.twig') }}
+
+										</td>
+										<td nowrap="nowrap">
+
+											{% if submission.awardgranted ==1  %}
+
+												<a class='badge bg-soft-success mt-2 bg-xs btn-block'>Winner
+													{# <i class="fa fa-check text-success"></i> #}
+												</a>
+											{% elseif   submission.reviewAssignments|length>0  %}
+
+												<a href="#" class="avatar-box thumb-xxs align-self-center">
+													<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+														{{submission.reviewAssignments|length}}R
+													</span>
+
+												</a>
+											{% else   %}
+												<a class='badge bg-soft-danger mt-2 bg-xs btn-block'>Not Assigned
+												</a>
+
+											{% endif %}
+	{% if  submission.callForProposal.coPoConfirmation ==1 %}
+
+
+											{% set count = 0 %}
+											{% for  confirmation in submission.reviewAssignments('closed') %}
+												{% set count = count + 1 %}
+
+												{% if  confirmation.closed()|length==0  %}
+
+													<a href="#" class="avatar-box thumb-xxs align-self-center">
+
+														<span class='avatar-title bg-soft-danger rounded-circle font-13 font-weight-normal'>
+															{{count}}
+															{% if count==0 %}
+
+																{% elseif count<=1 %}
+																	<sup>st</sup>
+																{% elseif count<=2%}
+																	<sup>nd</sup>
+																{% elseif count<=3%}
+																	<sup>rd</sup>
+																{% elseif count>=4%}
+																	<sup>th</sup>
+															{% endif %}
+														</span>
+													</a>
+
+												{% endif %}
+											{% endfor %}
+												{% endif %}
+
+										</td>
+									</tr>
+
+								{% else %}
+
+									<td colspan="8">no records found</td>
+
+								{% endfor %}
+
+
+							</tbody>
+						</table>
+					 

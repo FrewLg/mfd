@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProjectStatus index{% endblock %}
+
+{% block body %}
+ 
+   
+   <div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+   Project Status 
+							</h4>
+							Total: ({{project_statuses|length}})
+						</div>
+						<!--end col-->
+						<div class="col-auto">
+							<a href="{{ path('app_c_r_p_project_status_new') }}" class='btn btn-primary btn-sm'>
+								Create   new
+							</a>
+ 
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				<div class="card-body">
+				
+					<table class="table table-bordered table-striped">
+        <thead>  <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Projects</th>
+                <th>StatusColor </th>
+
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project_status in project_statuses %}
+            <tr>
+                <td>{{ project_status.id }}</td>
+                <td>{{ project_status.status }}</td>
+                <td> 
+                        <span title='{{project_status.collaborativeResearchProjects|length}}' class="badge bg-soft-{{project_status.statusColor}} bg-xs">
+                {{project_status.collaborativeResearchProjects|length}}</span>
+                </td>
+                <td>{{ project_status.statusColor  }}</td>
+
+                <td>
+                    <a href="{{ path('app_c_r_p_project_status_show', {'id': project_status.id}) }} " class="btn btn-xs btn-soft-primary">show</a>
+                    <a href="{{ path('app_c_r_p_project_status_edit', {'id': project_status.id}) }}" class="btn btn-xs btn-soft-warning">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+			</div>
+		</div>
+ {% endblock %}

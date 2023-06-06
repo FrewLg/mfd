@@ -1,0 +1,276 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Board Members
+{% endblock %}
+{% block maintitle %}Board Members
+{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								Board members
+							</h4>
+
+						</div>
+						<!--end col-->
+						<div
+							class="col-auto">{# <a href="{{ path(' ') }}" class='btn btn-primary btn-sm'>
+																																																																								Create   new
+																																																																							</a> #}
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				<div class="card-body">
+
+					<div class="row">
+						{% if is_granted('mng_brd_mbr') %}
+
+							<div class="col-12">
+
+								<div class="accordion" id="accordionExample">
+									<div class="accordion-item">
+										<h5 class="accordion-header m-0" id="headingOne">
+											<button class="accordion-button collapsed fw-semibold btn-soft-info btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne">
+												Register new Board Member
+											</button>
+										</h5>
+										<div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+											<div class="accordion-body ">
+												{{ include('board_member/_form.html.twig') }}
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+
+
+						{% endif %}
+						<br>
+						<br>
+						<br>
+
+
+						<div class="col-12">
+							<form action="" class="float form-horizontal flex-column form-inline ">
+								<h6 class=" d-inline">Board Members List(Total:-{{board_members.totalItemCount}})
+								</h6>
+								<input type="search" name="search" value="{{app.request.query.get('search')}}" class=" d-inline form-control mb-3" placeholder="Search">
+
+							</form>
+
+							<div class="row">
+								{% for board_member in board_members %}
+
+									<div class="col-lg-4">
+										<div class="card team-card">
+											<div class="card-body">
+												<div class="float-end">
+													<div class="dropdown d-inline-block">
+														<a class="dropdown-toggle arrow-none" id="dLabel1" data-bs-toggle="dropdown" href="apps#" role="button" aria-haspopup="false" aria-expanded="false">
+															<i class="las la-ellipsis-v font-24 text-muted"></i>
+														</a>
+														<div class="dropdown-menu dropdown-menu-end" aria-labelledby="dLabel1" style="">
+
+															<a class="dropdown-item" href="apps#">
+																{% if  is_granted('mng_brd_mbr') %}
+
+
+																	{{ include('board_member/_delete_form.html.twig') }}
+
+																{% endif %}
+															</a>
+
+
+														</div>
+													</div>
+												</div>
+												<div
+													class="media align-items-center">
+													{# <img src="assets/images/users/user-4.jpg" alt="" class="rounded-circle user-img"> #}
+
+													{% if board_member.user.userInfo and  board_member.user.userInfo.image %}
+
+
+														<img src="{{ asset('files/profile_pictures/'~ board_member.user.userInfo.image ) }}" alt="user" class="rounded-circle user-img">
+
+ 
+													{% else %}
+
+														<img src="{{ asset('/img/defaultuser.png') }}" alt="user" class="rounded-circle user-img">
+
+													{% endif %}
+
+													<div class="online-circle">
+														<i class="fa fa-circle text-success"></i>
+													</div>
+													<div class="media-body ms-3 align-self-center">
+														<h4 class="team-leader m-0">
+															<a href='{{path('researcher',{'id':board_member.user.id})}}'>
+
+																{{ board_member.user.userInfo }}
+															</a>
+
+														</h4>
+														<p class="text-muted font-12 mb-0">{{ board_member.role }}</p>
+													</div>
+												</div>
+												<h4 class="m-0 mt-4 font-12 font-weight-semibold">
+												College/Faculty:
+												
+													{% if  board_member.college %}
+														{{ board_member.college }}
+
+													{% else %}
+														Unknown
+													{% endif %}
+												</h4>
+<h4 class="m-0   font-12 font-weight-semibold">
+												Department:
+													{% if  board_member.user.userInfo.department %}
+														{{ board_member.user.userInfo.department }}
+
+													{% else %}
+														Unknown
+													{% endif %}
+
+												</h4>
+												{% if  board_member.user.userInfo.bio %}
+													
+														<p class="text-muted font-12 mb-0">	{{ board_member.user.userInfo.bio }}</p>
+
+													{% else %}
+											 	<p class="text-muted font-12 mb-0">	 Bio  </p>
+
+													{% endif %}
+
+												 
+												 
+												<hr class="hr-dashed my-3">
+												<div class="media align-items-center">
+													{# <img src="assets/images/widgets/project2.jpg" alt="" class="rounded-circle thumb-sm"> #}
+													<div class="media-body ms-3 align-self-center">
+
+														{% if  is_granted('mng_brd_mbr') %}
+
+
+															<form action="" class="float form-horizontal flex-column form-inline " method="POST">
+																<input hidden name="change-role" value="true"/>
+																<input hidden name="board_member" value="{{board_member.id}}"/>
+																<select name="roles" class="form-control" onchange="if(confirm('Are you sure you want to save member role changes?')){this.form.submit()}">
+																	<optgroup label="Role">
+																		<option value="Chair" {{board_member.role=='Chair'?"selected":""}}>Chair</option> 
+																		<option value="Vice Chair" {{board_member.role=='Vice Chair'?"selected":""}}>Vice Chair</option> 
+																		<option value="Secretary" {{board_member.role=='Secretary'?"selected":""}}> Secretary</option>
+																		
+																		<option value="Coordinator" {{board_member.role=='Coordinator'?"selected":""}}>Coordinator</option> 
+																		<option value="Member" {{board_member.role=='Member'?"selected":""}}>Member</option>
+
+																	</optgroup>
+
+																</select>
+															</form>
+														{% endif %}
+
+  </div>
+												</div>
+											</div>
+											<!--end card-body-->
+										</div>
+										<!--end card-->
+									</div>
+								{% else %}
+									No records found
+
+								{% endfor %}
+
+							</div>
+
+							{# <table class="table table-bordered table-striped">
+																			<thead>
+																				<tr>
+																					<th>#</th>
+																					<th>Name</th>
+																					<th>College/Faculty</th>
+																					<th>Department</th>
+																					<th>Academic Rank</th>
+																					<th>Roles</th>
+													
+													
+																					{% if  is_granted('mng_brd_mbr') %}
+													
+																						<th>actions</th>
+																					{% endif %}
+																				</tr>
+																			</thead>
+																			<tbody>
+																				{% for board_member in board_members %}
+																					<tr>
+																						<td>{{ loop.index }}</td>
+													
+																						<td>{{ board_member.user }}</td>
+																						<td>{{ board_member.college }}</td>
+																						<td>{{ board_member.user.userInfo.department }}</td>
+																						<td>{{ board_member.user.userInfo.academicrank }}</td>
+																						<td>
+													
+																							<form action="" method="POST" class="float form-horizontal flex-column form-inline ">
+																								<input hidden name="change-role" value="true"/>
+																								<input hidden name="board_member" value="{{board_member.id}}"/>
+																								<select name="roles" class="form-control" onchange="if(confirm('Save changes?')){this.form.submit()}">
+																									<optgroup label="Role">
+													
+																										<option value="Member" {{board_member.role=='Member'?"selected":""}}>Member</option>
+																										<option value="Secretary" {{board_member.role=='Secretary'?"selected":""}}>
+																											Secretary</option>
+																										<option value="Chair" {{board_member.role=='Chair'?"selected":""}}>Chair</option>
+																									</optgroup>
+													
+																								</select>
+																							</form>
+													
+													
+																						</td>
+													
+																						{% if  is_granted('mng_brd_mbr') %}
+													
+																							<td>
+																								{{ include('board_member/_delete_form.html.twig') }}
+																							</td>
+																						{% endif %}
+																					</tr>
+																				{% else %}
+																					<tr>
+																						<td colspan="4">no records found</td>
+																					</tr>
+																				{% endfor %}
+																			</tbody>
+																		</table> #}
+
+							<div class="float-right" id="custompag	inator">{{ knp_pagination_render(board_members) }}</div>
+						</div>
+					</div>dddddddd
+				</div>
+			</div>
+				<script>
+				  $(function () {
+$(".board_member_role").select2();
+
+}) 
+			</script>
+
+
+<script type="text/javascript">
+
+$('#board_member_role').select2();
+					</script>
+
+		{% endblock %}

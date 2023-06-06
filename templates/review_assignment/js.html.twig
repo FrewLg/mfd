@@ -1,0 +1,31 @@
+<script type="text/javascript">
+
+
+	function attachOrDoi() {
+if (document.getElementById('review_assignment_reviewfile_0').checked) {
+document.getElementById('original_file').style.display = 'block';
+document.getElementById('review_assignment_file_tobe_reviewed').style.display = 'none';
+$('#review_assignment_file_tobe_reviewed').removeAttr('required');
+} else {
+document.getElementById('original_file').style.display = 'none';
+document.getElementById('review_assignment_file_tobe_reviewed').style.display = 'block';
+}
+}
+{# $("#review_assignment_reviewer").select2(); #}
+</script>
+
+<script type="text/javascript">
+	function exernalreviewfilechoose() {
+if (document.getElementById('external_review_assignment_reviewfile_0').checked) {
+document.getElementById('ext_original_file').style.display = 'block';
+document.getElementById('external_review_assignment_file_tobe_reviewed').style.display = 'none';
+$('#external_review_assignment_file_tobe_reviewed').removeAttr('required');
+} else {
+
+document.getElementById('ext_original_file').style.display = 'none';
+document.getElementById('external_review_assignment_file_tobe_reviewed').style.display = 'block';
+
+}
+}
+{# $("#review_assignment_reviewer").select2(); #}
+</script>

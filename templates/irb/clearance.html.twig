@@ -1,0 +1,128 @@
+{% extends 'homelayout.html.twig' %}
+{% block breadcrumb %}{% endblock %}
+{# {% block pagehead %}Home
+{% endblock %} #}
+{% block title %}
+	IRB clearance
+{% endblock %}
+
+{% block body %}
+	{# % include 'page_includes/header_report.html.twig'% #}
+
+	<meta property="og:url" content="http://127.0.0.1:8000/call-for-proposals/45c6511210cb942387708990398a8bf9/details"/>
+	<meta property="og:type" content="JU"/>
+	<meta property="og:title" content="RMS Announcemen ts"/>
+	<meta property="og:description" content="Your description"/>
+	<meta property="og:image" content="http://127.0.0.1:8000/call-for-proposals/45c6511210cb942387708990398a8bf9/details"/>
+
+	{% if  not irb is defined %}
+		<div class="container aos-init aos-animate" data-aos="fade-up">
+
+
+			<div class="section-title">
+				<h2>
+					Validate IRB clearance here
+				</h2>
+			</div>
+			<div class="section-title">
+				<form method="post">
+					<div class="row justify-content-center">
+						<div class=" form-group col-md-6">
+							<input type="text" name="validate" class="form-control" id="name" placeholder="Code" required=""/>
+						</div>
+					</div>
+					<button class="mt-2 btn-lg btn btn-success" type="submit">Check</button>
+				</form>
+			</div>
+		</div>
+
+	{% else %}
+
+		{# <form method="post" action="{{ path('irb_validate2', {'certificateCode': irb.id}) }}"   >
+												    <input type="hidden" name="_token" value="{{ csrf_token('export' ~ irb.id) }}">
+																	<button class="mt-2 btn-lg btn btn-success" name="export" type="submit">Export</button>
+												</form>
+												  #}
+
+
+		<div class="container aos-init aos-animate" data-aos="fade-up">
+
+			<div class="section-title">
+				<h2>IRB Ethical Clearance</h2>
+
+			</div>
+			<p class="float-end">Reference code :<u>
+					<b>{{ irb.certificateCode }}</b>
+				</u>
+			</p>
+			<br>
+			<br>
+			<p>
+				The IRB of  Institute of Health   has reviewed research project
+				<u>
+					<b>"{{ irb.irbApplication.title }}".</b>
+				</u>
+
+
+				Thus, this is to notify that this research protocol has presented to the IRB meets the ethical and Scientific standards outlined in national and international guidelines. 
+												Hence, we are approve this  research protocol is ethically cleared.
+
+			</p>
+
+			<br>
+			{# Hence, we are pleased to inform you that your research protocol is ethically cleared under the following strict conditions:
+																							<ol>
+																								<li>Any significant deviation from the methodological details indicated in the approved protocol must be communicated to the IRB before it has been implemented.</li>
+																								<li>Approval shall be only for a period of twelve months. The principal investigator is required to submit an application for the renewal of the ethical approval.</li>
+																								<li>The Committee must be notified, in writing, of any alteration to the project including unforeseen events/circumstances that might affect the acceptability of the approved protocol.</li>
+																								<li>The Principal researcher is required to immediately notify the committee in the event of any adverse effects on participants or of any unforeseen events that might affect continued ethical acceptability or amendment to the original consent form.</li>
+																								<li>The inability of the Principal Researcher to continue in that role, or any other change in research personnel involved in the project; should be communicated.</li>
+																							</ol> #}
+			<div class="row content">
+				<div class="col-lg-6">
+
+
+					<p>
+						<b>Project Type:</b>
+						{{ irb.irbApplication.projectType }}
+					</p>
+					<p>
+						<b>Project PI:</b>
+						{{ irb.irbApplication.pi ? irb.irbApplication.pi  : irb.irbApplication.submittedBy  }}
+
+					</p>
+					<p>
+						<b>Project Start:</b>
+						{{ irb.irbApplication.startDate | date('Y-m-d') }}
+
+					</p>
+					<p>
+						<b>Project End:</b>
+						{{ irb.irbApplication.endDate | date('Y-m-d') }}
+					</p>
+
+				</div>
+				<div class="col-lg-6 pt-4 pt-lg-0">
+					<p>
+						<b>Clearance Valid until</b>:
+						{{ irb.validUntil | date('Y-m-d') }}
+					</p>
+					<br>
+					{% if irb.approvedBy %}
+					{{irb.approvedBy}}
+					<br>
+													<img src="{{ asset('files/signatures/'~irb.approvedBy.userInfo.signature ) }}" alt="" width=100 ;height=100>
+						
+					{% else %}
+						Not Approved
+					{% endif %} 
+
+				</div>
+
+			</div>
+
+		{% endif %}
+
+
+		{# <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.0/chart.min.js"></script> #}
+	{% endblock %}

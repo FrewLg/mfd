@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Submission Status {% endblock %}
+
+{% block body %}
+    <div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h4 class="card-title">
+								Submission Status  
+							</h4>
+							Total: ({{submission_statuses|length}})
+						</div>
+						<!--end col-->
+						<div class="col-auto">
+							<a href="{{ path('app_submission_status_new') }}" class='btn btn-primary btn-sm'>
+								Create   new
+							</a>
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-striped">
+         <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>StatusColor</th> 
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for submission_status in submission_statuses %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ submission_status.name }}</td>
+                <td>{{ submission_status.description }}</td>
+                <td>
+                <span class="badge bg-soft-{{ submission_status.statusColor }}">{{ submission_status.statusColor }} </span> 
+                <span class="badge bg-soft-{{ submission_status.statusColor }}">{{ submission_status.submission|length }} </span></td>
+                 <td>
+                    <a href="{{ path('app_submission_status_show', {'id': submission_status.id}) }}" class="btn btn-sm btn-soft-success">show</a>
+                    <a href="{{ path('app_submission_status_edit', {'id': submission_status.id}) }}" class="btn btn-sm btn-soft-warning">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+ {% endblock %}
+ {% block script %}
+ 
+ {% endblock %}

@@ -1,0 +1,325 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ collaborative_research_project.title }}{% endblock %}
+
+{% block body %}
+  
+  <div class="card mt-3">
+                                    <div class="card-body">
+ {# <a href="{{ path('app_c_r_p_collaborative_research_project_show', {'id': collaborative_research_project.id}) }}" class="btn btn-xs btn-soft-info">show</a> #}
+               
+				{% if is_granted("view_crp_projectDetails_as_admin") %}
+                    <a href="{{ path('app_c_r_p_collaborative_research_project_edit', {'id': collaborative_research_project.id}) }}" class="btn btn-xs btn-soft-warning">edit</a>
+
+               <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLarge">
+                                                        Attachment
+                                                        </button>
+
+<div class="modal fade bd-example-modal-lg" id="exampleModalLarge" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h6 class="modal-title m-0" id="myLargeModalLabel">Attachment 
+                                                    
+                                                         
+                                                         <a href="#" class="avatar-box thumb-xxs align-self-center">
+										<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+                                                         {{ collaborative_research_project.projectAttachments|length }}
+										</span>
+									</a>
+                                    </h6>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div><!--end modal-header-->
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-5 text-center">
+
+                                                        <div class="card">
+                                                        <div class="card-header">
+Attachments             
+               <a href="#" class="avatar-box thumb-xxs align-self-center">
+										<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+                                                         {{ collaborative_research_project.projectAttachments|length }}
+										</span>
+									</a>
+                                                                               </div><!--end col-->                                                            
+
+                                                        <div class="card-body">
+                                                            								<ul class="list-group  m-0">
+
+                                                        
+                                                         {% for row in collaborative_research_project.projectAttachments %}
+										<li class="list-group-item">
+                                                            {{row.file}}
+                                                           <span class="badge bg-soft-success"> {{row.attachmentType.name}} </span>
+                                                            </li>
+                                                         {% endfor %}
+                                                            </ul>
+                                                            {# <img src="assets/images/widgets/flame-5.png" alt="" class="img-fluid"> #}
+                                                        </div><!--end col-->
+                                                        </div><!--end col-->
+                                                        </div><!--end col-->
+                                                        
+                                                        <div class="col-lg-7 align-self-center">
+                                                        <div class="card">
+                                                        <div class="card-header">
+                                                     Upload   </div><!--end col-->                                                            
+
+                                                        <div class="card-body">
+                                                                 {# {{ include('crp/collaborative_research_project/_form.html.twig') }} #}
+    
+    {{ form_start(attachmentform) }}
+    {{ form_widget(attachmentform) }}
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(attachmentform) }}
+
+                                                        </div><!--end col-->                                                            
+                                                        </div><!--end col-->                                                            
+                                                        </div><!--end col-->                                                            
+                                                    </div><!--end row-->
+                                                    
+                                                </div><!--end modal-body-->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-soft-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                                </div><!--end modal-footer-->
+                                            </div><!--end modal-content-->
+                                        </div><!--end modal-dialog-->
+                                    </div><!--end modal-->
+    
+								{% endif %}
+
+<div class="ribbon1 rib1-primary">
+                                        <span class="text-white text-center rib1-primary">{{ collaborative_research_project.FundingOpportunityName}}</span>                                        
+                                    </div>
+
+                                        <div class="media mb-4">
+                                            
+                                           	{% if   collaborative_research_project.PrincipalInvestigator.userInfo.image %}
+
+									<img src="{{ asset('files/profile_pictures/'~collaborative_research_project.PrincipalInvestigator.userInfo.image ) }}" alt=""
+                                     class="thumb-lg rounded-circle  circle-border">
+								{% else %}
+									<img src="{{ asset('/img/defaultuser.png') }}" class="thumb-lg rounded-circle circle-border  " alt="profile">
+								{% endif %}
+
+                                            <div class="media-body align-self-center">
+                                                <h5 class="font-14 m-0">{{ collaborative_research_project.title }}</h5>
+                                                <small class="text-muted">{{ collaborative_research_project.PrincipalInvestigator}}</small>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="mt-0 font-15">{{ collaborative_research_project.title}}</h4>
+    		{{ include('crp/collaborative_research_project/includes/progress.html.twig') }}
+
+ThematicArea:{{ collaborative_research_project.ThematicArea }}
+                                        <p>Short Description:{{ collaborative_research_project.shortDescription}}</p>
+                                        <p>
+
+                                      
+                                        <hr class="hr-dashed">
+                                        <div class="mt-4 d-flex justify-content-between">
+							<div class="img-group">
+                             {% for member in collaborative_research_project.coInvestigators %}
+
+
+									{% if member.userInfo and member.userInfo.image %}
+
+										<a class="user-avatar user-avatar-group" href="##{{collaborative_research_project.id}}">
+											<img src="{{ asset('files/profile_pictures/'~member.userInfo.image ) }}" title="{{member.userInfo}}" alt="user" class="rounded-circle thumb-xxs">
+										</a>
+
+
+									{% else %}
+										<a class="user-avatar user-avatar-group" href="##{{collaborative_research_project.id}}">
+											<img src="{{ asset('/img/defaultuser.png') }}" alt="user" title="{{member.userInfo}}"  class="rounded-circle thumb-xxs">
+										</a>
+									{% endif %}
+
+									{% else %}No Co-PI has been involved
+								{% endfor %}
+
+
+								<a href="#" class="avatar-box thumb-xxs align-self-center">
+									<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+										+{{ collaborative_research_project.coInvestigators|length   }}
+									</span>
+								</a>
+
+							</div>
+
+						</div>
+                                        <p>
+                                         {{ collaborative_research_project.shortDescription }}</p>
+             <h4>Year Of Cemmencement: </h4>  {{ collaborative_research_project.YearOfCemmencement ? collaborative_research_project.YearOfCemmencement|date('Y-m-d H:i:s') : '' }}
+
+                              <h4>End Date:</h4>
+                {{ collaborative_research_project.EndDate ? collaborative_research_project.EndDate|date('Y-m-d H:i:s') : '' }}
+
+                                        <hr class="hr-dashed">
+Amount Of Grant:{{collaborative_research_project.AmountOfGrant}} {{collaborative_research_project.currency}}
+<p> 
+<div class="card">     <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Project Co-Investigators</h4>                      
+                                        </div><!--end col-->
+                                         
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->                                              
+                                <div class="card-body"> 
+																		<div class="row">
+                                     
+{% for co in collaborative_research_project.coInvestigators %}
+                                           
+
+																	<div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
+
+																		<div class="card">
+
+																			<div class="card-body text-center">
+
+
+																				{% if co.userInfo.image   %}
+																					<img src="{{ asset('files/profile_pictures/'~ co.userInfo.image ) }}" class="d-block mx-auto rounded-circle thumb-md" alt="profile">
+																				{% else %}
+																					<img src="{{ asset('/img/defaultuser.png') }}" class="d-block mx-auto rounded-circle thumb-md" alt="profile">
+																				{% endif %}
+
+																				<h5 class="fw-bold mt-3 mb-1">{{ co.userInfo}}
+																					<sapn class="text-muted mb-0">({{ co.userInfo.educationLevel }})</span>
+																				</h5>
+																				<p class="text-muted mb-0">{{ co.userInfo.college }}</p>
+																				<p class="text-muted mb-0">{{ co.userInfo.department }}</p>
+																				<p class="text-muted mb-0">{{ co.userInfo.academicRank }}</p>
+																				{# <div class="mb-3">
+																					<a href="apps-tasks.html#" class="me-3 text-warning">
+																						{{ co.role }}</a>
+
+																				</div> #}
+
+																				<a href='{{path('researcher',{'id':co.id})}}' class="btn btn-sm btn-soft-primary">About researcher</a>
+
+																			</div>
+																		</div>
+																	</div>  
+{% endfor %}
+
+                                                               
+                                   <!--end card-body-->                                     
+                            </div>
+                            </div>
+                            </div>
+<p> 
+<div class="card">     <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">                      
+                                            <h4 class="card-title">Major Activity/Deliverables</h4>                      
+                                        </div><!--end col-->
+                                         
+                                    </div>  <!--end row-->                                  
+                                </div><!--end card-header-->                                              
+                                <div class="card-body"> 
+                                    <div class="analytic-dash-activity" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;"><div class="simplebar-content" style="padding: 0px;">
+                                        <div class="activity">
+{% for row in collaborative_research_project.deliverables %}
+                                          
+                                            <div class="activity-info">
+                                                <div class="icon-info-activity">
+                                                    <i class="las la-user-clock bg-soft-primary"></i>
+                                                </div>
+                                                <div class="activity-info-text">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="text-muted mb-0 font-13 w-75"> 
+                                                              <a href="#"> {{row.name}}</a>  
+                                                        </p>
+                                                        <small class="text-muted">{{row.EndDate|date('d-m-y')}}</small>
+                                                      <div class="pricingTable1 text-center">
+                                                 {% if row.status==1 %}
+                                                    
+                                                 <ul class="list-unstyled pricing-content-2">
+                                                  <li>Done</li> 
+                                                 </ul>
+                                                 {% else %}
+
+                                                 <ul class="list-unstyled pricing-content-2">
+                                                  <li>Waiting
+                                                  <form method="post" action="{{ path('toggle_status', {'id': row.id}) }} ">
+    <input type="hidden" name="_token" value="{{ csrf_token('toggle' ~ row.id) }}">
+    <button class="btn">ChangeStatus</button>
+</form>
+
+
+                                                  </li> 
+                                                 </ul>
+                                                 {% endif %}
+
+                                                    </div>    
+                                                    </div>    
+                                                </div>
+                                            </div>   
+{% endfor %}
+
+                                                                                                                                                                                 
+                                        </div><!--end activity-->
+                                    </div>
+                                    </div></div></div><div class="simplebar-placeholder" style="width: auto; height: 405px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 293px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div></div><!--end analytics-dash-activity-->
+                                </div>  <!--end card-body-->                                     
+                            </div>
+
+                                         <div class="row">
+                                         <div class="card">
+                                         <div class="card-header">
+Attachements</div>
+                                         <div class="card-body">
+
+  {% for row in collaborative_research_project.projectAttachments %}
+										<li class="list-group-item">
+                                                           {% if row.file  %}
+                                                            
+<a href="{{ asset('/uploads/submission/'~ row.file ) }}" class="btn btn-info btn-xs float-right">
+							Download {{row.attachmentType.name}} 
+							<i class="fa fa-download material-icons warning"></i>
+						</a>
+                                                           
+                                                           {% else %}
+                                                           {% endif %}
+                                                            </li>
+                                                         {% endfor %}
+</div>
+</div>
+                                            <h4>Collaborating Institutes:              
+                    {{ collaborative_research_project.OtherInsitutes }}</h4>
+                    <h4>Collaborating Institutes:              </h4>
+               
+                    {% for fo in collaborative_research_project.fundingOrganization %}
+                                           <div class="col-auto">
+                                                <div class="card"> 
+                  
+                {% if  fo.logo %}
+
+									<img src="{{ asset('files/profile_pictures/'~fo.logo  ) }}" title='{{ fo.name }}'alt="{{ fo.name }}" class="thumb-lg rounded-circle circle-border  ">
+								{% else %}
+									<img src="{{ asset('/img/defaultuser.png') }}" class="thumb-lg rounded-circle circle-border  " alt="profile">
+	 	
+    					{% endif %}
+
+                                                     <div class="py-2 text-center">
+                                                        <a href="{{ path('app_c_r_p_funding_organization_show', {'id': fo.id}) }}" class="text-muted">{{fo.acronym}} </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                    {% endfor %}
+
+                                        </div>
+
+                                     </div>
+                                </div>
+
+     
+           
+
+    {# <a href="{{ path('app_c_r_p_collaborative_research_project_index') }}">back to list</a> #}
+
+    {# <a href="{{ path('app_c_r_p_collaborative_research_project_edit', {'id': collaborative_research_project.id}) }}">edit</a> #}
+
+ {% endblock %}

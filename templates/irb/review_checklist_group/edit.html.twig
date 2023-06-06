@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ReviewChecklistGroup{% endblock %}
+
+{% block body %}
+    <h1>Edit ReviewChecklistGroup</h1>
+
+    {{ include('irb/review_checklist_group/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('i_r_b_review_checklist_group_index') }}">back to list</a>
+
+    {{ include('irb/review_checklist_group/_delete_form.html.twig') }}
+{% endblock %}

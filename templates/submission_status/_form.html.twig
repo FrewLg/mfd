@@ -1,0 +1,28 @@
+{# {{ form_start(form) }} #}
+{{ form_start(form, {'attr': {'id': 'Form'}}) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+  <script>
+setInterval(saveData, 5000);
+function saveData(){
+ 
+ //var postid = $('#submission_status[name]').val(); 
+ var postid = $('#name').val(); 
+
+ if(postid != ''  ){
+  
+  $.ajax({
+   url: "{{ path('app_submission_status_test') }}",
+   type: 'post',
+   //data: {name:postid},
+   data: $('#Form').serialize(),
+   success: function(response){
+    $('#postid').val(response);
+   } 
+  });
+ }
+ 
+}
+
+</script>

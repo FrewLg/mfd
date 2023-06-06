@@ -1,0 +1,561 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Application
+{% endblock %}
+
+{% block body %}
+	<h4>
+		{% trans %}Application{% endtrans %}
+	</h4>
+	{# <a href="{{ path('application_index') }}" class="btn btn-primary">back to list</a> #}
+
+	{% if is_granted("ROLE_VICE_CHAIR") or is_granted("ROLE_CHAIR")   or is_granted("ROLE_SECRETARY") or   application.submittedBy ==app.user  %}
+
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body invoice-head">
+						<div class="row">
+							<div class="col-md-6 align-self-center">
+								<h6 class="mb-0">
+									<b>{% trans %}Title{% endtrans %}:</b>
+									{{ application.title }}</h6>
+								<p class="mt-2 mb-0 text-muted">{{ application.description }}</p>
+							</div>
+							<!--end col-->
+							<div class="col-md-6">
+
+								<div class="card-header ">
+
+									<h5 class="font-18 m-0 fw-bold">{% trans %}Reviewers{% endtrans %}
+
+
+										<a href="#" class="avatar-box thumb-xxs align-self-center">
+											<span
+												class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">{#{  application.irbreviewer|length }#}
+											</span>
+										</a>
+
+										{% if   is_granted("ROLE_CHAIR") or  is_granted("ROLE_VICE_CHAIR") %}
+											<a href="{{ path('irb_review_assignment_new', {'id': application.id}) }}" class='font-16 m-0   btn btn-sm btn-soft-primary btn-xs mb-1 align-right'>
+												{% trans %}Add  Reviewer{% endtrans %}</a>
+										{% endif %}
+
+									</h5>
+								</div>
+
+								<ul class="list-inline mb-0 contact-detail float-end">
+									<li class="list-inline-item">
+										<div class="ps-3">
+											<i class="">{% trans %}Submited by{% endtrans %}
+											</i>
+											<p>
+												{% trans %}Name{% endtrans %}:<span class="text-muted mb-0">
+													<a href='{{path('researcher',{'id':application.submittedBy.id})}}' class="text-primary">{{ application.submittedBy }}</a>
+
+												</span>
+											</p>
+											<p>{% trans %}Role{% endtrans %}:<span class="text-muted mb-0">
+													{{ application.pi ? "PI" : "Advisor"  }}</span>
+											</p>
+
+										</div>
+									</li>
+									<li class="list-inline-item"></li>
+									<li class="list-inline-item">
+										<div class="ps-3">
+											<p>{% trans %}Sumitted At{% endtrans %}:
+												<span class="text-muted mb-0">{{application.createdAt | date('Y-m-d h:i')}}</span>
+											</p>
+
+											<p class="">{% trans %}Status{% endtrans %}:
+												{% if application.status.type is defined  %}
+													<span class="badge bg-{{  application.status.type }}">{{  application.status }}</span>
+												{% endif %}
+
+
+											</p>
+
+										</div>
+									</li>
+								</ul>
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!--end card-body-->
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-3">
+								<div class="">
+									<h6 class="mb-0">
+										<b>{% trans %}Application Type{% endtrans %}:</b>
+										{{ application.applicationType }}</h6>
+									<h6 class="mb-0">
+										<b>{% trans %}Project Type{% endtrans %}
+											:</b>
+										{{ application.projectType }}</h6>
+									<h6 class="mb-0">
+										<b>{% trans %}Poject Start Date{% endtrans %}
+											:</b>
+										{{ application.startDate|date('Y-m-d') }}</h6>
+									<h6 class="mb-0">
+										<b>{% trans %}Poject End Date{% endtrans %}
+											:</b>
+										{{ application.endDate|date('Y-m-d') }}</h6>
+									<h6 class="mb-0">
+										<b>{% trans %}Location{% endtrans %}
+											:</b>
+										{{ application.location }}</h6>
+
+
+									{# <div class="card mt-4">
+										<div class="card-header">
+											<h4>Final IRB Editorial Decision</h4>
+										</div>
+
+										<div class="card-body">
+											Decision
+										</div>
+									</div> #}
+
+
+									{# <a href="{{ path('review_application', {'id': application.iRBReviewAssignments|filter(apllicatio=application.id)}) }} " class='text-primary'>
+																																																																																									{{ application.title }}
+																																																																																								</a> #}
+									{# {{application.iRBReviewAssignments|filter(application=>application.id)}} #}
+									{% if review and app.user == application.submittedBy and review.remark==3 %}
+										{% if application.hasToRenew %}
+
+											<form method="post">
+												<input hidden name="renewal" value="true">
+
+												<button type="submit" class="m-1 btn btn-outline-primary float-right">
+													<span class="fa fa-spinner m-1"></span>
+													{% trans %}Renew Clearance{% endtrans %}</button>
+											</form>
+										{% endif %}
+
+										<button type="button" class="m-1 btn btn-outline-primary -right" data-bs-toggle="modal" data-bs-target="#exampleModalSecondary">{% trans %}Request amendment{% endtrans %}</button>
+
+									{% endif %}
+								</div>
+							</div>
+							<!--end col-->
+
+							<div class="col-md-12 col-lg-9 mt-2">
+
+								{% if review %}
+									<div class="card">
+										<div class="row no-gutters">
+
+											<div class="col-md-12">
+												<div class="card-header">
+													<div class="row align-items-center">
+														<div class="col">
+															<h4 class="card-title">{% trans %}Review Decision{% endtrans %}</h4>
+														</div>
+														<!--end col-->
+														<div class="col-auto">
+
+															<span class="badge badge-outline-light">{{ review.createdAt|date('Y-m-d') }}</span>
+														</div>
+														<!--end col-->
+													</div>
+													<!--end row-->
+												</div>
+												<!--end card-header-->
+												<div class="card-body">
+
+													<p class="card-text">
+														<b>{% trans %}IRB Decision{% endtrans %}:</b>
+
+														<span class="badge bg-{{ review.remarkColor }}">{{ review.remarkText }}</span>
+													</p>
+													<p class="card-text"></p>
+													{% if review and app.user == application.submittedBy and review.remark == 2 %}
+														<button type="button" class="m-1 btn btn-outline-primary float-right" data-bs-toggle="modal" data-bs-target="#revision-modal">
+															<span class="fa fa-paper-plane m-1"></span>
+															{% trans %}Please Send Revision{% endtrans %}</button>
+													{% endif %}
+
+												</div>
+												<!--end card-body-->
+												<div class="card-footer"></div>
+											</div>
+											<!--end col-->
+
+										</div>
+									</div>
+
+								{% endif %}
+
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">{% trans %}Details{% endtrans %}</h4>
+
+									</div>
+									<!--end card-header-->
+									<div
+										class="card-body">
+										<!-- Nav tabs -->
+										<ul class="nav nav-tabs" role="tablist">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#members" role="tab" aria-selected="true">{% trans %}Members{% endtrans %}</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#subject" role="tab" aria-selected="false">{% trans %}Research subject{% endtrans %}</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#covid" role="tab" aria-selected="false">{% trans %}Covid-19 mitigation{% endtrans %}</a>
+											</li>
+
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#attachments" role="tab" aria-selected="false">{% trans %}Attachments{% endtrans %}</a>
+											</li>
+											{% if application.amendments | length > 0 %}
+												<li class="nav-item">
+													<a class="nav-link" data-bs-toggle="tab" href="#amendment" role="tab" aria-selected="false">{% trans %}Amendment{% endtrans %}</a>
+												</li>
+											{% endif %}
+
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#revisions" role="tab" aria-selected="false">{% trans %}Revisions{% endtrans %}</a>
+											</li>
+										</ul>
+
+										<!-- Tab panes -->
+										<div class="tab-content">
+											<div class="tab-pane p-3 active" id="members" role="tabpanel">
+												<h4 class='text-'>{% trans %}Research team{% endtrans %}
+													<a href="#" class="avatar-box thumb-xxs align-self-center">
+														<span class="avatar-title bg-soft-info rounded-circle font-13 font-weight-normal">
+															{{ application.members|length +1}}
+														</span>
+													</a>
+												</h4>
+												<div class="row">
+													{% set co_author = application.pi ? application.pi : application.submittedBy  %}
+													<div class="col-lg-4">
+
+														<div class="card">
+
+															<div class="card-body text-center">
+
+
+																<h5 class="fw-bold mt-3 mb-1">{{ co_author.userInfo}}
+																	<span class="text-muted mb-0">({{ co_author.userInfo.educationLevel }})</span>
+																</h5>
+																<p class="text-muted mb-0">{{ co_author.userInfo.college }}</p>
+																<p class="text-muted mb-0">{{ co_author.userInfo.department }}</p>
+																<p class="text-muted mb-0">{{ co_author.userInfo.academicRank }}</p>
+																<div class="mb-3">
+																	<a href="apps-tasks.html#" class="me-3 text-warning">
+																		{% trans %}PI{% endtrans %}</a>
+
+																</div>
+
+																<a href='{{path('researcher',{'id':co_author.id})}}' class="btn btn-sm btn-soft-primary">{% trans %}More details{% endtrans %}</a>
+
+															</div>
+														</div>
+													</div>
+													{% for co_author in  application.members %}
+
+														<div class="col-lg-4">
+
+															<div class="card">
+
+																<div class="card-body text-center">
+
+
+																	<h5 class="fw-bold mt-3 mb-1">{{ co_author.Name}}{{ co_author.MidleName}}
+																		{{ co_author.LastName  }}
+																		<span class="text-muted mb-0">({{ co_author.title }})</span>
+																	</h5>
+																	<p class="text-muted mb-0">{{ co_author.affiliation  }}</p>
+																	<p class="text-muted mb-0">{{ co_author.department }}</p>
+																	<p class="text-muted mb-0">{{ co_author.email }}</p>
+																	<div class="mb-3">
+																		<a href="apps-tasks.html#" class="me-3 text-warning">
+																			{{ co_author.role }}</a>
+
+																	</div>
+
+																	<a href='#' class="btn btn-sm btn-soft-primary">{% trans %}More details{% endtrans %}</a>
+
+																</div>
+															</div>
+														</div>
+
+
+													{% endfor %}
+
+												</div>
+
+											</div>
+											<div class="tab-pane p-3" id="covid" role="tabpanel">
+												<h5>COVID-19 Mitigation Strategies Associated with Data Collection</h5>
+												{% for group in mitigation_strategy_group %}
+													<label class="form-label mt-3 mb-1">{{group.name}}
+													</label>
+
+													<div class="row">
+														{% for strategy in application.applicationMitigationStrategies | filter(strat => strat.strategy.formGroup == group) %}
+
+															<div class="form-check">
+																<input class="form-check-input" checked type="checkbox" value="" id="s{{strategy.id}}" disabled>
+																<label class="form-check-label" for="s{{strategy.id}}">
+																	{{ strategy.strategy }}
+																</label>
+															</div>
+
+														{% endfor %}
+													</div>
+												{% endfor %}
+
+											</div>
+											<div class="tab-pane p-3" id="amendment" role="tabpanel">
+
+
+												<div class="col-md-12">
+													<div class="card">
+														<div class="card-header">
+															<h4 class="card-title">{% trans %}Amendments{% endtrans %}</h4>
+
+														</div>
+														<!--end card-header-->
+														<div class="card-body">
+															<div class="">
+																<table class="table table-bordered mb-0 table-centered">
+																	<thead>
+																		<tr>
+																			<th>#</th>
+																			<th>{% trans %}Purpose{% endtrans %}</th>
+																			<th>{% trans %}Requested At{% endtrans %}</th>
+																			<th class="text-right">{% trans %}Action{% endtrans %}</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		{% for amendment in application.amendments %}
+
+																			<tr>
+																				<td>{{loop.index}}</td>
+																				<td>{{ (amendment.purpose |length > 50 ?amendment.purpose|slice(0, 50) ~ "..." :  amendment.purpose)| raw}}</td>
+																				<td>{{ amendment.createdAt |date('Y-m-d h:i')  }}</td>
+																				<td>
+																					<span class="badge badge-soft-warning">Pending</span>
+																				</td>
+																				<td class="text-right">
+																					<div class="dropdown d-inline-block">
+																						<a class="dropdown-toggle arrow-none" id="dLabel11" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+																							<i class="las la-ellipsis-v font-20 text-muted"></i>
+																						</a>
+																						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel11">
+																							<a class="dropdown-item" href="#">Detail</a>
+																							<a class="dropdown-item" href="#"></a>
+																						</div>
+																					</div>
+																				</td>
+																			</tr>
+
+
+																		{% else %}
+																			<tr>
+																				<td colspan="4">{% trans %}No record{% endtrans %}</td>
+																			</tr>
+																		{% endfor %}
+
+																	</tbody>
+																</table>
+																<!--end /table-->
+															</div>
+															<!--end /tableresponsive-->
+														</div>
+														<!--end card-body-->
+													</div>
+													<!--end card-->
+												</div>
+											</div>
+
+											<div class="tab-pane p-3" id="revisions" role="tabpanel">
+
+
+												<div class="col-md-12">
+													<div class="card">
+														<div class="card-header">
+															<h4 class="card-title">{% trans %}Revisions{% endtrans %}</h4>
+
+														</div>
+														<!--end card-header-->
+														<div class="card-body">
+															<div class="">
+
+																{% for revision in application.revisions %}
+
+																	<div class="col-md-12">
+
+																		<div class="card">
+																			<div class="card-header">
+																				{% trans %}Revision{% endtrans %}
+																				{{loop.index }}
+																			</div>
+																			<div class="card-body">
+																				<ul>
+																					{% for attachment in revision.revisionAttachments %}
+																						<li>
+																							<a href='{{ asset('/uploads/application/' ~ attachment.file) }}' class="btn btn-sm btn-soft-primary m-1">{{ attachment.type }}
+																								<span class="fa fa-download m-1"></span>
+																							</a>
+																						</li>
+
+																					{% endfor %}
+																				</ul>
+
+																			</div>
+																		</div>
+																	</div>
+																{% endfor %}
+																{% include "application/tabs/checklist_responseallowed.html.twig" %}
+
+
+															</div>
+															<!--end /tableresponsive-->
+														</div>
+														<!--end card-body-->
+													</div>
+													<!--end card-->
+												</div>
+											</div>
+											<div class="tab-pane p-3" id="subject" role="tabpanel">
+												{% for category in subject_category %}
+													<label class="form-label mt-3 mb-1">Research Subjects({{category.name}})
+													</label>
+
+													<div class="row ">
+														{% for subject in application.applicationResearchSubjects | filter(sub => sub.subject.category == category) %}
+
+															<li>
+																{{ subject.subject }}
+																{{ subject.number ? "#" ~ subject.number :"" }}</li>
+														{% else %}
+															<p>{% trans %}No research subject specified{% endtrans %}</p>
+														{% endfor %}
+													</div>
+												{% endfor %}
+											</div>
+											<div class="tab-pane p-3" id="reviews" role="tabpanel">
+												{% for review_group in review_status_group %}
+													<label class="form-label mt-3 mb-1">{{review_group.name}}
+													</label>
+
+													<div class="row ">
+														{% for review in application.applicationReviews | filter(strat => strat.review.reviewGroup == review_group) %}
+
+															<div class="form-check">
+																<input class="form-check-input" checked type="checkbox" value="" id="r{{review.id}}" disabled>
+																<label class="form-check-label" for="r{{review.id}}">
+																	{{ review.review }}
+																</label>
+															</div>
+														{% else %}
+
+															<p>No research subject specified</p>
+
+														{% endfor %}
+													</div>
+												{% endfor %}
+											</div>
+
+											<div class="tab-pane p-3 " id="attachments" role="tabpanel">
+
+												<ol>
+
+
+													{% for attachment in application.applicationAttachments %}
+
+														<li class="text-info   pt-2">
+															<a style="margin-top:3px;" href="{{ asset('/uploads/application/'~ attachment.file ) }}" class="text-info    pt-3 mt-2">
+																{{attachment}}
+																<i class="fa fa-download material-icons warning"></i>
+															</a>
+														</li>
+													{% else %}
+														<span class="label label-danger">
+															{% trans %}No attachment found{% endtrans %}</span>
+													{% endfor %}
+													<ol></div>
+												</div>
+											</div>
+											<!--end card-body-->
+										</div>
+										<!--end card-->
+									</div>
+								</div>
+							</div>
+
+
+						{% else %}
+							<h4 class='text-danger'>You need higher privilage to view the content!</h4>
+
+						{% endif %}
+
+
+						{{ include('application_feedback/chatbox.html.twig') }}
+
+
+					</div>
+					<!--end card-body-->
+
+				</div>
+				<!--end card-->
+
+			</div>
+
+
+			<br>
+			{% include "application/modal.html.twig" %}
+		{% endblock %}
+
+
+		{% block script %}
+
+			<script>
+				$(document).ready(function () {
+
+
+$(".my-checkbox input[type=checkbox]").each(function (e, v) {
+$(v).click(function (e) {
+group = $(v).parentsUntil(".check-group").parent().attr("data-group")
+if (group) {
+$ (`.group-${group} input[type=checkbox]`).each(function (e2, v2) {
+$(v2).prop('checked', false);
+$(v2).prop('required', false);
+$(v2).parentsUntil(".parent").find(".my-hidden").addClass("d-none")
+$(v2).parentsUntil(".parent").find(".my-hidden").find('input').prop('required', false);
+$(v2).siblings('.error').remove();
+$(v2).removeClass('error')
+})
+$(v).prop('checked', true);
+
+}
+if (e.target.checked) {
+
+$(this).parentsUntil(".parent").find(".my-hidden").removeClass("d-none")
+$(this).parentsUntil(".parent").find(".my-hidden").find('input').prop('required', true);
+} else {
+$(this).parentsUntil(".parent").find(".my-hidden").addClass("d-none")
+$(this).parentsUntil(".parent").find(".my-hidden").find('input').prop('required', false);
+
+}
+});
+});
+$(".custom-file-label").each(function (e, v) {
+$(v).remove();
+})
+});
+			</script>
+		{% endblock %}

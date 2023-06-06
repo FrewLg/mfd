@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PublishedResearch index{% endblock %}
+
+{% block body %}
+	<h5 class="font-18 m-0 fw-bold">Publications  </h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr class="font-14 m-0 fw-bold" >
+                <th>#</th>
+                <th>Title</th>
+                <th>Journal name</th>
+                <th>Impact Factor
+                  </th>
+                <th>Author</th>
+                <th>Citation Score</th>
+                <th>Year</th>
+                 <th>DOI</th>
+                 <th>Attachments</th>
+              </tr>
+        </thead>
+        <tbody>
+        {% for published_research in published_researches %}
+            <tr>
+                <td>{{ loop.index}}</td>
+                <td>{{ published_research.title }}</td>
+                 <td>{{ published_research.journalName }}</td>
+                <td>{{ published_research.impactFactor   }}</td>
+                <td>{{ published_research.author }}</td>
+                <td>{{ published_research.citationScore }}</td>
+                <td>{{ published_research.publishedAt|date('Y-m-d') }}</td>
+                <td>
+{% if  published_research.doi  %} 
+<a href="{{ published_research.doi }}" target="_blank"><h6 class="text-primary">{{ published_research.doi }}</h6> </a>
+{% else %}
+<span class="badge bg-soft-success">Article uploaded</span>
+{% endif%}
+{#<h6 class="text-primary" id="myInput{{ published_research.id}}"> {{ published_research.doi }}  </h6>#}
+</td>
+                <td>
+        {% if published_research.ArticleDocument   %}
+                
+                <a href="{{ asset('/files/users_publications/'~ published_research.ArticleDocument ) }}" class="btn btn-soft-info btn-xs float-right">
+													 
+													<i class="fa fa-download material-icons warning"></i>
+												</a>
+        {% else %}
+
+<span class='badge bg-soft-pink'>DOI </span>
+        {% endif %}
+
+                                                </td>
+               
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+					<div class="navigation">{{ knp_pagination_render(published_researches) }}</div>
+ 
+{% endblock %}
